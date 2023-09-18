@@ -5,7 +5,7 @@ import api from "./routes/api"
 const app = express()
 app.use("/api", api)
 
-const nodemailer = require("nodemailer");
+/*const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
     host: "gougoule.ch",
@@ -38,6 +38,6 @@ async function main() {
     //
   }
   
-  main().catch(console.error);
+  main().catch(console.error);*/
 
 app.listen(Number(process.env.PORT))
