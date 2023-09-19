@@ -1,7 +1,6 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const query = require("./../../javascript/db")
-const forge = require('node-forge');
 
 const router = express.Router()
 const jsonMiddleware = bodyParser.json({ type: 'application/json' });
@@ -20,7 +19,7 @@ router.post("/", async (req, res) => {
                 res.status(400)
             }
             else {
-                if((await query("SELECT * FROM Users WHERE handle ~* $1;", [handle])).rowCount != 0) {
+                if((await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rowCount != 0) {
                     res.status(409).send({error: "handle already taken"})
                 }
                 else if((await query("SELECT * FROM Users WHERE email ~* $1;", [email])).rowCount != 0) {
@@ -28,7 +27,7 @@ router.post("/", async (req, res) => {
                 }
                 else {
                     let hash = await Bun.password.hash(password);
-                    query("INSERT INTO Users (handle, username, email, password, emailVerification) VALUES ($1, $2, $3, $4, $5);", [handle, username, email, hash, crypto.randomUUID()])
+                    query("INSERT INTO Users (handle, username, email, password, emailVerification, lastverificationemailsent) VALUES ($1, $2, $3, $4, $5, $6);", [handle, username, email, hash, crypto.randomUUID(), 0])
                     res.send("sucess")
                 }
             }
@@ -44,16 +43,6 @@ router.post("/", async (req, res) => {
 })
 
 
-async function generateKeyPair() {
-    // Create an RSA key pair
-    const keyPair = forge.pki.rsa.generateKeyPair({ bits: 2048 });
 
-    // Get the private and public keys in PEM format
-    const privateKeyPem = forge.pki.privateKeyToPem(keyPair.privateKey);
-    const publicKeyPem = forge.pki.publicKeyToPem(keyPair.publicKey);
-
-    // Output the keys
-    return { "privateKeyPem": privateKeyPem, "publicKeyPem": publicKeyPem }
-}
 
 module.exports = router

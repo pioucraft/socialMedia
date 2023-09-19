@@ -1,5 +1,6 @@
 const express = require("express")
 const query = require("./../../javascript/db")
+const forge = require('node-forge');
 
 const router = express.Router()
 
@@ -11,7 +12,11 @@ router.get("/:uuid", async (req, res) => {
             res.sendStatus(404)
         }
         else {
-            await query("UPDATE Users SET emailVerification = 'yes' WHERE emailVerification ~* $1;", [uuid])
+            let keys = await generateKeyPair()
+            console.log(keys)
+            await query("UPDATE Users SET publicKeyPem = $1 WHERE emailVerification = $2", [keys.publicKeyPem, uuid])
+            await query("UPDATE Users SET privateKeyPem = $1 WHERE emailVerification = $2", [keys.privateKeyPem, uuid])
+            await query("UPDATE Users SET emailVerification = 'yes' WHERE emailVerification = $1;", [uuid])
             res.sendStatus(200)
         }   
     }
@@ -20,5 +25,17 @@ router.get("/:uuid", async (req, res) => {
         console.log(err)
     }
 })
+
+async function generateKeyPair() {
+    // Create an RSA key pair
+    const keyPair = forge.pki.rsa.generateKeyPair({ bits: 2048 });
+
+    // Get the private and public keys in PEM format
+    const privateKeyPem = await forge.pki.privateKeyToPem(keyPair.privateKey);
+    const publicKeyPem = await forge.pki.publicKeyToPem(keyPair.publicKey);
+
+    // Output the keys
+    return { "privateKeyPem": privateKeyPem, "publicKeyPem": publicKeyPem }
+}
 
 module.exports = router
