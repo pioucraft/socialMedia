@@ -10,20 +10,23 @@ router.post("/", async (req, res) => {
     try {
         let body = req.body
         let handle = body.handle
-        let bio = body.bio
-        let token = body.token
-        if(bio.length > 1000) {
+        let password = body.password
+        let oldtoken = body.token
+        if(handle.length > 20) {
             res.sendStatus(400)
         }
         else {
             let trueToken = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].token
-            if(trueToken == token) {
+            if(trueToken == oldtoken) {
                 if((await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].emailverification != "yes") {
                     res.status(401).send({"message": "please verify your email"})
                 }
                 else {
-                    await query("UPDATE Users SET bio = $1 WHERE handle = $2", [bio, handle])
-                    res.sendStatus(200)
+                    let hash = await Bun.password.hash(password)
+                    let newToken = token()
+                    await query("UPDATE Users SET password = $1 WHERE handle = $2", [hash, handle])
+                    await query("UPDATE Users SET token = $1 WHERE handle = $2", [newToken, handle])
+                    res.send({"token": newToken})
                 }
 
             }
@@ -38,7 +41,12 @@ router.post("/", async (req, res) => {
     }
 })
 
+var rand = function() {
+    return Math.random().toString(36)
+};
 
-
+var token = function() {
+    return rand() + rand() + rand() + rand() + rand() + rand(); 
+};
 
 module.exports = router

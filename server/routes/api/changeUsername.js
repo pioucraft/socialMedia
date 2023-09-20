@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
         let handle = body.handle
         let username = body.username
         let token = body.token
-        if(handle.length > 20) {
+        if(username.length > 20) {
             res.sendStatus(400)
         }
         else {
