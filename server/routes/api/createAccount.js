@@ -26,10 +26,10 @@ router.post("/", async (req, res) => {
                     res.status(409).send({error: "email already taken"})
                 }
                 else {
-                    let token = crypto.randomUUID()
+                    let newToken = token()
                     let hash = await Bun.password.hash(password);
-                    await query("INSERT INTO Users (handle, username, email, password, emailVerification, lastverificationemailsent, token) VALUES ($1, $2, $3, $4, $5, $6, $7);", [handle, username, email, hash, crypto.randomUUID(), 0, token])
-                    res.status(200).send({"token": token})
+                    await query("INSERT INTO Users (handle, username, email, password, emailVerification, lastverificationemailsent, token) VALUES ($1, $2, $3, $4, $5, $6, $7);", [handle, username, email, hash, crypto.randomUUID(), 0, newToken])
+                    res.status(200).send({"token": newToken})
                 }
             }
         }
@@ -43,7 +43,13 @@ router.post("/", async (req, res) => {
     }
 })
 
+var rand = function() {
+    return Math.random().toString(36)
+};
 
+var token = function() {
+    return rand() + rand() + rand() + rand() + rand() + rand(); 
+};
 
 
 module.exports = router
