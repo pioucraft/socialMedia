@@ -26,9 +26,10 @@ router.post("/", async (req, res) => {
                     res.status(409).send({error: "email already taken"})
                 }
                 else {
+                    let token = crypto.randomUUID()
                     let hash = await Bun.password.hash(password);
-                    query("INSERT INTO Users (handle, username, email, password, emailVerification, lastverificationemailsent) VALUES ($1, $2, $3, $4, $5, $6);", [handle, username, email, hash, crypto.randomUUID(), 0])
-                    res.send("sucess")
+                    await query("INSERT INTO Users (handle, username, email, password, emailVerification, lastverificationemailsent, token) VALUES ($1, $2, $3, $4, $5, $6, $7);", [handle, username, email, hash, crypto.randomUUID(), 0, token])
+                    res.status(200).send({"token": token})
                 }
             }
         }
