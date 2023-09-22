@@ -1,6 +1,6 @@
 const pg = require("pg")
 
-const client = new pg.Client({database: "socialmedia", user: "postgres"})
+const client = new pg.Client({database: "socialmedia", user: "postgres", password: process.env.psql_password})
 client.connect().then(() => console.log("connected to the database"))
 
 async function query(query, parameters) {
