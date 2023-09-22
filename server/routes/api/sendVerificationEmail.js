@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
                         to: email, 
                         subject: "Confirm your email", 
                         text: `Welcome to ${process.env.socialName}. Click here to confirm your email.`, 
-                        html: `<p>Welcome to ${process.env.socialName}. Click <a href="http://${process.env.URL}/api/verifyEmail/${uuid}">here</a> to confirm your email. If you didn't try to create an account, you can just ignore this email.</p>`, 
+                        html: `<p>Welcome to ${process.env.socialName}. Click <a href="https://${process.env.URL}/api/verifyEmail/${uuid}">here</a> to confirm your email. If you didn't try to create an account, you can just ignore this email.</p>`, 
                     });
                     query("UPDATE Users SET lastVerificationEmailSent = $1 WHERE email = $2;", [date.getTime(), email])
                       
