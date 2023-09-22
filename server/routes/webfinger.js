@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
         
         let resource = req.query.resource
         if(resource.startsWith("acct:")) {
-            let account = ((resource.split("acct:"))[1]).join("acct:")
+            let account = resource.split("acct:")
             console.log(account)
         }
     }
