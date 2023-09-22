@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
         
         let resource = req.query.resource
         if(resource.startsWith("acct:")) {
-            let account = resource.split("acct:", 1)[1]
+            let account = resource.split("acct:")[1]
             res.send({"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `https://${process.env.URL}/users/${account}`}]})
         }
     }
