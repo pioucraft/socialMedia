@@ -2,14 +2,17 @@ const express = require("express")
 const router = express.Router()
 
 router.get("/", (req, res) => {
-    console.log("request")
-    console.log(req.query)
     try {
         
         let resource = req.query.resource
         if(resource.startsWith("acct:")) {
             let account = resource.split("acct:")[1]
-            console.log(account)
+            try {
+                account = account.join("acct:")
+            }
+            catch(err) {}
+            res.send(JSON.stringify({
+                "subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `https://${process.env.URL}/users/${account}`}]}))
         }
     }
     catch(err) {
