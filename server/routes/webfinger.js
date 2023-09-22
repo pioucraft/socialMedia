@@ -11,8 +11,7 @@ router.get("/", (req, res) => {
                 account = account.join("acct:")
             }
             catch(err) {}
-            res.send(JSON.stringify({
-                "subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `https://${process.env.URL}/users/${account}`}]}))
+            res.send({"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `https://${process.env.URL}/users/${account}`}]})
         }
     }
     catch(err) {
