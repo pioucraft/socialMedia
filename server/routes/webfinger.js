@@ -3,8 +3,9 @@ const router = express.Router()
 
 router.get("/", (req, res) => {
     console.log("request")
+    console.log(req.query)
     try {
-        console.log(req.query)
+        
         let resource = req.query.resource
         if(ressource.startsWith("acct:")) {
             let account = resource.split("acct:")[1].join("acct:")
