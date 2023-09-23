@@ -15,9 +15,9 @@ router.post("/", async (req, res) => {
         let username = body.username
         let email = body.email
         let password = body.password
-        console.log(isLatinUsername(handle))
+        let validUsername = isLatinUsername(handle)
         if(handle && username && email && password) {
-            if(handle.length > 20 || username.length > 30 || email.length > 100 || !isLatinUsername(handle)) {
+            if(handle.length > 20 || username.length > 30 || email.length > 100 || validUsername ) {
                 res.status(400)
             }
             else {
