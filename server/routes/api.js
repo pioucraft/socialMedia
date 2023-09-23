@@ -10,7 +10,7 @@ const uploadImage = require("./api/uploadImage")
 const changePassword = require("./api/changePassword")
 const login = require("./api/login")
 const changeProfilePicture = require("./api/changeProfilePicture")
-
+const images = require("./api/images")
 
 const router = express.Router()
 
@@ -24,5 +24,7 @@ router.use("/uploadImage", uploadImage)
 router.use("/changePassword", changePassword)
 router.use("/login", login)
 router.use("/changeProfilePicture", changeProfilePicture)
+router.use("/images", images)
+
 
 module.exports = router
