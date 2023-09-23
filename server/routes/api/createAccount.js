@@ -17,8 +17,8 @@ router.post("/", async (req, res) => {
         let password = body.password
         let validUsername = isLatinUsername(handle)
         if(handle && username && email && password) {
-            if(handle.length > 20 || username.length > 30 || email.length > 100 || validUsername ) {
-                res.status(400)
+            if(handle.length > 20 || username.length > 30 || email.length > 100 || validUsername == false) {
+                res.sendStatus(400)
             }
             else {
                 if((await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rowCount != 0) {
