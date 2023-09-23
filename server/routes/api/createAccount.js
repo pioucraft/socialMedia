@@ -11,11 +11,12 @@ router.post("/", async (req, res) => {
     try {
         let body = req.body
         let handle = body.handle
+        handle = handle.toLowerCase()
         let username = body.username
         let email = body.email
         let password = body.password
         if(handle && username && email && password) {
-            if(handle.length > 20 || username.length > 30 || email.length > 100) {
+            if(handle.length > 20 || username.length > 30 || email.length > 100 || isLatinUsername(handle) == false) {
                 res.status(400)
             }
             else {
@@ -51,5 +52,11 @@ var token = function() {
     return rand() + rand() + rand() + rand() + rand() + rand(); 
 };
 
+function isLatinUsername(username) {
+    
+    var pattern = /^[a-zA-Z0-9\-]+$/;
+  
+    return pattern.test(username);
+  }
 
 module.exports = router

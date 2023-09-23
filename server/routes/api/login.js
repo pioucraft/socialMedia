@@ -14,6 +14,7 @@ router.post("/", async (req, res) => {
         let truePassword = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].password
         if(await Bun.password.verify(password, truePassword)) {
             let token = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].token
+            let handle = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].handle
             res.send({"token": token})
         }
         else {
