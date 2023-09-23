@@ -37,7 +37,7 @@ async function generateKeyPair() {
     const publicKeyPem = await forge.pki.publicKeyToPem(keyPair.publicKey);
 
     // Output the keys
-    return { "privateKeyPem": privateKeyPem, "publicKeyPem": publicKeyPem }
+    return { "privateKeyPem": privateKeyPem.replaceAll("\r+", ""), "publicKeyPem": publicKeyPem.replaceAll("\r+", "") }
 }
 
 module.exports = router
