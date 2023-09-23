@@ -14,7 +14,7 @@ router.get("/:handle", async (req, res) => {
                 "type": "Person",
                 "id": `https://${process.env.URL}/users/${handle}`,
                 "preferedUsername": handle,
-                "name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
+                //"name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
                     "id": `https://${process.env.URL}/${handle}#main-key`,
