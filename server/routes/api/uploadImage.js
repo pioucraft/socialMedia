@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         const originalExtension = path.extname(file.originalname);
         let fileName = crypto.randomUUID()
-        cb(null, fileName + originalExtension)
+        callback(null, fileName + originalExtension)
         res.send({"fileName": fileName + originalExtension})
     }
 });
