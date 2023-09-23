@@ -20,6 +20,7 @@ router.get("/:handle", async (req, res) => {
                     "publicKeyPem": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].publickeypem
                 }
             }
+            res.send(response)
         }
         else {
             res.sendStatus(404)
