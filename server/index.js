@@ -9,4 +9,6 @@ app.use("/api", api)
 app.use("/.well-known/webfinger", webfinger)
 app.use("/users", users)
 
+app.use("/images", express.static("./api/images"))
+
 app.listen(Number(process.env.PORT))

@@ -24,6 +24,4 @@ router.use("/changePassword", changePassword)
 router.use("/login", login)
 router.use("/changeProfilePicture", changeProfilePicture)
 
-router.use("/images", express.static("./api/images"))
-
 module.exports = router
