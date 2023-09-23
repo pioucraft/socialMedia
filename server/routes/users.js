@@ -17,8 +17,8 @@ router.get("/:handle", async (req, res) => {
                 //"name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
-                    "id": `https://${process.env.URL}/${handle}#main-key`,
-                    "owner": `https://${process.env.URL}/${handle}`,
+                    "id": `https://${process.env.URL}/users/${handle}#main-key`,
+                    "owner": `https://${process.env.URL}/users/${handle}`,
                     "publicKeyPem": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].publickeypem
                 }
             }
