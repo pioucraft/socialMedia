@@ -14,8 +14,8 @@ router.get("/:handle", async (req, res) => {
                     "https://www.w3.org/ns/activitystreams",
                     "https://w3id.org/security/v1"
                 ],
-                "type": "Person",
                 "id": `https://${process.env.URL}/users/${handle}`,
+                "type": "Person",
                 "preferedUsername": handle,
                 //"name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
