@@ -6,18 +6,20 @@ const path = require('path');
 const router = express.Router()
 
 const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
+    destination: function (req, res, file, callback) {
       callback(null, __dirname + "/images/");
     },
     filename: function (req, file, cb) {
         const originalExtension = path.extname(file.originalname);
-        cb(null, crypto.randomUUID() + originalExtension)
+        let fileName = crypto.randomUUID()
+        cb(null, fileName + originalExtension)
+        res.send({"fileName": fileName + originalExtension})
     }
 });
   
 const upload = multer({
     storage: storage,
-    fileFilter: (req, file, cb) => {
+    fileFilter: (req, res, file, cb) => {
       if (
         file.mimetype == "image/png" ||
         file.mimetype == "image/jpg" ||
@@ -40,7 +42,7 @@ router.post("/:handle/:token", async (req, res) => {
     let realToken = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].token
     if(realToken == token) {
         const uploadMiddleware = await upload.single("files");
-        console.log(await uploadMiddleware(req, res, async (err) => {console.log(err)}))
+        await uploadMiddleware(req, res, async (err) => {console.log(err)})
     }   
     else {
         res.status(401)

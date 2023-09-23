@@ -4,7 +4,7 @@ const client = new pg.Client({database: "socialmedia", user: "postgres", passwor
 client.connect().then(() => console.log("connected to the database"))
 
 try {
-    query("CREATE TABLE Users(handle VARCHAR(20), username VARCHAR(30), email VARCHAR(100), password TEXT, bio VARCHAR(1000), following TEXT, followers TEXT, profilePicture VARCHAR(36), notes TEXT, announces TEXT, likes TEXT, publicKeyPem TEXT, privateKeyPem TEXT, emailVerification TEXT, token TEXT, lastVerificationEmailSent BIGSERIAL);")
+    query("CREATE TABLE Users(handle VARCHAR(20), username VARCHAR(30), email VARCHAR(100), password TEXT, bio VARCHAR(1000), following TEXT, followers TEXT, profilePicture VARCHAR(45), notes TEXT, announces TEXT, likes TEXT, publicKeyPem TEXT, privateKeyPem TEXT, emailVerification TEXT, token TEXT, lastVerificationEmailSent BIGSERIAL);")
 }
 catch(err) {
     console.log(err)
