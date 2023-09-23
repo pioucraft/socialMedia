@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.get("/:handle", async (req, res) => {
     try {
+        console.log("request")
         let handle = req.params.handle
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse) {
