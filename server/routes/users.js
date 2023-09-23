@@ -17,18 +17,18 @@ router.get("/:handle", async (req, res) => {
                 "id": `https://${process.env.URL}/users/${handle}`,
                 "type": "Person",
                 "preferredUsername": handle,
-                "name": handleFromDatabse.rows[0].username,
-                "summary": handleFromDatabse.rows[0].bio,
+                "name": handleFromDatabse.username,
+                "summary": handleFromDatabse.bio,
                 "icon": {
                     "type": "Image",
-                    "mediaType": `image/${handleFromDatabse.rows[0].profilepicture.split(".")[handleFromDatabse.length - 1]}`,
-                    "url": `https://${process.env.URL}/images/${handleFromDatabse.rows[0].profilepicture}`,
+                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.length - 1]}`,
+                    "url": `https://${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
                 },
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
                     "id": `https://${process.env.URL}/users/${handle}#main-key`,
                     "owner": `https://${process.env.URL}/users/${handle}`,
-                    "publicKeyPem": handleFromDatabse.rows[0].publickeypem
+                    "publicKeyPem": handleFromDatabse.publickeypem
                 }
             }
             res.send(response)
