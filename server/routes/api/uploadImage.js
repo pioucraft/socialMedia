@@ -40,7 +40,7 @@ router.post("/:handle/:token", async (req, res) => {
     let realToken = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].token
     if(realToken == token) {
         const uploadMiddleware = await upload.single("files");
-        await uploadMiddleware(req, res, async (err) => {console.log(err)})
+        console.log(await uploadMiddleware(req, res, async (err) => {console.log(err)}))
     }   
     else {
         res.status(401)

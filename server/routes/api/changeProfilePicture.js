@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
         let handle = body.handle
         let profilePicture = body.profilePicture
         let token = body.token
-        if(profilePicture.length > 36) {
+        if(profilePicture.length > 45) {
             res.sendStatus(400)
         }
         else {
