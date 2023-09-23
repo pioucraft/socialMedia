@@ -10,7 +10,10 @@ router.get("/:handle", async (req, res) => {
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse) {
             let response = {
-                "@context": "https://www.w3.org/ns/activitystreams",
+                "@context": [
+                    "https://www.w3.org/ns/activitystreams",
+                    "https://w3id.org/security/v1"
+                ],
                 "type": "Person",
                 "id": `https://${process.env.URL}/users/${handle}`,
                 "preferedUsername": handle,
