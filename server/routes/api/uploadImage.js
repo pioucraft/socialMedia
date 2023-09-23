@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     destination: function (req, res, file, callback) {
       callback(null, __dirname + "/images/");
     },
-    filename: function (req, file, cb) {
+    filename: function (req, file, callback) {
         const originalExtension = path.extname(file.originalname);
         let fileName = crypto.randomUUID()
         callback(null, fileName + originalExtension)
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
   
 const upload = multer({
     storage: storage,
-    fileFilter: (req, res, file, cb) => {
+    fileFilter: (req, res, file, callback) => {
       if (
         file.mimetype == "image/png" ||
         file.mimetype == "image/jpg" ||
@@ -27,10 +27,10 @@ const upload = multer({
         file.mimetype == "image/gif" ||
         file.mimetype == "image/webp"
       ) {
-        cb(null, true);
+        callback(null, true);
       } else {
-        cb(null, false);
-        return cb(new Error("Only .png, .jpg, .jpeg, .gif and .webp format allowed!"));
+        callback(null, false);
+        return callback(new Error("Only .png, .jpg, .jpeg, .gif and .webp format allowed!"));
       }
     },
     limits: { fileSize: 15000000 },
