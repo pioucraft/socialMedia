@@ -4,7 +4,7 @@ const query = require("../javascript/db")
 
 router.get("/", async (req, res) => {
     try {
-        
+        console.log("request")
         let resource = req.query.resource
         if(resource.startsWith("acct:")) {
             let account = resource.split("acct:")[1]
