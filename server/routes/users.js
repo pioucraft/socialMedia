@@ -17,18 +17,18 @@ router.get("/:handle", async (req, res) => {
                 "id": `https://${process.env.URL}/users/${handle}`,
                 "type": "Person",
                 "preferredUsername": handle,
-                "name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
-                "summary": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].bio,
+                "name": handleFromDatabse.rows[0].username,
+                "summary": handleFromDatabse.rows[0].bio,
                 "icon": {
                     "type": "Image",
-                    "mediaType": `image/${(await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].profilepicture.split(".")[-1]}`,
-                    "url": `https://${process.env.URL}/images/${(await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].profilepicture}`,
+                    "mediaType": `image/${handleFromDatabse.rows[0].profilepicture.split(".")[handleFromDatabse.length - 1]}`,
+                    "url": `https://${process.env.URL}/images/${handleFromDatabse.rows[0].profilepicture}`,
                 },
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
                     "id": `https://${process.env.URL}/users/${handle}#main-key`,
                     "owner": `https://${process.env.URL}/users/${handle}`,
-                    "publicKeyPem": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].publickeypem
+                    "publicKeyPem": handleFromDatabse.rows[0].publickeypem
                 }
             }
             res.send(response)
