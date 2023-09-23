@@ -19,9 +19,11 @@ router.get("/:handle", async (req, res) => {
                 "preferredUsername": handle,
                 "name": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].username,
                 "summary": (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].bio,
-                "icon": [
-                    `https://${process.env.URL}/images/${(await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].profilepicture}`
-                ],
+                "icon": {
+                    "type": "Image",
+                    "mediaType": `image/${(await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].profilepicture.split(".")[-1]}`,
+                    "url": `https://${process.env.URL}/images/${(await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].profilepicture}`,
+                },
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
                     "id": `https://${process.env.URL}/users/${handle}#main-key`,
