@@ -21,7 +21,7 @@ router.get("/:handle", async (req, res) => {
                 "summary": handleFromDatabse.bio,
                 "icon": {
                     "type": "Image",
-                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.length - 1]}`,
+                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
                     "url": `https://${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
                 },
                 "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
