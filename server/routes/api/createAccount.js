@@ -55,7 +55,7 @@ var token = function() {
 
 function isLatinUsername(username) {
     
-    var pattern = /^[a-zA-Z0-9\-]+$/;
+    var pattern = /^[a-zA-Z0-9\_]+$/;
   
     return pattern.test(username);
   }
