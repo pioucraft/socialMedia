@@ -1,15 +1,9 @@
-const express = require("express")
-const bodyParser = require("body-parser")
 const nodemailer = require("nodemailer");
 const query = require("./../../javascript/db")
 
-const router = express.Router()
-const jsonMiddleware = bodyParser.json({ type: 'application/json' });
-router.use(jsonMiddleware)
-
 const transporter = nodemailer.createTransport({
     host: process.env.email_host,
-    port: process.env.email_email_port,
+    port: process.env.email_port,
     secure: true,
     auth: {
       user: process.env.email_user,
@@ -17,9 +11,9 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-router.post("/", async (req, res) => {
+async function sendVerificationEmail(req) {
     try {
-        let body = req.body
+        let body = await req.json()
         let email = body.email
         let uuid = (await query("SELECT * FROM Users WHERE email = $1;", [email])).rows[0].emailverification
         console.log(uuid)
@@ -59,6 +53,6 @@ router.post("/", async (req, res) => {
         console.log(err)
     }
 
-})
+}
 
-module.exports = router
+module.exports = sendVerificationEmail

@@ -1,14 +1,8 @@
-const express = require("express")
-const bodyParser = require("body-parser")
 const query = require("../../javascript/db")
 
-const router = express.Router()
-const jsonMiddleware = bodyParser.json({ type: 'application/json' });
-router.use(jsonMiddleware)
-
-router.post("/", async (req, res) => {
+async function changePassword(req) {
     try {
-        let body = req.body
+        let body = await req.json()
         let handle = body.handle
         let password = body.password
         let oldtoken = body.token
@@ -39,7 +33,7 @@ router.post("/", async (req, res) => {
         res.sendStatus(500)
         console.log(err)
     }
-})
+}
 
 var rand = function() {
     return Math.random().toString(36)
@@ -49,4 +43,4 @@ var token = function() {
     return rand() + rand() + rand() + rand() + rand() + rand(); 
 };
 
-module.exports = router
+module.exports = changePassword

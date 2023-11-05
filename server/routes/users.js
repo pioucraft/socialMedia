@@ -1,45 +1,16 @@
-const express = require("express")
 const query = require("../javascript/db")
 
-const router = express.Router()
+const handle = require("./users/handle")
 
-router.get("/:handle", async (req, res) => {
-    try {
-        console.log("request")
-        let handle = req.params.handle
-        let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
-        if(handleFromDatabse) {
-            let response = {
-                "@context": [
-                    "https://www.w3.org/ns/activitystreams",
-                    "https://w3id.org/security/v1"
-                ],
-                "id": `https://${process.env.URL}/users/${handle}`,
-                "type": "Person",
-                "preferredUsername": handle,
-                "name": handleFromDatabse.username,
-                "summary": handleFromDatabse.bio,
-                "icon": {
-                    "type": "Image",
-                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
-                    "url": `https://${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
-                },
-                "inbox": `https://${process.env.URL}/users/${handle}/inbox`,
-                "publicKey": {
-                    "id": `https://${process.env.URL}/users/${handle}#main-key`,
-                    "owner": `https://${process.env.URL}/users/${handle}`,
-                    "publicKeyPem": handleFromDatabse.publickeypem
-                }
-            }
-            res.send(response)
-        }
-        else {
-            res.sendStatus(404)
-        }
+async function users(req) {
+    let url = req.url
+    if(!url.endsWith("/")) {
+        url = url.concat("/")
+        console.log("url: " + url.split("/"))
     }
-    catch(err) {
-        res.sendStatus(500)
+    if(url.split("/").length == 6) {
+        return await handle(req)
     }
-})
+}
 
-module.exports = router
+module.exports = users

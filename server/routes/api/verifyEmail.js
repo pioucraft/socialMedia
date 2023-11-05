@@ -1,12 +1,10 @@
-const express = require("express")
 const query = require("./../../javascript/db")
 const forge = require('node-forge');
 
-const router = express.Router()
 
-router.get("/:uuid", async (req, res) => {
+async function verifyEmail() {
     try {
-        let uuid = req.params.uuid
+        let uuid = req.url.split("/")[5]
         
         if(uuid == "yes") {
             res.sendStatus(404)
@@ -26,7 +24,7 @@ router.get("/:uuid", async (req, res) => {
         res.sendStatus(500)
         console.log(err)
     }
-})
+}
 
 async function generateKeyPair() {
     // Create an RSA key pair
@@ -40,4 +38,4 @@ async function generateKeyPair() {
     return { "privateKeyPem": privateKeyPem.replaceAll("\r", "").slice(0, -2), "publicKeyPem": publicKeyPem.replaceAll("\r", "").slice(0, -2) }
 }
 
-module.exports = router
+module.exports = verifyEmail

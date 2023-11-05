@@ -1,5 +1,3 @@
-const express = require("express")
-
 const createAccount = require("./api/createAccount")
 const verifyEmail = require("./api/verifyEmail")
 const sendVerificationEmail = require("./api/sendVerificationEmail")
@@ -11,17 +9,41 @@ const changePassword = require("./api/changePassword")
 const login = require("./api/login")
 const changeProfilePicture = require("./api/changeProfilePicture")
 
-const router = express.Router()
+async function api(req) {
+    let url = req.url
+    if(!url.endsWith("/")) {
+        url = url.concat("/")
+    }
+    if(url.split("/")[4] == "createAccount") {
+        return await createAccount(req)
+    }
+    else if(url.split("/")[4] == "verifyEmail") {
+        return await verifyEmail(req)
+    }
+    else if(url.split("/")[4] == "sendVerificationEmail") {
+        return await sendVerificationEmail(req)
+    }
+    else if(url.split("/")[5] == "changeUsername") {
+        return await changeUsername(req)
+    }
+    else if(url.split("/")[5] == "changeEmail") {
+        return await changeEmail(req)
+    }
+    else if(url.split("/")[5] == "changeBio") {
+        return await changeBio(req)
+    }
+    else if(url.split("/")[5] == "uploadImage") {
+        return await uploadImage(req)
+    }
+    else if(url.split("/")[5] == "changePassword") {
+        return await changePassword(req)
+    }
+    else if(url.split("/")[5] == "login") {
+        return await login(req)
+    }
+    else if(url.split("/")[5] == "changeProfilePicture") {
+        return await changeProfilePicture(req)
+    }
+}
 
-router.use("/createAccount", createAccount)
-router.use("/verifyEmail", verifyEmail)
-router.use("/sendVerificationEmail", sendVerificationEmail)
-router.use("/changeUsername", changeUsername)
-router.use("/changeEmail", changeEmail)
-router.use("/changeBio", changeBio)
-router.use("/uploadImage", uploadImage)
-router.use("/changePassword", changePassword)
-router.use("/login", login)
-router.use("/changeProfilePicture", changeProfilePicture)
-
-module.exports = router
+module.exports = api

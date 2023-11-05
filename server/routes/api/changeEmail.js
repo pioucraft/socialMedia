@@ -1,15 +1,8 @@
-const express = require("express")
-const bodyParser = require("body-parser")
 const query = require("../../javascript/db")
 
-const router = express.Router()
-const jsonMiddleware = bodyParser.json({ type: 'application/json' });
-router.use(jsonMiddleware)
-
-
-router.post("/", async (req, res) => {
+async function changeEmail(req) {
     try {
-        let body = req.body
+        let body = await req.json()
         let handle = body.handle
         let email = body.email
         let token = body.token
@@ -38,9 +31,9 @@ router.post("/", async (req, res) => {
         res.sendStatus(500)
         console.log(err)
     }
-})
+}
 
 
 
 
-module.exports = router
+module.exports = changeEmail
