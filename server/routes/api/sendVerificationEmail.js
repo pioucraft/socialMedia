@@ -18,7 +18,7 @@ async function sendVerificationEmail(req) {
         let uuid = (await query("SELECT * FROM Users WHERE email = $1;", [email])).rows[0].emailverification
         console.log(uuid)
         if(uuid == "yes") {
-            res.sendStatus(200)
+            return {"message": "Success", "code": 200} 
         }
         else {
             let date = new Date()
@@ -29,27 +29,27 @@ async function sendVerificationEmail(req) {
                         to: email, 
                         subject: "Confirm your email", 
                         text: `Welcome to ${process.env.socialName}. Click here to confirm your email.`, 
-                        html: `<p>Welcome to ${process.env.socialName}. Click <a href="https://${process.env.URL}/api/verifyEmail/${uuid}">here</a> to confirm your email. If you didn't try to create an account, you can just ignore this email.</p>`, 
+                        html: `<p>Welcome to ${process.env.socialName}. Click <a href="${process.env.URL}/api/verifyEmail/${uuid}">here</a> to confirm your email. If you didn't try to create an account, you can just ignore this email.</p>`, 
                     });
                     query("UPDATE Users SET lastVerificationEmailSent = $1 WHERE email = $2;", [date.getTime(), email])
                       
-                    res.sendStatus(200) 
+                    return {"message": "Success", "code": 200} 
                 }
                 else {
-                    res.sendStatus(429)
+                    return {"message": "429 Too Many Requests", "code": 429}
                 }
                     
                 
             }
             else {
-                res.sendStatus(404)
+                return {"message": "404 Not Found", "code": 404}
             }
         }
 
         
     }
     catch(err) {
-        res.sendStatus(500)
+        return {"message": "500 Internal Server Error", "code": 500}
         console.log(err)
     }
 

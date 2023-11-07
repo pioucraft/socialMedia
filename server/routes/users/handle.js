@@ -2,8 +2,7 @@ const query = require("../../javascript/db")
 
 async function handle(req) {
     try {
-        console.log("request")
-        let handle = req.url.split("/")[5]
+        let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse) {
             let response = {
@@ -15,12 +14,12 @@ async function handle(req) {
                 "type": "Person",
                 "preferredUsername": handle,
                 "name": handleFromDatabse.username,
-                "summary": handleFromDatabse.bio,
-                "icon": {
-                    "type": "Image",
-                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
-                    "url": `${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
-                },
+                //"summary": handleFromDatabse.bio,
+                //"icon": {
+                //    "type": "Image",
+                //    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
+                //    "url": `${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
+                //},
                 "inbox": `${process.env.URL}/users/${handle}/inbox`,
                 "publicKey": {
                     "id": `${process.env.URL}/users/${handle}#main-key`,
@@ -28,15 +27,25 @@ async function handle(req) {
                     "publicKeyPem": handleFromDatabse.publickeypem
                 }
             }
-            return response
+            if(handleFromDatabse.profilepicture)  {
+                response.icon = {
+                    "type": "Image",
+                    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
+                    "url": `${process.env.URL}/files/${handle}/${handleFromDatabse.profilepicture}`,
+                }
+            }
+            if(handleFromDatabse.bio) {
+                response.summary = handleFromDatabse.bio
+            }
+            return JSON.stringify(response)
         }
         else {
-            return 404
+            return {"message": "404 Not Found", "code": 404}
         }
     }
     catch(err) {
         console.log(err)
-        return 500
+        return {"message": "500 Internal Server Error", "code": 500}
     }
 }
 

@@ -10,15 +10,14 @@ async function login(req) {
         if(await Bun.password.verify(password, truePassword)) {
             let token = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].token
             let handle = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].handle
-            res.send({"token": token})
+            return JSON.stringify({"token": token, "handle": handle})
         }
         else {
-            res.sendStatus(401)
+            return {"message": "401 Unauthorized", "code": 401}
         }
     }
     catch(err) {
-        res.sendStatus(500)
-        console.log(err)
+        return {"message": "500 Internal Server Error", "code": 500}
     }
 }
 

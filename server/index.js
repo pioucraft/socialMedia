@@ -24,7 +24,14 @@ const server = Bun.serve({
                 return new Response(response.message, {status: response.code})
             }
             else {
-                return new Response(response)
+                if(response.startsWith("{")) {
+                    return new Response(response, {
+                        headers: { "Content-Type": "application/json" },
+                    })
+                }
+                else {
+                    return new Response(response)
+                }
             }
             
         }
@@ -34,16 +41,30 @@ const server = Bun.serve({
                 return new Response(response.message, {status: response.code})
             }
             else {
-                return new Response(response)
+                if(response.startsWith("{")) {
+                    return new Response(response, {
+                        headers: { "Content-Type": "application/json" },
+                    })
+                }
+                else {
+                    return new Response(response)
+                }
             }
         }
-        else if(req.url.startsWith(`${process.env.URL}/.webifinger/`)) {
+        else if(req.url.startsWith(`${process.env.URL}/.well-known/webfinger`)) {
             let response = await webfinger(req)
             if(response.code) {
                 return new Response(response.message, {status: response.code})
             }
             else {
-                return new Response(response)
+                if(response.startsWith("{")) {
+                    return new Response(response, {
+                        headers: { "Content-Type": "application/json" },
+                    })
+                }
+                else {
+                    return new Response(response)
+                }
             }
         }
         else {

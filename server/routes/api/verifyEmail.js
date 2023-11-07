@@ -2,12 +2,12 @@ const query = require("./../../javascript/db")
 const forge = require('node-forge');
 
 
-async function verifyEmail() {
+async function verifyEmail(req) {
     try {
         let uuid = req.url.split("/")[5]
         
         if(uuid == "yes") {
-            res.sendStatus(404)
+            return {"message": "404 Not Found", "code": 404}
         }
         else {
             if((await query("SELECT * FROM Users WHERE emailVerification = $1", [uuid])).rows[0].publickeypem == null) {
@@ -17,12 +17,12 @@ async function verifyEmail() {
                 await query("UPDATE Users SET privateKeyPem = $1 WHERE emailVerification = $2", [keys.privateKeyPem, uuid])
             }
             await query("UPDATE Users SET emailVerification = 'yes' WHERE emailVerification = $1;", [uuid])
-            res.sendStatus(200)
+            return {"message": "Success, you can now use your account", "code": 200}
         }   
     }
     catch(err) {
-        res.sendStatus(500)
         console.log(err)
+        return {"message": "500 Internal Server Error", "code": 500}
     }
 }
 

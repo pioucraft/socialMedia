@@ -1,43 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form class="form">
-        <input type="file" name="file" id="files" class="form-file" >
-        <button type="submit" class="form-button">ajouter la photo sélectionée</button>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Form</title>
+  </head>
+  <body>
+    <form action="http://localhost:3000/api/uploadFile" method="post" enctype="multipart/form-data">
+        <input type="text" placeholder="handle" name="handle">
+        <input type="text" placeholder="token" name="token">
+        <input type="file" name="file" id="file"/>
+        <input type="text" name="name" id="name">
+        <input type="submit" value="Submit" />
     </form>
-   <button class="post-message" id="post-message" onclick="postMessage()">Poster le message</button>
-   <script>
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (e) => {
-        
-        e.preventDefault();
-        // Prevents HTML handling submission
-        const name = ""
-        const files = document.getElementById("files");
-        const formData = new FormData();
-        // Creates empty formData object
-        formData.append("name", name.value);
-        // Appends value of text input
-        for(let i =0; i < files.files.length; i++) {
-            formData.append("files", files.files[i]);
+    <script>
+        function getFileName() {
+            let filename = document.getElementById("file")
+            document.getElementById("name").value = filename.files[0].name
         }
-        // Appends value(s) of file input
-        // Post data to Node and Express server:
-        fetch('https://social.gougoule.ch/api/uploadImage/pioucraft/0.25u6hb4oajw0.3sq5jnq0ipk0.kbudk98m1sh0.vxifd5w7m6r0.bj709xo1jws0.v52m33d8m38', {
-            method: 'POST',
-            body: formData, // Payload is formData object
-        })
-        .then(res => res.json())
-        .then(data => { 
-            console.log(data)
-            document.getElementById("content").value = document.getElementById("content").value + " " + data.response + " "
-        });
-    })
-</script>
-</body>
+    </script>
+  </body>
 </html>

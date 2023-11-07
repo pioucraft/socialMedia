@@ -4,7 +4,7 @@ const sendVerificationEmail = require("./api/sendVerificationEmail")
 const changeUsername = require("./api/changeUsername")
 const changeEmail = require("./api/changeEmail")
 const changeBio = require("./api/changeBio")
-const uploadImage = require("./api/uploadImage")
+const uploadFile = require("./api/uploadFile")
 const changePassword = require("./api/changePassword")
 const login = require("./api/login")
 const changeProfilePicture = require("./api/changeProfilePicture")
@@ -23,25 +23,25 @@ async function api(req) {
     else if(url.split("/")[4] == "sendVerificationEmail") {
         return await sendVerificationEmail(req)
     }
-    else if(url.split("/")[5] == "changeUsername") {
+    else if(url.split("/")[4] == "changeUsername") {
         return await changeUsername(req)
     }
-    else if(url.split("/")[5] == "changeEmail") {
+    else if(url.split("/")[4] == "changeEmail") {
         return await changeEmail(req)
     }
-    else if(url.split("/")[5] == "changeBio") {
+    else if(url.split("/")[4] == "changeBio") {
         return await changeBio(req)
     }
-    else if(url.split("/")[5] == "uploadImage") {
-        return await uploadImage(req)
+    else if(url.split("/")[4] == "uploadFile") {
+        return await uploadFile(req)
     }
-    else if(url.split("/")[5] == "changePassword") {
+    else if(url.split("/")[4] == "changePassword") {
         return await changePassword(req)
     }
-    else if(url.split("/")[5] == "login") {
+    else if(url.split("/")[4] == "login") {
         return await login(req)
     }
-    else if(url.split("/")[5] == "changeProfilePicture") {
+    else if(url.split("/")[4] == "changeProfilePicture") {
         return await changeProfilePicture(req)
     }
 }

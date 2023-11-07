@@ -2,29 +2,30 @@ const express = require("express")
 const router = express.Router()
 const query = require("../javascript/db")
 
-router.get("/", async (req, res) => {
+async function webfinger(req) {
     try {
-        console.log("request")
-        let resource = req.query.resource
+        let resource = req.url.split("=")[1]
         if(resource.startsWith("acct:")) {
             let account = resource.split("acct:")[1]
             let accountWithoutDomain = account.split("@")[0]
             let accountDomain = account.split("@")[1]
             let accountFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [accountWithoutDomain])).rows[0]
-            //!!!!! problem to fix !!!!! the accountDomain does not contain the "https://" but the thing in env does contain it. Add a new thing in env without the "https://"!!!!
-            //!!!!! problem to fix !!!!! it does not check if the email was verified. It's a problem !!!!!
-            if(accountFromDb && accountDomain == process.env.URL) {
-                res.send({"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `https://${process.env.URL}/users/${accountWithoutDomain}`}]})
+            console.log(accountFromDb)
+            console.log(accountDomain)
+            if(accountFromDb && accountDomain == process.env.DOMAIN && accountFromDb.emailverification == "yes") {
+                return JSON.stringify({"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `${process.env.URL}/users/${accountWithoutDomain}`}]})
             }
             else {
-                res.status(404).send("")
+                return {"message": "404 Not Found", "code": 404}
             }
+        }
+        else {
+            return {"message": "404 Not Found", "code": 404}
         }
     }
     catch(err) {
-        console.log(err)
-        res.sendStatus(500)
+        return {"message": "500 Internal Server Error", "code": 500}
     }
-})
+}
 
-module.exports = router
+module.exports = webfinger

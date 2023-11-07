@@ -6,29 +6,28 @@ async function changeProfilePicture(req) {
         let handle = body.handle
         let profilePicture = body.profilePicture
         let token = body.token
-        if(profilePicture.length > 45) {
-            res.sendStatus(400)
+        if(!profilePicture.endsWith(".jpg") && !profilePicture.endsWith(".jpeg") && !profilePicture.endsWith(".png") && !profilePicture.endsWith(".gif") && !profilePicture.endsWith(".webp")) {
+            return {"message": "400 Bad Request", "code": 400}
         }
         else {
             let trueToken = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].token
             if(trueToken == token) {
                 if((await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].emailverification != "yes") {
-                    res.status(401).send({"message": "please verify your email"})
+                    return {"message": "401 Please Verify Your Email", "code": 401}
                 }
                 else {
                     await query("UPDATE Users SET profilePicture = $1 WHERE handle = $2", [profilePicture, handle])
-                    res.sendStatus(200)
+                    return "Success"
                 }
 
             }
             else {
-                res.sendStatus(401)
+                return {"message": "401 Unauthorized", "code": 401}
             }
         }
     }
     catch(err) {
-        res.sendStatus(500)
-        console.log(err)
+        return {"message": "500 Internal Server Error", "code": 500}
     }
 }
 
