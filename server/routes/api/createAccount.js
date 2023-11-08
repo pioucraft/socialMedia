@@ -35,6 +35,7 @@ async function createAccount(req) {
         }
     }
     catch(err) {
+        console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
