@@ -32,7 +32,7 @@ const server = Bun.serve({
                 return new Response(response.message)
             }
         }
-        else if(req.url.split("/")[3] == ".well-known" && req.url.split("/")[4] == "webfinger") {
+        else if(req.url.split("/")[3] == ".well-known" && req.url.split("/")[4].split("?")[0] == "webfinger") {
             let response = await webfinger(req)
             if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
@@ -44,7 +44,7 @@ const server = Bun.serve({
                 return new Response(response.message)
             }
         }
-        else if(req.url.contains(`/files/`)) {
+        else if(req.url.split("/")[3] == "files") {
             return new Response(Bun.file(`${__dirname}/routes/api/files/${req.url.split("/")[4]}/${req.url.split("/")[5]}`));
         }
         else {
