@@ -6,7 +6,8 @@ import users from "./routes/users"
 const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
-        if(req.url.startsWith(`${process.env.URL}/api/`)) {
+        //very important, check if the /api/ is contained in the correct place of the url. If a user is named api, it will break everything. !!!!! do it for everything else in the file
+        if(req.url.contains(`/api/`)) {
             let response = await api(req)
             if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
@@ -19,7 +20,7 @@ const server = Bun.serve({
             }
             
         }
-        else if(req.url.startsWith(`${process.env.URL}/users/`)) {
+        else if(req.url.contains(`/users/`)) {
             let response = await users(req)
             if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
@@ -31,7 +32,7 @@ const server = Bun.serve({
                 return new Response(response.message)
             }
         }
-        else if(req.url.startsWith(`${process.env.URL}/.well-known/webfinger`)) {
+        else if(req.url.contains(`/.well-known/webfinger`)) {
             let response = await webfinger(req)
             if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
@@ -43,7 +44,7 @@ const server = Bun.serve({
                 return new Response(response.message)
             }
         }
-        else if(req.url.startsWith(`${process.env.URL}/files/`)) {
+        else if(req.url.contains(`/files/`)) {
             return new Response(Bun.file(`${__dirname}/routes/api/files/${req.url.split("/")[4]}/${req.url.split("/")[5]}`));
         }
         else {
