@@ -16,9 +16,8 @@ async function sendVerificationEmail(req) {
         let body = await req.json()
         let email = body.email
         let uuid = (await query("SELECT * FROM Users WHERE email = $1;", [email])).rows[0].emailverification
-        console.log(uuid)
         if(uuid == "yes") {
-            return {"message": "Success", "code": 200} 
+            return {"message": "Success", "status": 200} 
         }
         else {
             let date = new Date()
@@ -33,25 +32,24 @@ async function sendVerificationEmail(req) {
                     });
                     query("UPDATE Users SET lastVerificationEmailSent = $1 WHERE email = $2;", [date.getTime(), email])
                       
-                    return {"message": "Success", "code": 200} 
+                    return {"message": "Success", "status": 200}
                 }
                 else {
-                    return {"message": "429 Too Many Requests", "code": 429}
+                    return {"message": "429 Too Many Requests", "status": 429}
                 }
                     
                 
             }
             else {
-                return {"message": "404 Not Found", "code": 404}
+                return {"message": "404 Not Found", "status": 404}
             }
         }
 
         
     }
     catch(err) {
-        return {"message": "500 Internal Server Error", "code": 500}
-        console.log(err)
-    }
+        return {"message": "500 Internal Server Error", "status": 500}
+        }
 
 }
 

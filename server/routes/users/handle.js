@@ -37,15 +37,14 @@ async function handle(req) {
             if(handleFromDatabse.bio) {
                 response.summary = handleFromDatabse.bio
             }
-            return JSON.stringify(response)
+            return {"message": response, "status": 200}
         }
         else {
-            return {"message": "404 Not Found", "code": 404}
+            return {"message": "404 Not Found", "status": 404}
         }
     }
     catch(err) {
-        console.log(err)
-        return {"message": "500 Internal Server Error", "code": 500}
+        return {"message": "500 Internal Server Error", "status": 500}
     }
 }
 

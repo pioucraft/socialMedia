@@ -10,21 +10,20 @@ async function webfinger(req) {
             let accountWithoutDomain = account.split("@")[0]
             let accountDomain = account.split("@")[1]
             let accountFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [accountWithoutDomain])).rows[0]
-            console.log(accountFromDb)
-            console.log(accountDomain)
             if(accountFromDb && accountDomain == process.env.DOMAIN && accountFromDb.emailverification == "yes") {
-                return JSON.stringify({"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `${process.env.URL}/users/${accountWithoutDomain}`}]})
+                let response = {"subject": resource, "links": [{"rel": "self", "type": "application/activity+json", "href": `${process.env.URL}/users/${accountWithoutDomain}`}]}
+                return {"message": response, status: 200}
             }
             else {
-                return {"message": "404 Not Found", "code": 404}
+                return {"message": "404 Not Found", status: 404}
             }
         }
         else {
-            return {"message": "404 Not Found", "code": 404}
+            return {"message": "404 Not Found", status: 404}
         }
     }
     catch(err) {
-        return {"message": "500 Internal Server Error", "code": 500}
+        return {"message": "500 Internal Server Error", status: 500}
     }
 }
 

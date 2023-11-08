@@ -8,56 +8,46 @@ const server = Bun.serve({
     async fetch(req) {
         if(req.url.startsWith(`${process.env.URL}/api/`)) {
             let response = await api(req)
-            console.log(response)
-            if(response.code) {
-                return new Response(response.message, {status: response.code})
+            if(typeof response.message == "object") {
+                return new Response(JSON.stringify(response.message), {
+                    headers: { "Content-Type": "application/json" },
+                    status: response.status
+                })
             }
             else {
-                if(response.startsWith("{")) {
-                    return new Response(response, {
-                        headers: { "Content-Type": "application/json" },
-                    })
-                }
-                else {
-                    return new Response(response)
-                }
+                return new Response(response.message)
             }
             
         }
         else if(req.url.startsWith(`${process.env.URL}/users/`)) {
             let response = await users(req)
-            if(response.code) {
-                return new Response(response.message, {status: response.code})
+            if(typeof response.message == "object") {
+                return new Response(JSON.stringify(response.message), {
+                    headers: { "Content-Type": "application/json" },
+                    status: response.status
+                })
             }
             else {
-                if(response.startsWith("{")) {
-                    return new Response(response, {
-                        headers: { "Content-Type": "application/json" },
-                    })
-                }
-                else {
-                    return new Response(response)
-                }
+                return new Response(response.message)
             }
         }
         else if(req.url.startsWith(`${process.env.URL}/.well-known/webfinger`)) {
             let response = await webfinger(req)
-            if(response.code) {
-                return new Response(response.message, {status: response.code})
+            if(typeof response.message == "object") {
+                return new Response(JSON.stringify(response.message), {
+                    headers: { "Content-Type": "application/json" },
+                    status: response.status
+                })
             }
             else {
-                if(response.startsWith("{")) {
-                    return new Response(response, {
-                        headers: { "Content-Type": "application/json" },
-                    })
-                }
-                else {
-                    return new Response(response)
-                }
+                return new Response(response.message)
             }
         }
+        else if(req.url.startsWith(`${process.env.URL}/files/`)) {
+            return new Response(Bun.file(`${__dirname}/routes/api/files/${req.url.split("/")[4]}/${req.url.split("/")[5]}`));
+        }
         else {
-            return new Response('Not Found', { status: 404 })
+            return new Response('404 Not Found', { status: 404 })
         }
     }
 })

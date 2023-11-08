@@ -7,22 +7,20 @@ async function verifyEmail(req) {
         let uuid = req.url.split("/")[5]
         
         if(uuid == "yes") {
-            return {"message": "404 Not Found", "code": 404}
+            return {"message": "404 Not Found", "status": 404}
         }
         else {
             if((await query("SELECT * FROM Users WHERE emailVerification = $1", [uuid])).rows[0].publickeypem == null) {
                 let keys = await generateKeyPair()
-                console.log(keys)
                 await query("UPDATE Users SET publicKeyPem = $1 WHERE emailVerification = $2", [keys.publicKeyPem, uuid])
                 await query("UPDATE Users SET privateKeyPem = $1 WHERE emailVerification = $2", [keys.privateKeyPem, uuid])
             }
             await query("UPDATE Users SET emailVerification = 'yes' WHERE emailVerification = $1;", [uuid])
-            return {"message": "Success, you can now use your account", "code": 200}
+            return {"message": "Success, you can now use your account", "status": 200}
         }   
     }
     catch(err) {
-        console.log(err)
-        return {"message": "500 Internal Server Error", "code": 500}
+        return {"message": "500 Internal Server Error", "status": 500}
     }
 }
 

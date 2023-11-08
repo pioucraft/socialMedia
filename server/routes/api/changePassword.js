@@ -8,36 +8,33 @@ async function changePassword(req) {
         let oldPassword = body.oldPassword
         let oldtoken = body.token
         if(handle.length > 20) {
-            return {"message": "400 Bad Request", "code": 400}
+            return {"message": "400 Bad Request", "status": 400}
         }
         else {
             let thingThatIQuery = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
             let trueToken = thingThatIQuery.token
             let truePassword = thingThatIQuery.password
-            console.log(await Bun.password.verify(oldPassword, truePassword))
-            console.log(trueToken)
-            console.log(oldtoken)
             if(trueToken == oldtoken && (await Bun.password.verify(oldPassword, truePassword))) {
-                console.log("verified")
                 if((await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].emailverification != "yes") {
-                    return {"message": "401 Please Verify Your Email", "code": 401}
+                    return {"message": "401 Please Verify Your Email", "status": 401}
                 }
                 else {
                     let hash = await Bun.password.hash(newPassword)
                     let newToken = token()
                     await query("UPDATE Users SET password = $1 WHERE handle = $2", [hash, handle])
                     await query("UPDATE Users SET token = $1 WHERE handle = $2", [newToken, handle])
-                    return JSON.stringify({"token": newToken})
+                    let response = {"token": newToken}
+                    return {"message": response, "status": 200}
                 }
 
             }
             else {
-                return {"message": "401 Unauthorized", "code": 401}
+                return {"message": "401 Unauthorized", "status": 401}
             }
         }
     }
     catch(err) {
-        return {"message": "500 Internal Server Error", "code": 500}
+        return {"message": "500 Internal Server Error", "status": 500}
     }
 }
 

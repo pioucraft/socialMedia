@@ -15,34 +15,37 @@ async function api(req) {
         url = url.concat("/")
     }
     if(url.split("/")[4] == "createAccount") {
-        return await createAccount(req)
+        return (await createAccount(req))
     }
     else if(url.split("/")[4] == "verifyEmail") {
-        return await verifyEmail(req)
+        return (await verifyEmail(req))
     }
     else if(url.split("/")[4] == "sendVerificationEmail") {
-        return await sendVerificationEmail(req)
+        return (await sendVerificationEmail(req))
     }
     else if(url.split("/")[4] == "changeUsername") {
-        return await changeUsername(req)
+        return (await changeUsername(req))
     }
     else if(url.split("/")[4] == "changeEmail") {
-        return await changeEmail(req)
+        return (await changeEmail(req))
     }
     else if(url.split("/")[4] == "changeBio") {
-        return await changeBio(req)
+        return (await changeBio(req))
     }
     else if(url.split("/")[4] == "uploadFile") {
-        return await uploadFile(req)
+        return (await uploadFile(req))
     }
     else if(url.split("/")[4] == "changePassword") {
-        return await changePassword(req)
+        return (await changePassword(req))
     }
     else if(url.split("/")[4] == "login") {
-        return await login(req)
+        return (await login(req))
     }
     else if(url.split("/")[4] == "changeProfilePicture") {
-        return await changeProfilePicture(req)
+        return (await changeProfilePicture(req))
+    }
+    else {
+        return {"message": "404 Not Found", "status": 404}
     }
 }
 

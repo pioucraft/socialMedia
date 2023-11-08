@@ -5,8 +5,9 @@ async function uploadFile(req) {
     let formData = await req.formData()
     let handle = formData.get("handle")
     let token = formData.get("token")
-    let realToken = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0].token
-    if(realToken == token) {
+    let accountFromDb = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
+    let realToken = accountFromDb.token
+    if(realToken == token && accountFromDb.emailverification == "yes") {
 
         const directoryPath = `${__dirname}/files/${handle}/`;
 
@@ -14,12 +15,12 @@ async function uploadFile(req) {
             fs.mkdirSync(directoryPath);
         }
         let filename = formData.get("name")
-        console.log(formData.get("file"))
         await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
-        return JSON.stringify({"filename": filename})
+        let response = {"filename": filename}
+        return {"message": response, "status": 200}
     }   
     else {
-        return {"message": "401 Unauthorized", "code": 401}
+        return {"message": "401 Unauthorized", "status": 401}
     }
 }
 
