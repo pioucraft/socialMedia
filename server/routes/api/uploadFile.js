@@ -16,7 +16,7 @@ async function uploadFile(req) {
         }
         let filename = formData.get("name")
         console.log(formData.get("file"))
-        await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
+        await Bun.write(`${__dirname}/files/${handle}/${filename}`, await Bun.readableStreamToText(formData.get("file").stream()));
         let response = {"filename": filename}
         return {"message": response, "status": 200}
     }   
