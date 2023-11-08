@@ -15,6 +15,7 @@ async function uploadFile(req) {
             fs.mkdirSync(directoryPath);
         }
         let filename = formData.get("name")
+        console.log(formData.get("file"))
         await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
         let response = {"filename": filename}
         return {"message": response, "status": 200}
