@@ -6,7 +6,6 @@ import users from "./routes/users"
 const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
-        //very important, check if the /api/ is contained in the correct place of the url. If a user is named api, it will break everything. !!!!! do it for everything else in the file
         if(req.url.split("/")[3] == "api") {
             let response = await api(req)
             if(typeof response.message == "object") {

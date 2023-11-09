@@ -19,9 +19,10 @@ async function uploadFile(req) {
 
         let buffer = Buffer.from( await formData.get("file").arrayBuffer() );
         fs.writeFile(`${__dirname}/files/${handle}/${filename}`, buffer, () => {
-            let response = {"filename": filename}
-            return {"message": response, "status": 200}
+            
         } );
+        let response = {"filename": filename}
+        return {"message": response, "status": 200}
         //await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
 
     }   
