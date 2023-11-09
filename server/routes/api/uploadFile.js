@@ -18,10 +18,12 @@ async function uploadFile(req) {
         console.log(formData.get("file"))
 
         let buffer = Buffer.from( await formData.get("file").arrayBuffer() );
-        fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
+        fs.writeFile(`${__dirname}/files/${handle}/${filename}`, buffer, () => {
+            let response = {"filename": filename}
+            return {"message": response, "status": 200}
+        } );
         //await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
-        let response = {"filename": filename}
-        return {"message": response, "status": 200}
+
     }   
     else {
         return {"message": "401 Unauthorized", "status": 401}
