@@ -6,6 +6,9 @@ import users from "./routes/users"
 const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
+        console.log("request !!!")
+        console.log(req)
+        console.log("\n\n------------------\n\n")
         if(req.url.split("/")[3] == "api") {
             let response = await api(req)
             if(typeof response.message == "object") {
