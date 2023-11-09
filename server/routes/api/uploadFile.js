@@ -16,14 +16,7 @@ async function uploadFile(req) {
         }
         let filename = formData.get("name")
         console.log(formData.get("file"))
-        fs.writeFile(`${__dirname}/files/${handle}/${filename}`, Buffer.from(formData.get("file")), (err) => {
-            if (err) {
-              console.error('Error writing the image to the file:', err);
-            } else {
-              console.log('Image has been saved to', outputFilePath);
-            }
-        });
-        //await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
+        await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
         let response = {"filename": filename}
         return {"message": response, "status": 200}
     }   
