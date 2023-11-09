@@ -16,7 +16,10 @@ async function uploadFile(req) {
         }
         let filename = formData.get("name")
         console.log(formData.get("file"))
-        await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
+
+        let buffer = Buffer.from( await formData.get("file").arrayBuffer() );
+        fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
+        //await Bun.write(`${__dirname}/files/${handle}/${filename}`, formData.get("file"));
         let response = {"filename": filename}
         return {"message": response, "status": 200}
     }   
