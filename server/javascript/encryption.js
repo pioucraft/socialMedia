@@ -23,6 +23,10 @@ async function signWithoutBody(actor, headers, userLink, date) {
 
     let actorFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [actor])).rows[0]
     let privateKeyPem = actorFromDb.privatekeypem
+    let key = createPrivateKey(privateKeyPem)
+    headers = headers.join("\n")
+    let signature = sign("sha256", Buffer.from(headers), key).toString("base64");
+    console.log(signature)
 }
 
 module.exports = {"signWithoutBody": signWithoutBody}
