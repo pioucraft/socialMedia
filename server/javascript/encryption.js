@@ -30,7 +30,7 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
     
     let signature = crypto.sign("sha256", Buffer.from(headers), key).toString("base64");
     console.log(`keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`)
-    return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="w${signature}"`
+    return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
 }
 
 module.exports = {"signWithoutBody": signWithoutBody}
