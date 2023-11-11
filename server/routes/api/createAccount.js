@@ -1,12 +1,12 @@
-const { json } = require("body-parser")
 const query = require("./../../javascript/db")
+const sanitize = require("sanitize-html")
 
 async function createAccount(req) {
     try {
         let body = await req.json()
-        let handle = body.handle
+        let handle = sanitize(body.handle)
         handle = handle.toLowerCase()
-        let username = body.username
+        let username = sanitize(body.username)
         let email = body.email
         let password = body.password
         let validUsername = isLatinUsername(handle)

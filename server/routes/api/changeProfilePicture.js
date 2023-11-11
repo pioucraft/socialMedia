@@ -1,10 +1,11 @@
 const query = require("../../javascript/db")
+const sanitize = require("sanitize-html")
 
 async function changeProfilePicture(req) {
     try {
         let body = await req.json()
         let handle = body.handle
-        let profilePicture = body.profilePicture
+        let profilePicture = sanitize(body.profilePicture)
         let token = body.token
         if(!profilePicture.endsWith(".jpg") && !profilePicture.endsWith(".jpeg") && !profilePicture.endsWith(".png") && !profilePicture.endsWith(".gif") && !profilePicture.endsWith(".webp")) {
             return {"message": "400 Bad Request", "status": 400}

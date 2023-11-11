@@ -1,11 +1,11 @@
 const query = require("../../javascript/db")
-
+const sanitize = require("sanitize-html")
 
 async function changeBio(req) {
     try {
         let body = await req.json()
         let handle = body.handle
-        let bio = body.bio
+        let bio = sanitize(body.bio)
         let token = body.token
         if(bio.length > 1000) {
             return {"message": "400 Bad Request", "status": 400}

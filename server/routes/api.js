@@ -8,6 +8,7 @@ const uploadFile = require("./api/uploadFile")
 const changePassword = require("./api/changePassword")
 const login = require("./api/login")
 const changeProfilePicture = require("./api/changeProfilePicture")
+const getUser = require("./api/getUser")
 
 async function api(req) {
     let url = req.url
@@ -43,6 +44,9 @@ async function api(req) {
     }
     else if(url.split("/")[4] == "changeProfilePicture") {
         return (await changeProfilePicture(req))
+    }
+    else if(url.split("/")[4] == "getUser") {
+        return (await getUser.getUser(req))
     }
     else {
         return {"message": "404 Not Found", "status": 404}

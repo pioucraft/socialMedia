@@ -1,5 +1,6 @@
 const query = require("../../javascript/db");
 const fs = require("node:fs")
+const sanitize = require("sanitize-html")
 
 async function uploadFile(req) {
     let formData = await req.formData()
