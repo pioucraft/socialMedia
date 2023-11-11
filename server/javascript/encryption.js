@@ -1,7 +1,7 @@
 const query = require("./db")
 
-async function signWithoutBody(actor, headers, userLink, date) {
-    headers = headers.split(" ")
+async function signWithoutBody(actor, rawHeaders, userLink, date) {
+    let headers = rawHeaders.split(" ")
     console.log(headers)
     for (let i = 0; i < headers.length; i++) {
         if (headers[i] === "(request-target)") {
@@ -23,10 +23,11 @@ async function signWithoutBody(actor, headers, userLink, date) {
 
     let actorFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [actor])).rows[0]
     let privateKeyPem = actorFromDb.privatekeypem
-    let key = createPrivateKey(privateKeyPem)
+    let key = crypto.createPrivateKey(privateKeyPem)
     headers = headers.join("\n")
-    let signature = sign("sha256", Buffer.from(headers), key).toString("base64");
-    console.log(signature)
+    let signature = crypto.sign("sha256", Buffer.from(headers), key).toString("base64");
+    console.log(`keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`)
+    return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
 }
 
 module.exports = {"signWithoutBody": signWithoutBody}
