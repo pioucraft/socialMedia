@@ -33,7 +33,7 @@ async function generateKeyPair() {
     const publicKeyPem = await forge.pki.publicKeyToPem(keyPair.publicKey);
 
     // Output the keys
-    return { "privateKeyPem": privateKeyPem.replaceAll("\r", "").slice(0, -2), "publicKeyPem": publicKeyPem.replaceAll("\r", "").slice(0, -2) }
+    return { "privateKeyPem": privateKeyPem.replaceAll("\r", ""), "publicKeyPem": publicKeyPem.replaceAll("\r", "") }
 }
 
 module.exports = verifyEmail
