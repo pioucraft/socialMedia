@@ -11,7 +11,7 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
             headers[i].shift();
             headers[i].shift();
             headers[i].shift();
-            headers[i] = headers[i].join("/");
+            headers[i] = "/" + headers[i].join("/");
         } else if (headers[i] === "host") {
             headers[i] = userLink.split("/")[2];
         } else if (headers[i] === "date") {
@@ -20,13 +20,14 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
             headers[i] = "application/activity+json, application/ld+json";
         }
     }
+    headers = headers.join("\n")
     console.log(headers)
 
     let actorFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [actor])).rows[0]
     let privateKeyPem = actorFromDb.privatekeypem
     console.log(privateKeyPem)
     let key = crypto.createPrivateKey(privateKeyPem)
-    headers = headers.join("\n")
+    
     let signature = crypto.sign("sha256", Buffer.from(headers), key).toString("base64");
     console.log(`keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`)
     return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
