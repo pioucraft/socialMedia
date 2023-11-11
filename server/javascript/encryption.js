@@ -1,4 +1,5 @@
 const query = require("./db")
+const crypto = require("node:crypto")
 
 async function signWithoutBody(actor, rawHeaders, userLink, date) {
     let headers = rawHeaders.split(" ")
