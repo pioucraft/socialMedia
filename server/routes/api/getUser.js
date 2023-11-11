@@ -118,7 +118,8 @@ async function fetchUser(user) {
     //then use the getUserAsAdmin function with the file inbox.js. It will be used when someone follows an account on this server
     //when following an account on the same server, don't use activitypub. It's stupid, just use local api or something
     //when someone tries to follow on the same server. check the domains and prevent the person from doing it using activitypub. When you follow on the same server, you don't have to specify a domain name
-    let signature = await encryption.signWithoutBody("admin", )
+    let date = new Date()
+    let signature = await encryption.signWithoutBody("admin", "(request-target) host date accept", userLink, date)
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
@@ -127,7 +128,7 @@ async function fetchUser(user) {
     returnStatement.link = sanitize(userPage.link)
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
-    let date = new Date()
+    
     returnStatement.lastfetch = date.getTime()
     return {"message": userPage, "status": 200}
 }
