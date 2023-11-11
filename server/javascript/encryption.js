@@ -24,6 +24,7 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
 
     let actorFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [actor])).rows[0]
     let privateKeyPem = actorFromDb.privatekeypem
+    console.log(privateKeyPem)
     let key = crypto.createPrivateKey(privateKeyPem)
     headers = headers.join("\n")
     let signature = crypto.sign("sha256", Buffer.from(headers), key).toString("base64");
