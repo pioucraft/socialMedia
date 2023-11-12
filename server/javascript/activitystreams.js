@@ -4,7 +4,7 @@ async function getOrderedCollection(url) {
     console.log(fetchedUrl)
     let collection = []
     if(typeof fetchedUrl.first == "string") {
-        let fetched = await fetch(fetchedUrl.first, {headers: {"Accept": "application/activity+json"}})
+        let fetched = await (await fetch(fetchedUrl.first, {headers: {"Accept": "application/activity+json"}})).json()
         console.log(fetched)
         //collection = 
         //if
