@@ -1,4 +1,4 @@
-async function getOrderedCollection(url) {
+async function getCollection(url) {
     let fetchedUrl = await fetch(url, {headers: {"Accept": "application/activity+json"}})
     fetchedUrl = await fetchedUrl.json()
     console.log(fetchedUrl)
@@ -6,9 +6,15 @@ async function getOrderedCollection(url) {
     if(typeof fetchedUrl.first == "string") {
         let fetched = await (await fetch(fetchedUrl.first, {headers: {"Accept": "application/activity+json"}})).json()
         console.log(fetched)
-        //collection = 
+        if(fetched.orderedItems) {
+            collection = fetched.orderedItems
+        }
+        else {
+            
+        }
+        
         //if
     }
 }
 
-module.exports = {"getOrderedCollection": getOrderedCollection}
+module.exports = {"getCollection": getdCollection}
