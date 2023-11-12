@@ -8,12 +8,22 @@ async function getCollection(url) {
         console.log(fetched)
         if(fetched.orderedItems) {
             collection = fetched.orderedItems
+            if(typeof fetched.next == "string") {
+                let nextLink = fetched.next
+                while(typeof nextLink == "string") {
+                    fetched = await (await fetch(fetchedUrl.first, {headers: {"Accept": "application/activity+json"}})).json()
+                    if(typeof fetched.next == "string") {
+                        nextLink = fetched.next
+                    }
+                    else {
+                        nextLink = null
+                    }
+                    collection = [...collection, ...fetched.orderedItems]
+                }
+            }
         }
-        else {
-
-        }
+        console.log(collection)
         
-        //if
     }
 }
 
