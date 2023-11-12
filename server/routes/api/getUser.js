@@ -112,7 +112,7 @@ async function fetchUser(user) {
 
     }
     
-    await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem) Values ($1, $2, $3, $4, $5, $6, $7, $8)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilePicture, returnStatement.publicKey])
+    await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem, lastfetch) Values ($1, $2, $3, $4, $5, $6, $7, $8)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilePicture, returnStatement.publicKey, returnStatement.lastfetch])
     
     return {"message": returnStatement, "status": 200}
 }
