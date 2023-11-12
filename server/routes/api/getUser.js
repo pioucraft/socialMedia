@@ -1,6 +1,7 @@
 const query = require("../../javascript/db")
 const sanitize = require("sanitize-html")
 const encryption = require("../../javascript/encryption")
+const activitystreams = require("../../javascript/activitystreams")
 
 async function getUser(req) {
     try {
@@ -49,10 +50,6 @@ async function getUserAsAdmin(user) {
         else {
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
             if(userFromDatabase /*&& hasbeenlastfetchsincelessthan1day*/) {
-                return userFromDatabase
-            }
-            else if(userFromDatabase) {
-                fetchUser()
                 return userFromDatabase
             }
             else {
@@ -120,7 +117,7 @@ async function fetchUser(user) {
     //when someone tries to follow on the same server. check the domains and prevent the person from doing it using activitypub. When you follow on the same server, you don't have to specify a domain name
     let date = new Date()
     let signature = await encryption.signWithoutBody("admin", "(request-target) host date accept", userLink, date)
-    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json", "Signature": signature}})).json()
+    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json", "Signature": signature}})).json()
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
     returnStatement.username = sanitize(userPage.preferedUsername)
@@ -128,6 +125,8 @@ async function fetchUser(user) {
     returnStatement.link = sanitize(userPage.link)
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
+
+
     
     returnStatement.lastfetch = date.getTime()
     return {"message": userPage, "status": 200}
