@@ -47,11 +47,14 @@ async function getUserAsAdmin(user) {
             }
         }
         else {
+            let date = new Date()
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
-            if(userFromDatabase /*&& hasbeenlastfetchsincelessthan1day*/) {
+            if(userFromDatabase && userFromDatabase.lastfetch < date.getTime() + 1000 * 60 * 60 * 24) {
+                console.log("hahah just get the user from database")
                 return userFromDatabase
             }
             else {
+                console.log("hahaha you gotta update the database !!!!!!")
                 return fetchUser(user)
             }
         }
@@ -73,39 +76,6 @@ async function fetchUser(user) {
             break;
         }
     }
-
-    // SANITIZE HTML !!!!
-    
-    
-    /*
-    
-        fetch with signature. I will need to generate a main key that will be used for the server.
-        here's an example of a request :
-
-        request !!!
-        Request (0 KB) {
-        method: "GET",
-        url: "http://localhost:3000/users/pioucraft",
-        headers: Headers {
-            "host": "localhost:3000",
-            "user-agent": "http.rb/5.1.1 (Mastodon/4.2.1; +https://caluettefamily.com/)",
-            "date": "Sat, 11 Nov 2023 12:52:00 GMT",
-            "accept-encoding": "gzip",
-            "accept": "application/activity+json, application/ld+json",
-            "connection": "Keep-Alive",
-            "signature": "keyId=\"https://caluettefamily.com/actor#main-key\",algorithm=\"rsa-sha256\",headers=\"(request-target) host date accept\",signature=\"1NUczlhxS2HepfXN70E1nsrY/uYETTuYyj3+0r9eSC1F8XtbiRfnRiXbdmkeHf6XYplmBlIfgdFZqp5K7iAv7zitiB5Iwu91vZ11ha2j4IoZYG8SSKkDIczXbKxsH0fW47PNmWDHWtwfX1L0F5JV2HJzmfQygFWkav5gFfD0nKLLTDqffiW9fmaUrrc7tsElo5Y55XHYuU/bHza9r+Hla4rQqpp2QjWjX30SFQJoMNAuZmof4X2Jb3ibSroiWQWSyVrkmNgfwkKGKvtmnWc0eNzN7E6+UtMENR+Xm2v9eAWclvAlJksi0ynQiFhrUqBFknq9eMIwTrWAw+iCYu39BA==\"",
-            "x-forwarded-for": "74.194.226.131",
-            "x-forwarded-host": "test.gougoule.ch",
-            "x-forwarded-server": "test.gougoule.ch"
-        }
-        }
-
-
-        ------------------
-
-        make a function to sign anything and another to verify the signature of anything. put all of them in the file
-
-    */
 
 
     //finish the fetching with the signature
@@ -134,8 +104,10 @@ async function fetchUser(user) {
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
         returnStatement.publicKey = userPage.publicKey.publicKeyPem
     }
-
     returnStatement.lastfetch = date.getTime()
+    await query("DELETE FROM RemoteUsers WHERE handle = $2;", [user])
+    await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem) Values ($1, $2, $3, $4, $5, $6, $7, $8)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilePicture, returnStatement.publicKey])
+    
     return {"message": returnStatement, "status": 200}
 }
 
