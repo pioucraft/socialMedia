@@ -49,10 +49,7 @@ async function getUserAsAdmin(user) {
         else {
             let date = new Date()
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
-            console.log(Number(userFromDatabase.lastfetch))
-            console.log(date.getTime() + 1000 * 10)
-            console.log(parseInt(userFromDatabase.lastfetch) > parseInt(date.getTime() + 1000 * 10))
-            if(userFromDatabase && parseInt(userFromDatabase.lastfetch) + 1000 * 10 > parseInt(date.getTime())) {
+            if(userFromDatabase && parseInt(parseInt(userFromDatabase.lastfetch) + 1000 * 10) > parseInt(date.getTime())) {
                 console.log("hahah just get the user from database")
                 return {"message": userFromDatabase, "status": 200}
             }
