@@ -105,7 +105,13 @@ async function fetchUser(user) {
         returnStatement.publicKey = userPage.publicKey.publicKeyPem
     }
     returnStatement.lastfetch = date.getTime()
-    await query("DELETE FROM RemoteUsers WHERE handle = $2;", [user])
+    try {
+        await query("DELETE FROM RemoteUsers WHERE handle = $2;", [user])
+    }
+    catch(err) {
+
+    }
+    
     await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem) Values ($1, $2, $3, $4, $5, $6, $7, $8)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilePicture, returnStatement.publicKey])
     
     return {"message": returnStatement, "status": 200}
