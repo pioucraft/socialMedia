@@ -18,7 +18,10 @@ async function getCollection(url) {
                     else {
                         nextLink = null
                     }
-                    collection = [...collection, ...fetched.orderedItems]
+                    if(fetched.orderedItems) {
+                        collection = [...collection, ...fetched.orderedItems]
+                    }
+                    
                 }
             }
         }
