@@ -51,7 +51,7 @@ async function getUserAsAdmin(user) {
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
             if(userFromDatabase && userFromDatabase.lastfetch < date.getTime() + 1000 * 60 * 60 * 24) {
                 console.log("hahah just get the user from database")
-                return {"message": userFromDatabase.rows[0], "status": 200}
+                return {"message": userFromDatabase, "status": 200}
             }
             else {
                 console.log("hahaha you gotta update the database !!!!!!")
