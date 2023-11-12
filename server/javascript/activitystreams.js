@@ -11,6 +11,7 @@ async function getCollection(url) {
             if(typeof fetched.next == "string") {
                 let nextLink = fetched.next
                 while(typeof nextLink == "string") {
+                    console.log(collection)
                     fetched = await (await fetch(fetchedUrl.first, {headers: {"Accept": "application/activity+json"}})).json()
                     if(typeof fetched.next == "string") {
                         nextLink = fetched.next
