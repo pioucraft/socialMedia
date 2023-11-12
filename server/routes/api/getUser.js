@@ -125,8 +125,6 @@ async function fetchUser(user) {
     returnStatement.link = sanitize(userPage.link)
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
-    returnStatement.following = activitystreams.getCollection(userPage.following)
-
 
     
     returnStatement.lastfetch = date.getTime()
