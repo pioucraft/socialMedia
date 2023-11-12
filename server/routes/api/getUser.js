@@ -120,15 +120,24 @@ async function fetchUser(user) {
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json", "Signature": signature}})).json()
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
-    returnStatement.username = sanitize(userPage.preferedUsername)
-    returnStatement.bio = sanitize(userPage.summary)
+    if(userPage.preferedUsername) {
+        returnStatement.username = sanitize(userPage.preferedUsername)
+    }
+    if(userPage.summary) {
+        returnStatement.bio = sanitize(userPage.summary)
+    }
     returnStatement.link = sanitize(userPage.link)
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
+    if(userPage.icon) {
+        returnStatement.profilePicture = userPage.icon.url
+    }
+    if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
+        returnStatement.publicKey = userPage.publicKey.publicKeyPem
+    }
 
-    
     returnStatement.lastfetch = date.getTime()
-    return {"message": userPage, "status": 200}
+    return {"message": returnStatement, "status": 200}
 }
 
 module.exports = {"getUser": getUser, "getUserAsAdmin": getUserAsAdmin}
