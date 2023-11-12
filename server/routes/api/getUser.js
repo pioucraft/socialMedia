@@ -14,8 +14,12 @@ async function getUser(req) {
             }
             else {
                 let user = body.user
-                return await getUserAsAdmin(user)
-                // request the user with getuserasadmin function and return the interesting object or idk what
+                if(user.contains(process.env.DOMAIN)) {
+                    return {"message": "218 IDK", "status": 218}
+                }
+                else {
+                    return await getUserAsAdmin(user)
+                }
             }
 
         }
