@@ -14,7 +14,7 @@ async function getUser(req) {
             }
             else {
                 let user = body.user
-                if(user.contains(process.env.DOMAIN)) {
+                if(user.includes(process.env.DOMAIN)) {
                     return {"message": "218 IDK", "status": 218}
                 }
                 else {
