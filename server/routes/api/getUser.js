@@ -49,6 +49,8 @@ async function getUserAsAdmin(user) {
         else {
             let date = new Date()
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
+            console.log(Number(userFromDatabase.lastfetch))
+            console.log(date.getTime() + 1000 * 10)
             if(userFromDatabase && Number(userFromDatabase.lastfetch) < date.getTime() + 1000 * 10) {
                 console.log("hahah just get the user from database")
                 return {"message": userFromDatabase, "status": 200}
@@ -95,7 +97,7 @@ async function fetchUser(user) {
     if(userPage.summary) {
         returnStatement.bio = sanitize(userPage.summary)
     }
-    returnStatement.link = sanitize(userPage.link)
+    returnStatement.link = sanitize(userLink)
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
     if(userPage.icon) {
