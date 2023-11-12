@@ -10,11 +10,11 @@ async function getCollection(url) {
             collection = fetched.orderedItems
         }
         else {
-            
+
         }
         
         //if
     }
 }
 
-module.exports = {"getCollection": getdCollection}
+module.exports = {"getCollection": getCollection}
