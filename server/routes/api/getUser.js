@@ -106,7 +106,7 @@ async function fetchUser(user) {
     }
     returnStatement.lastfetch = date.getTime()
     try {
-        await query("DELETE FROM remoteusers WHERE handle = $2;", [user])
+        await query("DELETE FROM remoteusers WHERE handle='$2';", [user])
     }
     catch(err) {
 
