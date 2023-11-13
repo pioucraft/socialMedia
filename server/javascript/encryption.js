@@ -1,41 +1,13 @@
 const query = require("./db")
-const crypto = require("node:crypto")
-
-async function signWithoutBody(actor, rawHeaders, userLink, date) {
-    let headers = rawHeaders.split(" ")
-    console.log(headers)
-    for (let i = 0; i < headers.length; i++) {
-        if (headers[i] === "(request-target)") {
-            headers[i] = userLink.split(`/`);
-            console.log(headers[i])
-            headers[i].shift();
-            headers[i].shift();
-            headers[i].shift();
-            headers[i] = "/" + headers[i].join("/");
-        } else if (headers[i] === "host") {
-            headers[i] = userLink.split("/")[2];
-        } else if (headers[i] === "date") {
-            headers[i] = date.getTime();
-        } else if (headers[i] === "accept") {
-            headers[i] = "application/activity+json, application/ld+json";
-        }
-    }
-    headers = headers.join("\n")
-    console.log(headers)
-
-    let actorFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [actor])).rows[0]
-    let privateKeyPem = actorFromDb.privatekeypem
-    console.log(privateKeyPem)
-    let key = crypto.createPrivateKey(privateKeyPem)
-    
-    let signature = crypto.sign("sha256", Buffer.from(headers), key).toString("base64");
-    console.log(`keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`)
-    return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
-}
 
 async function verifySignatureWithBody(req) {
     let body = await req.json()
     console.log(body)
+    const hash = crypto.createHash('sha256');
+    hash.update(body.toString(), 'utf-8');
+    const digest = hash.digest('base64');
+    console.log(digest)
+    console.log(req.headers.get("digest"))
 }
 
-module.exports = {"signWithoutBody": signWithoutBody, "verifySignatureWithBody": verifySignatureWithBody}
+module.exports = {"verifySignature": verifySignature}
