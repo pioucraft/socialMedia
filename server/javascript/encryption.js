@@ -1,6 +1,6 @@
 const query = require("./db")
 
-async function verifySignatureWithBody(req) {
+async function verifySignature(req) {
     let body = await req.json()
     console.log(body)
     const hash = crypto.createHash('sha256');
