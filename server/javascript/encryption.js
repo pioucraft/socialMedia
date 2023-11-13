@@ -6,7 +6,7 @@ async function verifySignature(req) {
     console.log(body)
     
     const hash = crypto.createHash('SHA-256');
-    hash.update(body.toString(), 'utf-8');
+    hash.update(body, 'utf-8');
     const digest = hash.digest('base64');
     console.log(digest)
     console.log(req.headers.get("digest"))
