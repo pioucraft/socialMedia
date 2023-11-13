@@ -1,4 +1,5 @@
 const query = require("../../javascript/db")
+const encryption = require("../../javascript/encryption")
 
 async function inbox(req) {
     try {
@@ -7,6 +8,12 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             let body = await req.json()
             console.log(body)
+            if(body && await encryption.verifySignatureWithBody(req)) {
+
+            }
+            else {
+                return {"message": "400 Bad Request", "status": 400}
+            }
             //verification of signature with a function that can be accessed from anywhere. the verification function will need to check the dns too. 
         }
         else {

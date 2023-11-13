@@ -33,4 +33,9 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
     return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
 }
 
-module.exports = {"signWithoutBody": signWithoutBody}
+async function verifySignatureWithBody(req) {
+    let body = await req.json()
+    console.log(body)
+}
+
+module.exports = {"signWithoutBody": signWithoutBody, "verifySignatureWithBody": verifySignatureWithBody}
