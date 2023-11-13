@@ -89,8 +89,8 @@ async function fetchUser(user) {
     //when following an account on the same server, don't use activitypub. It's stupid, just use local api or something
     //when someone tries to follow on the same server. check the domains and prevent the person from doing it using activitypub. When you follow on the same server, you don't have to specify a domain name
     let date = new Date()
-    let signature = await encryption.signWithoutBody("admin", "(request-target) host date accept", userLink, date)
-    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json", "Signature": signature}})).json()
+    
+    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
     if(userPage.preferedUsername) {
