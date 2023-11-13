@@ -16,8 +16,6 @@ async function verifySignature(req) {
     else {
         return false
     }
-    console.log(digest)
-    console.log()
 }
 
 module.exports = {"verifySignature": verifySignature}
