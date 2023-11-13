@@ -5,7 +5,7 @@ async function verifySignature(req) {
     let body = await req.json()
     console.log(body)
     
-    const hash = crypto.createHash('sha256');
+    const hash = crypto.createHash('SHA-256');
     hash.update(body.toString(), 'utf-8');
     const digest = hash.digest('base64');
     console.log(digest)
