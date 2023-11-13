@@ -9,7 +9,7 @@ async function verifySignature(req) {
     hash.update(JSON.stringify(body), 'utf-8');
     const digest = hash.digest('base64');
     if(digest == req.headers.get("digest").split("SHA256")[1]) {
-
+        console.log("true")
     }
     else {
         return false
