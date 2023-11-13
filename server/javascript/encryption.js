@@ -1,9 +1,10 @@
 const query = require("./db")
+const crypto = require("node:crypto")
 
 async function verifySignature(req) {
     let body = await req.json()
     console.log(body)
-    console.log("signature verifiying")
+    
     const hash = crypto.createHash('sha256');
     hash.update(body.toString(), 'utf-8');
     const digest = hash.digest('base64');
