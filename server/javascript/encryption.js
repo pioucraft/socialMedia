@@ -12,6 +12,8 @@ async function verifySignature(req) {
     console.log(req.headers.get("digest").split("SHA-256=")[1])
     if(digest == req.headers.get("digest").split("SHA-256=")[1]) {
         console.log("true")
+        let signature = req.headers.get("signature").split(",")
+        console.log(signature)
     }
     else {
         return false
