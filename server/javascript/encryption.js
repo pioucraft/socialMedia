@@ -22,7 +22,7 @@ async function verifySignature(req) {
         for(let i = 0; i<headersList.split(" ").length;i++) {
             
             if(splitedHeaders[i] == "(request-target)") {
-                headers.push(`(request-target): post ${req.url.split(`http://localhost:${process.env.PORT}/`)[1]}`)
+                headers.push(`(request-target): post ${req.url.split(`http://localhost:${process.env.PORT}`)[1]}`)
             }
             else if(splitedHeaders[i] == "host") {
                 headers.push(`host: ${process.env.DOMAIN}`)
