@@ -1,7 +1,5 @@
 const query = require("../../javascript/db")
-const sanitize = require("sanitize-html")
 const getUserJs = require("../../javascript/getuser")
-const encryption = require("../../javascript/encryption")
 
 async function getUser(req) {
     try {

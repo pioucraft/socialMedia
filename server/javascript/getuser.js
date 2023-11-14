@@ -1,4 +1,5 @@
 const query = require("./db")
+const sanitize = require("sanitize-html")
 
 async function getUserAsAdmin(user) {
     try {
