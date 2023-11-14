@@ -46,7 +46,7 @@ async function api(req) {
         return (await changeProfilePicture(req))
     }
     else if(url.split("/")[4] == "getUser") {
-        return (await getUser.getUser(req))
+        return (await getUser(req))
     }
     else {
         return {"message": "404 Not Found", "status": 404}
