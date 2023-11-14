@@ -15,7 +15,7 @@ async function verifySignature(req) {
         let signature = req.headers.get("signature").split(",")
         let headers = signature[1].split('"')[1].split('"')[0]
         console.log(headers)
-        let siognature = signature[2].split('"')[1].split('"')[0]
+        signature = signature[2].split('"')[1].split('"')[0]
         console.log(signature)
     }
     else {
