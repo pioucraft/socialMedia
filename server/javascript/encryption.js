@@ -1,4 +1,3 @@
-const query = require("./db")
 const getUserJs = require("./getuser")
 const crypto = require("node:crypto")
 

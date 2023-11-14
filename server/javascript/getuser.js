@@ -1,3 +1,4 @@
+const query = require("./db")
 
 async function getUserAsAdmin(user) {
     try {
