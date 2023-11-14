@@ -36,9 +36,10 @@ async function verifySignature(req) {
             else if(splitedHeaders[i] == "content-type") {
                 headers.push(`content-type: ${req.headers.get("content-type")}`)
             }
-            headers = headers.join("\n")
-            console.log(headers)
+            
         }
+        headers = headers.join("\n")
+        console.log(headers)
     }
     else {
         return false
