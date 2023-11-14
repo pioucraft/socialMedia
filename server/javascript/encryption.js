@@ -22,20 +22,21 @@ async function verifySignature(req) {
         for(let i = 0; i<headersList.split(" ").length;i++) {
             
             if(splitedHeaders[i] == "(request-target)") {
-                console.log("request target")
+                headers.push(`(request-target): post ${req.url.split(`${process.env.URL}/`)[1]}`)
             }
             else if(splitedHeaders[i] == "host") {
-                console.log("host")
+                headers.push(`host: ${process.env.DOMAIN}`)
             }
             else if(splitedHeaders[i] == "date") {
-                console.log("date")
+                headers.push(`date: ${req.headers.get("date")}`)
             }
             else if(splitedHeaders[i] == "digest") {
-                console.log("digest")
+                headers.push(`digest: ${req.headers.get("digest")}`)
             }
             else if(splitedHeaders[i] == "content-type") {
-                console.log("content-type")
+                headers.push(`content-type: ${req.headers.get("content-type")}`)
             }
+            console.log(headers)
         }
     }
     else {
