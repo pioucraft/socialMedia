@@ -71,10 +71,10 @@ async function fetchUser(user) {
     returnStatement.inbox = sanitize(userPage.inbox)
     returnStatement.outbox = sanitize(userPage.outbox)
     if(userPage.icon) {
-        returnStatement.profilePicture = userPage.icon.url
+        returnStatement.profilepicture = userPage.icon.url
     }
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
-        returnStatement.publicKey = userPage.publicKey.publicKeyPem
+        returnStatement.publickeypem = userPage.publicKey.publicKeyPem
     }
     returnStatement.lastfetch = date.getTime()
     if(userPage.inbox) {
@@ -85,7 +85,7 @@ async function fetchUser(user) {
             console.log(err)
         }
         
-        await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem, lastfetch) Values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilePicture, returnStatement.publicKey, returnStatement.lastfetch])
+        await query("INSERT INTO RemoteUsers (handle, username, bio, link, inbox, outbox, profilePicture, publicKeyPem, lastfetch) Values ($1, $2, $3, $4, $5, $6, $7, $8, $9)", [returnStatement.handle, returnStatement.username, returnStatement.bio, returnStatement.link, returnStatement.inbox, returnStatement.outbox, returnStatement.profilepicture, returnStatement.publickeypem, returnStatement.lastfetch])
     }
     
     
