@@ -12,13 +12,13 @@ async function inbox(req) {
             if(await encryption.verifySignature(req, body)) {
                 let body = await req.clone()
                 
-                /*let body = await req.json()
+                
                 console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
                     console.log(object)
-                }*/
+                }
                 return {"message": "200 ahhhhh", "status": 200}
             }
             else {
