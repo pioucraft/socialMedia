@@ -10,10 +10,9 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req, body)) {
-                let body = await req.clone()
                 
                 
-                console.log(body)
+                console.log(body.type)
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
