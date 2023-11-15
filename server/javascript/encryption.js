@@ -42,7 +42,9 @@ async function verifySignature(req) {
             
         }
         headers = headers.join("\n")
-        if(!headers.includes("date:") || !headers.includes("digest:") || !headers.includes("(request-target):" || !headers.includes("host:")))
+        if(!headers.includes("date:") || !headers.includes("digest:") || !headers.includes("(request-target):" || !headers.includes("host:"))) {
+            return false
+        }
         console.log(headers)
         let userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
         let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
@@ -58,6 +60,7 @@ async function verifySignature(req) {
         console.log("signature:"+signature)
         
         let verification = crypto.verify(algorithm, Buffer.from(headers), publicKey, Buffer.from(signature, "base64"))
+        console.log(verification)
         return verification
         
     }
