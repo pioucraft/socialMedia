@@ -8,7 +8,7 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
-
+                console.log("verified")
             }
             else {
                 return {"message": "400 Bad Request", "status": 400}
