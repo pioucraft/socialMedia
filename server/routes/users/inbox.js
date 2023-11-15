@@ -8,12 +8,14 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
-                console.log("verified")
+                let body = await req.json()
+                if(body.type == "Follow") {
+
+                }
             }
             else {
                 return {"message": "400 Bad Request", "status": 400}
             }
-            //verification of signature with a function that can be accessed from anywhere. the verification function will need to check the dns too. 
         }
         else {
             return {"message": "404 Not Found", "status": 404}
