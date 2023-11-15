@@ -13,7 +13,7 @@ async function inbox(req) {
                 let body = await req.clone()
                 
                 
-                console.log(body.type)
+                console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
