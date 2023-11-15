@@ -15,7 +15,7 @@ async function inbox(req) {
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
                     console.log(object)
                 }*/
-                console.log(req)
+                console.log(await req)
                 return {"message": "200 ahhhhh", "status": 200}
             }
             else {
