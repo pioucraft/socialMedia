@@ -48,11 +48,12 @@ async function verifySignature(req) {
         console.log("finished")
         //verify the date thing with 30 seconds or idk what
         //verify that a minimum of headers are included in the signature
+        let publicKey = crypto.createPublicKey(publicKeyPem)
         console.log("algorithm: "+algorithm)
         console.log("headers: "+headers)
         console.log("publicKey: "+publicKey)
         console.log("signature:"+signature)
-        let publicKey = crypto.createPublicKey(publicKeyPem)
+        
         let verification = crypto.verify("sha256", Buffer.from(headers), publicKey, signature)
         console.log(verification)
         
