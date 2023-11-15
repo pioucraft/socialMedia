@@ -17,7 +17,6 @@ async function inbox(req) {
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
                     console.log(object)
                 }*/
-                console.log(await req)
                 return {"message": "200 ahhhhh", "status": 200}
             }
             else {
@@ -29,6 +28,7 @@ async function inbox(req) {
         }
     }
     catch(err) {
+        console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
