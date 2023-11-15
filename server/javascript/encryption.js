@@ -44,7 +44,7 @@ async function verifySignature(req) {
         let userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
         let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
         
-        let publicKey = (await getUserJs.getUserAsAdmin(actor)).message.publickeypem
+        let publicKeyPem = (await getUserJs.getUserAsAdmin(actor)).message.publickeypem
         console.log("finished")
         //verify the date thing with 30 seconds or idk what
         //verify that a minimum of headers are included in the signature
@@ -52,6 +52,7 @@ async function verifySignature(req) {
         console.log("headers: "+headers)
         console.log("publicKey: "+publicKey)
         console.log("signature:"+signature)
+        let publicKey = crypto.createPublicKey(publicKeyPem)
         let verification = crypto.verify("sha256", Buffer.from(headers), publicKey, signature)
         console.log(verification)
         
