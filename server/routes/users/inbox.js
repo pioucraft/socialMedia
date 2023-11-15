@@ -9,6 +9,7 @@ async function inbox(req) {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
                 let body = await req.json()
+                console.log("ok")
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
