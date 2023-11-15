@@ -8,6 +8,7 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
+                let body = await req.json()
                 console.log("ok")
                 if(body.type == "Follow") {
                     console.log("following")
