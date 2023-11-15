@@ -15,8 +15,8 @@ async function inbox(req) {
                 console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
-                    let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
-                    console.log(object)
+                    let object = (await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])).rows[0]
+                    console.log(object.handle)
                 }
                 return {"message": "200 ahhhhh", "status": 200}
             }
