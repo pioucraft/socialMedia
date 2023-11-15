@@ -8,7 +8,7 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
-                let body = req.clone()
+                let body = await req.clone()
                 body = await body.json()
                 console.log(body)
                 /*let body = await req.json()
