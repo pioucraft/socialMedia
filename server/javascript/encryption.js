@@ -41,7 +41,7 @@ async function verifySignature(req) {
         headers = headers.join("\n")
         console.log(headers)
         //let userFetched = await (await fetch(body.actor)).json()
-        console.log(await (await fetch(body.actor, {headers: {"Accept": "application/activity+json"}})).json())
+        console.log()
         //let publicKey = getUserJs.getUserAsAdmin("")
     }
     else {

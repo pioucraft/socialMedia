@@ -61,8 +61,8 @@ async function fetchUser(user) {
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
-    if(userPage.preferedUsername) {
-        returnStatement.username = sanitize(userPage.preferedUsername)
+    if(userPage.name) {
+        returnStatement.username = sanitize(userPage.name)
     }
     if(userPage.summary) {
         returnStatement.bio = sanitize(userPage.summary)
