@@ -9,7 +9,7 @@ async function inbox(req) {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
                 let body = await req.json()
-                console.log(body)
+                console.log(body.type)
                 /*let body = await req.json()
                 console.log(body)
                 if(body.type == "Follow") {
