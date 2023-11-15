@@ -8,13 +8,14 @@ async function inbox(req) {
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
             if(await encryption.verifySignature(req)) {
-                let body = await req.json()
+                /*let body = await req.json()
                 console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])
                     console.log(object)
-                }
+                }*/
+                console.log(await req.json())
             }
             else {
                 return {"message": "400 Bad Request", "status": 400}
