@@ -47,6 +47,10 @@ async function verifySignature(req) {
         let publicKey = (await getUserJs.getUserAsAdmin(actor)).message.publickeypem
         console.log("finished")
         //verify the date thing with 30 seconds or idk what
+        console.log("algorithm: "+algorithm)
+        console.log("headers: "+headers)
+        console.log("publicKey: "+publicKey)
+        console.log("signature:"+signature)
         let verification = crypto.verify(algorithm, headers, publicKey, signature)
         console.log(verification)
         
