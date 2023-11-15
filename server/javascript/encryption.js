@@ -1,8 +1,7 @@
 const getUserJs = require("./getuser")
 const crypto = require("node:crypto")
 
-async function verifySignature(req) {
-    let body = await req.json()
+async function verifySignature(req, body) {
     
     const hash = crypto.createHash('SHA-256');
     hash.update(JSON.stringify(body), 'utf-8');

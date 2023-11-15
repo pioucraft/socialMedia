@@ -3,14 +3,15 @@ const encryption = require("../../javascript/encryption")
 
 async function inbox(req) {
     try {
+        body = await body.json()
+        console.log(body)
         let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
-            if(await encryption.verifySignature(req)) {
+            if(await encryption.verifySignature(req, body)) {
                 let body = await req.clone()
-                body = await body.json()
-                console.log(body)
+                
                 /*let body = await req.json()
                 console.log(body)
                 if(body.type == "Follow") {
