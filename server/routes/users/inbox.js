@@ -3,7 +3,7 @@ const encryption = require("../../javascript/encryption")
 
 async function inbox(req) {
     try {
-        body = await body.json()
+        let body = await req.json()
         console.log(body)
         let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
