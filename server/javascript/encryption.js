@@ -51,7 +51,7 @@ async function verifySignature(req) {
         console.log("headers: "+headers)
         console.log("publicKey: "+publicKey)
         console.log("signature:"+signature)
-        let verification = crypto.verify(algorithm, Buffer.from(headers), publicKey, signature)
+        let verification = crypto.verify(algorithm, Buffer.from(headers, "base64"), publicKey, signature)
         console.log(verification)
         
     }
