@@ -15,6 +15,7 @@ async function verifySignature(req) {
         let signatureHeader = req.headers.get("signature").split(",")
         let headersList = signatureHeader[2].split('"')[1].split('"')[0]
         console.log(headersList)
+        let algorithm = signatureHeader[1].split('"')[1].split('"')[0]
         let signature = signatureHeader[3].split('"')[1].split('"')[0]
         console.log(signature)
         let headers = []
@@ -42,8 +43,11 @@ async function verifySignature(req) {
         console.log(headers)
         let userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
         let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+        
         let publicKey = (await getUserJs.getUserAsAdmin(actor)).message.publickeypem
-        console.log(publicKey)
+        let verification = crypto.verify(algorithm, headers, publicKey, signature)
+        console.log(verification)
+        
     }
     else {
         return false
