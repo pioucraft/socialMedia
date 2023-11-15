@@ -16,6 +16,7 @@ async function inbox(req) {
                     console.log(object)
                 }*/
                 console.log(req)
+                return {"message": "200 ahhhhh", "status": 200}
             }
             else {
                 return {"message": "400 Bad Request", "status": 400}
