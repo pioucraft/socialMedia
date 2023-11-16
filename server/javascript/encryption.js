@@ -72,12 +72,14 @@ async function sign(body, headers) {
 
     
     console.log(body)
-    let privateKey = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).rows[0].privatekeypem
+    let actor = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).rows[0]
+    let privateKey = actor.privatekeypem
     console.log(privateKey)
     
     const key = crypto.createPrivateKey(privateKey)
     let signature = await crypto.sign("sha256", Buffer.from(JSON.stringify(body)), key).toString("base64")
     console.log(signature)
+    let returnStatement = `keyId="${body.actor}#main-key",algorithm="rsa-sha256",headers="(request-target) digest host date",signature="${signature}"`
 }
 
 module.exports = {"verifySignature": verifySignature, "sign": sign}

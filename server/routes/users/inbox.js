@@ -43,6 +43,23 @@ async function inbox(req) {
                     
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
+                    const contentLength = Buffer.byteLength(returnBody, 'utf-8');
+                    fetch("https://mastodon.gougoule.ch/users/pfannkuchen/inbox", {
+                    method: "POST",
+                    headers: {
+                        "Date": date,
+                        "content-type": "application/activity+json",
+                        "Host": body.actor.split("/")[2],
+                        "Signature": signature,
+                        "accept": "application/json",
+                        "Digest": `SHA-256=${digest}`,
+                        "Content-Length": contentLength // Add the Content-Length header
+                    },
+                    body: returnBody
+                    })
+                    .then(data => {
+                    console.log(data);
+                    })
                     return {"message": "202 Accepted", "status": 202}
                 }
                 
