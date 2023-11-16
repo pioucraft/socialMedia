@@ -44,14 +44,14 @@ async function inbox(req) {
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
                     const contentLength = Buffer.byteLength(JSON.stringify(returnBody), 'utf-8');
-                    fetch(userFetched.inbox, {
+                    fetchUserInbox(userFetched.inbox, {
                     method: "POST",
                     headers: {
                         "Date": date,
-                        "content-type": "application/activity+json",
+                        "Content-Type": "application/activity+json",
                         "Host": body.actor.split("/")[2],
                         "Signature": signature,
-                        "accept": "application/json",
+                        "Accept": "application/json",
                         "Digest": `SHA-256=${digest}`,
                         "Content-Length": contentLength // Add the Content-Length header
                     },
@@ -77,5 +77,15 @@ async function inbox(req) {
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
+
+function fetchUserInbox(url, headers) {
+    return new Promise((resolve, reject) => {
+      // Simulate an asynchronous task (replace with your actual logic)
+      setTimeout(() => {
+        fetch(url, headers)
+        resolve('Inbox data fetched successfully');
+      }, 1000);
+    });
+  }
 
 module.exports = inbox
