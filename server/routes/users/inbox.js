@@ -23,10 +23,10 @@ async function inbox(req) {
 
                     let returnBody = {
                         "@context": "https://www.w3.org/ns/activitystreams",
-                        "actor": `${URL}/users/${object.handle}`,
+                        "actor": `${URL}/users/${handle}`,
                         "type": "Accept",
                         "id": activityId,
-                        "object": returnBody
+                        "object": body
                     }
                     const hash = crypto.createHash('sha256');
                     hash.update(JSON.stringify(returnBody), 'utf-8');
