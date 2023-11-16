@@ -73,12 +73,12 @@ async function sign(body) {
     let activityId = `${URL}/${crypto.randomUUID()}`
     body = JSON.stringify(body)
 
-    const hash = createHash('sha256');
+    const hash = crypto.createHash('sha256');
     hash.update(body, 'utf-8');
     const digest = hash.digest('base64');
     let privateKey = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).privatekeypem
     console.log(privateKey)
-    const key = createPrivateKey(privateKey)
+    const key = crypto.createPrivateKey(privateKey)
 
 }
 
