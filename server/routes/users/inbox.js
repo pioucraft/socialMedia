@@ -36,7 +36,7 @@ async function inbox(req) {
                     let date = new Date().toUTCString()
                     let headers = [
                         `(request-target): post ${userFetched.inbox.split(`https://${body.actor.split("/")[2]}`)[1]}`,
-                        `digest: ${digest}`,
+                        `digest: SHA-256=${digest}`,
                         `host: ${body.actor.split("/")[2]}`,
                         `date: ${date}`
                     ].join("\n")
