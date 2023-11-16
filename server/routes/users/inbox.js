@@ -15,7 +15,7 @@ async function inbox(req) {
                 console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
-                    userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
+                    let userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
         
                     actor = (await getUserJs.getUserAsAdmin(actor)).message
                     let activityId = `${URL}/${crypto.randomUUID()}`
