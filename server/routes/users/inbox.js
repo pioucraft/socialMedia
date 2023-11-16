@@ -16,6 +16,7 @@ async function inbox(req) {
                 if(body.type == "Follow") {
                     console.log("following")
                     let object = (await query("SELECT * FROM Users WHERE handle = $1", [body.object.split("/")[4]])).rows[0]
+                    let signature = await encryption.sign({"actor": "https://social.gougoule.ch/users/admin"})
                     return {"message": "202 Accepted", "status": 202}
                 }
                 

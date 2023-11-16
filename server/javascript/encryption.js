@@ -1,3 +1,4 @@
+const query = require("./db");
 const getUserJs = require("./getuser")
 const crypto = require("node:crypto")
 
@@ -65,6 +66,20 @@ async function verifySignature(req, body) {
     else {
         return false
     }
+}
+
+async function sign(body) {
+    let date = new Date().toUTCString()
+    let activityId = `${URL}/${crypto.randomUUID()}`
+    body = JSON.stringify(body)
+
+    const hash = createHash('sha256');
+    hash.update(body, 'utf-8');
+    const digest = hash.digest('base64');
+    let privateKey = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).privatekeypem
+    console.log(privateKey)
+    const key = createPrivateKey(privateKey)
+
 }
 
 module.exports = {"verifySignature": verifySignature}
