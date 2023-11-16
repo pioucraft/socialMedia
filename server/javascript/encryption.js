@@ -71,7 +71,6 @@ async function verifySignature(req, body) {
 async function sign(body) {
     let date = new Date().toUTCString()
     let activityId = `${URL}/${crypto.randomUUID()}`
-    body = JSON.stringify(typeof body)
 
     const hash = crypto.createHash('sha256');
     hash.update(body, 'utf-8');
