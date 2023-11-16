@@ -77,7 +77,7 @@ async function sign(body, headers) {
     console.log(privateKey)
     
     const key = crypto.createPrivateKey(privateKey)
-    let signature = await crypto.sign("sha256", Buffer.from(headers), key).toString("base64")
+    let signature = await crypto.sign("SHA-256", Buffer.from(headers), key).toString("base64")
     console.log(signature)
     let returnStatement = `keyId="${body.actor}#main-key",algorithm="rsa-sha256",headers="(request-target) digest host date",signature="${signature}"`
     console.log(returnStatement)
