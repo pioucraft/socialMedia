@@ -57,8 +57,8 @@ async function inbox(req) {
                     },
                     body: returnBody
                     })
-                    .then(data => {
-                    console.log(data);
+                    .then(async (data) => {
+                    console.log(await data.json());
                     })
                     return {"message": "202 Accepted", "status": 202}
                 }
