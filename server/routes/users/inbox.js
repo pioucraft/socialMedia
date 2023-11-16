@@ -15,29 +15,29 @@ async function inbox(req) {
                 console.log(body)
                 if(body.type == "Follow") {
                     console.log("following")
-                    console.log(await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
+                    let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
         
                     let actor = (await getUserJs.getUserAsAdmin(actor)).message
                     let activityId = `${URL}/${crypto.randomUUID()}`
 
-                    let body = {
+                    let returnBody = {
                         "@context": "https://www.w3.org/ns/activitystreams",
                         "actor": `${URL}/users/${object.handle}`,
                         "type": "Accept",
                         "id": activityId,
-                        "object": body
+                        "object": returnBody
                     }
                     const hash = crypto.createHash('sha256');
-                    hash.update(JSON.stringify(body), 'utf-8');
+                    hash.update(JSON.stringify(returnBody), 'utf-8');
                     const digest = hash.digest('base64');
                     let headers = [
                         `(request-target): post ${userFetched.inbox.split(`https://${body.actor.split("/")[2]}`)[1]}`,
                         `digest: ${digest}`,
-                        `host: ${body.actor.split("/")[2]}`,
+                        `host: ${returnBody.actor.split("/")[2]}`,
                         `date: ${date}`
                     ].join("\n")
                     let date = new Date().toUTCString()
-                    let signature = await encryption.sign(body, headers)
+                    let signature = await encryption.sign(returnBody, headers)
                     return {"message": "202 Accepted", "status": 202}
                 }
                 
