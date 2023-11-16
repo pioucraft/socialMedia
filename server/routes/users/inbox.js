@@ -44,7 +44,7 @@ async function inbox(req) {
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
                     const contentLength = Buffer.byteLength(JSON.stringify(returnBody), 'utf-8');
-                    fetchUserInbox(userFetched.inbox, {
+                    let responseFromInbox = await fetchUserInbox(userFetched.inbox, {
                     method: "POST",
                     headers: {
                         "Date": date,
@@ -57,6 +57,7 @@ async function inbox(req) {
                     },
                     body: returnBody
                     })
+                    console.log(responseFromInbox)
                     return {"message": "202 Accepted", "status": 202}
                 }
                 
