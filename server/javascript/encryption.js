@@ -82,4 +82,4 @@ async function sign(body) {
 
 }
 
-module.exports = {"verifySignature": verifySignature}
+module.exports = {"verifySignature": verifySignature, "sign": sign}
