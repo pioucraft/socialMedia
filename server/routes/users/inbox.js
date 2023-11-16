@@ -1,5 +1,6 @@
 const query = require("../../javascript/db")
 const encryption = require("../../javascript/encryption")
+const getUserJs = require("../../javascript/getuser")
 
 async function inbox(req) {
     try {
