@@ -68,16 +68,13 @@ async function verifySignature(req, body) {
     }
 }
 
-async function sign(body) {
-    let date = new Date().toUTCString()
-    let activityId = `${URL}/${crypto.randomUUID()}`
+async function sign(body, headers) {
 
-    const hash = crypto.createHash('sha256');
-    hash.update(body, 'utf-8');
-    const digest = hash.digest('base64');
+    
     console.log(body)
     let privateKey = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).rows[0].privatekeypem
     console.log(privateKey)
+    
     const key = crypto.createPrivateKey(privateKey)
 
 }
