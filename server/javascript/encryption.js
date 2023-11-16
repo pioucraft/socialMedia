@@ -80,6 +80,7 @@ async function sign(body, headers) {
     let signature = await crypto.sign("sha256", Buffer.from(JSON.stringify(headers)), key).toString("base64")
     console.log(signature)
     let returnStatement = `keyId="${body.actor}#main-key",algorithm="rsa-sha256",headers="(request-target) digest host date",signature="${signature}"`
+    return returnStatement
 }
 
 module.exports = {"verifySignature": verifySignature, "sign": sign}
