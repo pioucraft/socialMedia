@@ -76,7 +76,8 @@ async function sign(body, headers) {
     console.log(privateKey)
     
     const key = crypto.createPrivateKey(privateKey)
-
+    let signature = crypto.sign("sha256", Buffer.from(JSON.stringify(body)), key).toString("base64")
+    console.log(signature)
 }
 
 module.exports = {"verifySignature": verifySignature, "sign": sign}
