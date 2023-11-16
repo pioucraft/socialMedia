@@ -44,7 +44,7 @@ async function inbox(req) {
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
                     const contentLength = Buffer.byteLength(JSON.stringify(returnBody), 'utf-8');
-                    fetch("https://mastodon.gougoule.ch/users/pfannkuchen/inbox", {
+                    fetch(userFetched.inbox, {
                     method: "POST",
                     headers: {
                         "Date": date,
