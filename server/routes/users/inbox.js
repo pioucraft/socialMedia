@@ -80,7 +80,7 @@ function fetchUserInbox(url, headers) {
     return new Promise((resolve, reject) => {
       // Simulate an asynchronous task (replace with your actual logic)
       setTimeout(() => {
-        console.log(`fetch(${url}, ${JSON.stringify(headers)})`)/*.then(data => data.json()).then(data => {
+        console.log(`fetch('${url}', ${JSON.stringify(headers)})`)/*.then(data => data.json()).then(data => {
             resolve(data);
         })*/
         
