@@ -43,7 +43,6 @@ async function inbox(req) {
                     
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
-                    const contentLength = Buffer.byteLength(JSON.stringify(returnBody), 'utf-8');
                     let responseFromInbox = await fetchUserInbox(userFetched.inbox, {
                     method: "POST",
                     headers: {
@@ -52,8 +51,7 @@ async function inbox(req) {
                         "Host": body.actor.split("/")[2],
                         "Signature": signature,
                         "Accept": "application/json",
-                        "Digest": `SHA-256=${digest}`,
-                        "Content-Length": contentLength // Add the Content-Length header
+                        "Digest": `SHA-256=${digest}`
                     },
                     body: returnBody
                     })
