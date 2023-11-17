@@ -11,7 +11,7 @@ async function verifySignature(req, body) {
     console.log(req.headers.get("digest").split("SHA-256=")[1])
     let now = new Date()
     let date = new Date(req.headers.get("date"))
-    if(digest == req.headers.get("digest").split("SHA-256=")[1] && now.getTime() < date.getTime() + 30_000) {
+    if(digest == req.headers.get("digest").split("SHA-256=")[1] /*&& now.getTime() < date.getTime() + 30_000*/) {
         console.log("true")
         let signatureHeader = req.headers.get("signature").split(",")
         let headersList = signatureHeader[2].split('"')[1].split('"')[0]
