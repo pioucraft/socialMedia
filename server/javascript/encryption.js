@@ -113,4 +113,7 @@ async function sign(body, headers) {
     return returnStatement
 }
 
-module.exports = {"verifySignature": verifySignature, "sign": sign, "signWithoutBody": signWithoutBody}
+
+exports.verifySignature = verifySignature
+exports.sign = sign
+exports.signWithoutBody = signWithoutBody

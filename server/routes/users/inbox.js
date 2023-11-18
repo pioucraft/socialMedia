@@ -1,8 +1,9 @@
 const query = require("../../javascript/db");
-import encryption from "../../javascript/encryption";
+const encryptionModule = require("../../javascript/encryption")
 const getUserJs = require("../../javascript/getuser");
 const crypto = require("node:crypto");
 
+const encryption = encryptionModule()
 
 async function inbox(req) {
     try {
