@@ -19,7 +19,7 @@ async function inbox(req) {
                     console.log("following")
                     let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
                     let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-                    actor = (await getUserJs(actor)).message
+                    actor = (await getUserJs.getUserAsAdmin(actor)).message
                     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
 
                     let returnBody = {

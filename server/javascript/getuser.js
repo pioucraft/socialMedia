@@ -88,4 +88,4 @@ async function fetchUser(user) {
     return {"message": returnStatement, "status": 200}
 }
 
-exports = getUserAsAdmin
+exports.getUserAsAdmin = getUserAsAdmin
