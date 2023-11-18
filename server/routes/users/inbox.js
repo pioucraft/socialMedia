@@ -42,7 +42,6 @@ async function inbox(req) {
                     ].join("\n")
                     
                     console.log(headers)
-                    const contentLength = Buffer.byteLength(JSON.stringify(returnBody), 'utf-8');
                     let signature = await encryption.sign(returnBody, headers)
                     let responseFromInbox = await fetchUserInbox(userFetched.inbox, {
                     method: "POST",
