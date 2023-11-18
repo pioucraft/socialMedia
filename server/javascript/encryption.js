@@ -78,8 +78,8 @@ async function verifySignature(req, body) {
         console.log(headers)
         let userFetched = await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json()
         let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-        console.log(getUserJs.getUserAsAdmin)
-        let publicKeyPem = (await getUserJs.getUserAsAdmin(actor)).message.publickeypem
+        console.log(getUserJs)
+        let publicKeyPem = (await getUserJs(actor)).message.publickeypem
         console.log("finished")
         let publicKey = crypto.createPublicKey(publicKeyPem)
         console.log("algorithm: "+algorithm)

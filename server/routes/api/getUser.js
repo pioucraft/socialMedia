@@ -17,7 +17,7 @@ async function getUser(req) {
                     return {"message": "218 IDK", "status": 218}
                 }
                 else {
-                    return await getUserJs.getUserAsAdmin(user)
+                    return await getUserJs(user)
                 }
             }
 
