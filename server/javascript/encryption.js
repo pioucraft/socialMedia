@@ -1,5 +1,5 @@
 const query = require("./db");
-import getUserJs from "./getuser";
+//import getUserJs from "./getuser";
 const crypto = require("node:crypto")
 
 async function signWithoutBody(actor, rawHeaders, userLink, date) {

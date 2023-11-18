@@ -2,6 +2,7 @@ import 'dotenv/config'
 import api from "./routes/api"
 import webfinger from "./routes/webfinger"
 import users from "./routes/users"
+import getUserJs from './routes/api/getUser'
 
 const server = Bun.serve({
     port: process.env.PORT,
