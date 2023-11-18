@@ -21,6 +21,7 @@ async function handle(req) {
                 //    "url": `${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
                 //},
                 "inbox": `${process.env.URL}/users/${handle}/inbox`,
+                
                 "publicKey": {
                     "id": `${process.env.URL}/users/${handle}#main-key`,
                     "owner": `${process.env.URL}/users/${handle}`,

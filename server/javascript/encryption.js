@@ -12,13 +12,13 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
             headers[i].shift();
             headers[i].shift();
             headers[i].shift();
-            headers[i] = "/" + headers[i].join("/");
+            headers[i] = "(request-target): "+"/" + headers[i].join("/");
         } else if (headers[i] === "host") {
-            headers[i] = userLink.split("/")[2];
+            headers[i] = "host: "+userLink.split("/")[2];
         } else if (headers[i] === "date") {
-            headers[i] = date.getTime();
+            headers[i] = "date: "+date.getTime();
         } else if (headers[i] === "accept") {
-            headers[i] = "application/activity+json, application/ld+json";
+            headers[i] = "accept: "+"application/activity+json, application/ld+json";
         }
     }
     headers = headers.join("\n")
