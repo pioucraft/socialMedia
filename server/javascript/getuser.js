@@ -50,10 +50,10 @@ async function fetchUser(user) {
         }
     }
     let date = new Date()
-    let signature = await encryption.signWithoutBody("admin", "(request-target) host date accept", userLink, date).json()
+    let signature = await encryption.signWithoutBody("admin", "(request-target) host date accept", userLink, date)
     
     
-    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json", "signature": signature}}))
+    let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json", "signature": signature}})).json()
     console.log(userPage)
     let returnStatement = {}
     returnStatement.handle = sanitize(user)
