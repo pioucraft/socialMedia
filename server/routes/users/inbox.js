@@ -1,7 +1,7 @@
-const query = require("../../javascript/db")
-import encryption from "../../javascript/encryption"
-const getUserJs = require("../../javascript/getuser")
-const crypto = require("node:crypto")
+const query = require("../../javascript/db");
+import encryption from "../../javascript/encryption";
+const getUserJs = require("../../javascript/getuser");
+const crypto = require("node:crypto");
 
 
 async function inbox(req) {
