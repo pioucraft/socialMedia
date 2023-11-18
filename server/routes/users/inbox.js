@@ -1,5 +1,5 @@
 const query = require("../../javascript/db")
-const encryption = require("../../javascript/encryption")
+import encryption from "../../javascript/encryption"
 const getUserJs = require("../../javascript/getuser")
 const crypto = require("node:crypto")
 
