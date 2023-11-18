@@ -2,6 +2,7 @@ const query = require("../../javascript/db")
 const encryption = require("../../javascript/encryption")
 const getUserJs = require("../../javascript/getuser")
 const crypto = require("node:crypto")
+console.log(getUserJs)
 
 
 async function inbox(req) {
