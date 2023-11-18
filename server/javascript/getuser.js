@@ -1,5 +1,6 @@
 const query = require("./db")
 const sanitize = require("sanitize-html")
+const encryption = require("./encryption")
 
 async function getUserAsAdmin(user) {
     try {
