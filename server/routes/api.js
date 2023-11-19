@@ -9,6 +9,7 @@ const changePassword = require("./api/changePassword")
 const login = require("./api/login")
 const changeProfilePicture = require("./api/changeProfilePicture")
 const getUser = require("./api/getUser")
+const follow = require("./api/follow")
 
 async function api(req) {
     let url = req.url
@@ -47,6 +48,9 @@ async function api(req) {
     }
     else if(url.split("/")[4] == "getUser") {
         return (await getUser(req))
+    }
+    else if(url.split("/")[4] == "follow") {
+        return (await follow(req))
     }
     else {
         return {"message": "404 Not Found", "status": 404}
