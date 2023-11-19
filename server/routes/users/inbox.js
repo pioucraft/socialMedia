@@ -25,14 +25,7 @@ async function inbox(req) {
                         let actorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
-                        if(followersString != null) {
-                            followersTemporaryString = JSON.parse(followersString)
-                            for(let i=0; i<followersTemporaryString.length;i++) {
-                                if(followersTemporaryString[i].user == actorHandle) {
-                                    return 
-                                }
-                            }
-                        }
+                        
                         
                         
                         let activityId = `${process.env.URL}/${crypto.randomUUID()}`
@@ -70,7 +63,14 @@ async function inbox(req) {
                             body: JSON.stringify(returnBody)
                         }))
                         console.log(responseFromInboxFetch)
-                        
+                        if(followersString != null) {
+                            followersTemporaryString = JSON.parse(followersString)
+                            for(let i=0; i<followersTemporaryString.length;i++) {
+                                if(followersTemporaryString[i].user == actorHandle) {
+                                    return 
+                                }
+                            }
+                        }
                         if(followersString == null) {
                             followersString = [{"id": body.id, "user": actorHandle}]
                         }
