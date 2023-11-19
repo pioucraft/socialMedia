@@ -59,7 +59,7 @@ async function inbox(req) {
                             body: JSON.stringify(returnBody)
                         }))
                         console.log(responseFromInboxFetch)
-                        let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).rows[0]
+                        let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
                         console.log(followersString)
                         console.log(localUserFromDb)
