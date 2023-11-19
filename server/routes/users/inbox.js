@@ -28,7 +28,7 @@ async function inbox(req) {
                         if(followersString != null) {
                             followersTemporaryString = followersString.split(",")
                             for(let i=0; i<followersTemporaryString.length;i++) {
-                                if(JSON.parse(followersTemporaryString[i].user) == actorHandle) {
+                                if(JSON.parse(followersTemporaryString[i]).user == actorHandle) {
                                     return 
                                 }
                             }
