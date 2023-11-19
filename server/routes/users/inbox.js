@@ -72,7 +72,7 @@ async function inbox(req) {
                         console.log(responseFromInboxFetch)
                         
                         if(followersString == null) {
-                            followersString = [`{"id": ${body.id}, "user": ${actorHandle}}`]
+                            followersString = [JSON.stringify({"id": body.id, "user": actorHandle})]
                         }
                         else {
                             followersString = followersString.split("   ")
