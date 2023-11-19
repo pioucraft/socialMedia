@@ -19,10 +19,6 @@ async function inbox(req) {
                     try {
                         console.log("following")
                         return {"message": "202 Accepted", "status": 202}
-                        
-                        
-                        
-                        
                     }
                     finally {
                         let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
@@ -63,6 +59,9 @@ async function inbox(req) {
                             body: JSON.stringify(returnBody)
                         }))
                         console.log(responseFromInboxFetch)
+                        let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [body.actor.split("/")[4]])).rows[0]
+                        let followersString = localUserFromDb.followers
+                        console.log(followersString)
                     }
                 }
                 
@@ -82,15 +81,5 @@ async function inbox(req) {
     
     
 }
-
-function fetchUserInbox(url, headers) {
-    return new Promise((resolve, reject) => {
-      // Simulate an asynchronous task (replace with your actual logic)
-      setTimeout(() => {
-       
-        
-      }, 1000);
-    });
-  }
 
 module.exports = inbox
