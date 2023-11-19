@@ -26,7 +26,7 @@ async function inbox(req) {
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
                         if(followersString != null) {
-                            followersTemporaryString = followersString.split(",")
+                            followersTemporaryString = followersString.split("   ")
                             for(let i=0; i<followersTemporaryString.length;i++) {
                                 if(JSON.parse(followersTemporaryString[i]).user == actorHandle) {
                                     return 
@@ -75,10 +75,11 @@ async function inbox(req) {
                             followersString = [`{"id": ${body.id}, "user": ${actorHandle}}`]
                         }
                         else {
-                            followersString = followersString.split(",")
-                            followersString.push(`{"id": ${body.id}, "user": ${actorHandle}}`)
+                            followersString = followersString.split("   ")
+                            
+                            followersString.push(`{"id": '${body.id}', "user": '${actorHandle}'}`)
                         }
-                        followersString = followersString.join(",")
+                        followersString = followersString.join("   ")
                         console.log(followersString)
                         await query("UPDATE Users SET followers = $1 WHERE handle = $2", [followersString, handle])
                     }
