@@ -50,7 +50,7 @@ async function inbox(req) {
                         
                         console.log(headers)
                         let signature = await encryption.sign(returnBody, headers)
-                        fetch(userFetched.inbox, {
+                        let responseFromInboxFetch = (await fetch(userFetched.inbox, {
                             method: "POST",
                             headers: {
                                 "Date": date,
@@ -61,7 +61,8 @@ async function inbox(req) {
                                 "Digest": `SHA-256=${digest}`
                             },
                             body: JSON.stringify(returnBody)
-                        })
+                        }))
+                        console.log(responseFromInboxFetch)
                     }
                 }
                 
