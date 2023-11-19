@@ -15,7 +15,10 @@ async function inbox(req) {
                 
                 
                 console.log(body)
-                if(body.type == "Follow") {
+                if(body.type == "Undo") {
+                    return {"message": "202 Accepted", "status": 202}
+                }
+                else if(body.type == "Follow") {
                     try {
                         console.log("following")
                         return {"message": "202 Accepted", "status": 202}
