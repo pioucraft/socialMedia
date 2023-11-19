@@ -21,7 +21,7 @@ async function inbox(req) {
                         let followers = JSON.parse(localUserFromDb.followers)
                         let newFollowers = []
                         for(let i=0;i<followers.length;i++) {
-                            if(!followers[i].includes(body.object.id)) {
+                            if(!followers[i].id.includes(body.object.id)) {
                                 newFollowers.push(followers[i])
                             }
                         }
