@@ -34,7 +34,7 @@ async function inbox(req) {
                             }
                         }
                         
-                        let actor = (await getUserJs.getUserAsAdmin(actorHandle)).message
+                        
                         let activityId = `${process.env.URL}/${crypto.randomUUID()}`
 
                         let returnBody = {
@@ -77,7 +77,7 @@ async function inbox(req) {
                         else {
                             followersString = followersString.split("   ")
                             
-                            followersString.push(`{"id": '${body.id}', "user": '${actorHandle}'}`)
+                            followersString.push(JSON.stringify({"id": body.id, "user": actorHandle}))
                         }
                         followersString = followersString.join("   ")
                         console.log(followersString)
