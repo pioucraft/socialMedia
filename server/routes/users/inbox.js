@@ -23,7 +23,7 @@ async function inbox(req) {
                     finally {
                         let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
                         let actorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-                        let actor = (await getUserJs.getUserAsAdmin(actor)).message
+                        let actor = (await getUserJs.getUserAsAdmin(actorHandle)).message
                         let activityId = `${process.env.URL}/${crypto.randomUUID()}`
 
                         let returnBody = {
