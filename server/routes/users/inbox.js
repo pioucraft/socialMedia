@@ -18,6 +18,13 @@ async function inbox(req) {
                 if(body.type == "Follow") {
                     try {
                         console.log("following")
+                        return {"message": "202 Accepted", "status": 202}
+                        
+                        
+                        
+                        
+                    }
+                    finally {
                         let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
                         let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
                         actor = (await getUserJs.getUserAsAdmin(actor)).message
@@ -43,11 +50,6 @@ async function inbox(req) {
                         
                         console.log(headers)
                         let signature = await encryption.sign(returnBody, headers)
-                        
-                        
-                        return {"message": "202 Accepted", "status": 202}
-                    }
-                    finally {
                         fetch(userFetched.inbox, {
                             method: "POST",
                             headers: {
