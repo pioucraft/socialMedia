@@ -56,6 +56,10 @@ async function inbox(req) {
             return {"message": "404 Not Found", "status": 404}
         }
     }
+    catch(err) {
+        console.log(err)
+        return {"message": "500 Internal Server Error", "status": 500}
+    }
     finally {
         fetch(userFetched.inbox, {
             method: "POST",
