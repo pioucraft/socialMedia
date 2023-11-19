@@ -16,35 +16,51 @@ async function inbox(req) {
                 
                 console.log(body)
                 if(body.type == "Follow") {
-                    console.log("following")
-                    let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
-                    let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-                    actor = (await getUserJs.getUserAsAdmin(actor)).message
-                    let activityId = `${process.env.URL}/${crypto.randomUUID()}`
+                    try {
+                        console.log("following")
+                        let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
+                        let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+                        actor = (await getUserJs.getUserAsAdmin(actor)).message
+                        let activityId = `${process.env.URL}/${crypto.randomUUID()}`
 
-                    let returnBody = {
-                        "@context": "https://www.w3.org/ns/activitystreams",
-                        "actor": `${process.env.URL}/users/${handle}`,
-                        "type": "Accept",
-                        "id": activityId,
-                        "object": body
+                        let returnBody = {
+                            "@context": "https://www.w3.org/ns/activitystreams",
+                            "actor": `${process.env.URL}/users/${handle}`,
+                            "type": "Accept",
+                            "id": activityId,
+                            "object": body
+                        }
+                        const hash = crypto.createHash('sha256');
+                        hash.update(JSON.stringify(returnBody), 'utf-8');
+                        const digest = hash.digest('base64');
+                        let date = new Date().toUTCString()
+                        let headers = [
+                            `(request-target): post ${userFetched.inbox.split(`https://${body.actor.split("/")[2]}`)[1]}`,
+                            `digest: SHA-256=${digest}`,
+                            `host: ${body.actor.split("/")[2]}`,
+                            `date: ${date}`
+                        ].join("\n")
+                        
+                        console.log(headers)
+                        let signature = await encryption.sign(returnBody, headers)
+                        
+                        
+                        return {"message": "202 Accepted", "status": 202}
                     }
-                    const hash = crypto.createHash('sha256');
-                    hash.update(JSON.stringify(returnBody), 'utf-8');
-                    const digest = hash.digest('base64');
-                    let date = new Date().toUTCString()
-                    let headers = [
-                        `(request-target): post ${userFetched.inbox.split(`https://${body.actor.split("/")[2]}`)[1]}`,
-                        `digest: SHA-256=${digest}`,
-                        `host: ${body.actor.split("/")[2]}`,
-                        `date: ${date}`
-                    ].join("\n")
-                    
-                    console.log(headers)
-                    let signature = await encryption.sign(returnBody, headers)
-                    
-                    
-                    return {"message": "202 Accepted", "status": 202}
+                    finally {
+                        fetch(userFetched.inbox, {
+                            method: "POST",
+                            headers: {
+                                "Date": date,
+                                "Content-Type": "application/activity+json",
+                                "Host": body.actor.split("/")[2],
+                                "Signature": signature,
+                                "Accept": "application/json",
+                                "Digest": `SHA-256=${digest}`
+                            },
+                            body: JSON.stringify(returnBody)
+                        })
+                    }
                 }
                 
             }
@@ -60,20 +76,7 @@ async function inbox(req) {
         console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
-    finally {
-        fetch(userFetched.inbox, {
-            method: "POST",
-            headers: {
-                "Date": date,
-                "Content-Type": "application/activity+json",
-                "Host": body.actor.split("/")[2],
-                "Signature": signature,
-                "Accept": "application/json",
-                "Digest": `SHA-256=${digest}`
-            },
-            body: JSON.stringify(returnBody)
-        })
-    }
+    
     
 }
 
