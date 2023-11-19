@@ -71,6 +71,7 @@ async function inbox(req) {
                             for(let i=0; i<followersTemporaryString.length;i++) {
                                 if(followersTemporaryString[i].user == actorHandle) {
                                     followersString[i].id.push(body.id)
+                                    followersString = JSON.stringify(followersString)
                                     await query("UPDATE Users SET followers = $1 WHERE handle = $2", [followersString, handle])
                                     return
                                 }
