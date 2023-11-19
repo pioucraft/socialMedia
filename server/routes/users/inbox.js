@@ -18,7 +18,7 @@ async function inbox(req) {
                 if(body.type == "Undo") {
                     if(body.object.type == "Follow") {
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-                        let followers = JSON.parse(localUserFromDb)
+                        let followers = JSON.parse(localUserFromDb.followers)
                         let newFollowers = []
                         for(let i=0;i<followers.length;i++) {
                             if(!followers[i].includes(body.object.id)) {
