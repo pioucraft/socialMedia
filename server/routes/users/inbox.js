@@ -70,6 +70,7 @@ async function inbox(req) {
                         }
                         followersString = followersString.join(",")
                         console.log(followersString)
+                        await query("UPDATE Users SET followers = $1 WHERE handle = $2", [followersString, handle])
                     }
                 }
                 
