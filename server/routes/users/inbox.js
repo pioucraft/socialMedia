@@ -62,9 +62,13 @@ async function inbox(req) {
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
                         if(followersString == null) {
-                            followersString = ""
+                            followersString = [{"id": body.id, "user": actor}]
                         }
-                        followersString = followersString.split(",")
+                        else {
+                            followersString = followersString.split(",")
+                            followersString.push({"id": body.id, "user": actor})
+                        }
+                        followersString = followersString.join(",")
                         console.log(followersString)
                     }
                 }
