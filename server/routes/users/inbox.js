@@ -42,19 +42,8 @@ async function inbox(req) {
                     
                     console.log(headers)
                     let signature = await encryption.sign(returnBody, headers)
-                    let responseFromInbox = await fetchUserInbox(userFetched.inbox, {
-                    method: "POST",
-                    headers: {
-                        "Date": date,
-                        "Content-Type": "application/activity+json",
-                        "Host": body.actor.split("/")[2],
-                        "Signature": signature,
-                        "Accept": "application/json",
-                        "Digest": `SHA-256=${digest}`
-                    },
-                    body: JSON.stringify(returnBody)
-                    })
-                    console.log(responseFromInbox)
+                    
+                    
                     return {"message": "202 Accepted", "status": 202}
                 }
                 
@@ -67,19 +56,28 @@ async function inbox(req) {
             return {"message": "404 Not Found", "status": 404}
         }
     }
-    catch(err) {
-        console.log(err)
-        return {"message": "500 Internal Server Error", "status": 500}
+    finally {
+        fetch(userFetched.inbox, {
+            method: "POST",
+            headers: {
+                "Date": date,
+                "Content-Type": "application/activity+json",
+                "Host": body.actor.split("/")[2],
+                "Signature": signature,
+                "Accept": "application/json",
+                "Digest": `SHA-256=${digest}`
+            },
+            body: JSON.stringify(returnBody)
+        })
     }
+    
 }
 
 function fetchUserInbox(url, headers) {
     return new Promise((resolve, reject) => {
       // Simulate an asynchronous task (replace with your actual logic)
       setTimeout(() => {
-        console.log(`fetch('${url}', ${JSON.stringify(headers)}).then(data => data.json()).then(data => console.log(data))`)/*.then(data => data.json()).then(data => {
-            resolve(data);
-        })*/
+       
         
       }, 1000);
     });
