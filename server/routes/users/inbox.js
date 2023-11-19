@@ -61,8 +61,11 @@ async function inbox(req) {
                         console.log(responseFromInboxFetch)
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
+                        if(followersString == null) {
+                            followersString = ""
+                        }
+                        followersString = followersString.split(",")
                         console.log(followersString)
-                        console.log(localUserFromDb)
                     }
                 }
                 
