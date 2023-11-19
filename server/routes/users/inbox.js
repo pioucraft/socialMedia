@@ -22,8 +22,8 @@ async function inbox(req) {
                     }
                     finally {
                         let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
-                        let actor = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-                        actor = (await getUserJs.getUserAsAdmin(actor)).message
+                        let actorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+                        let actor = (await getUserJs.getUserAsAdmin(actor)).message
                         let activityId = `${process.env.URL}/${crypto.randomUUID()}`
 
                         let returnBody = {
@@ -62,11 +62,11 @@ async function inbox(req) {
                         let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
                         let followersString = localUserFromDb.followers
                         if(followersString == null) {
-                            followersString = [`{"id": ${body.id}, "user": ${actor}}`]
+                            followersString = [`{"id": ${body.id}, "user": ${actorHandle}}`]
                         }
                         else {
                             followersString = followersString.split(",")
-                            followersString.push(`{"id": ${body.id}, "user": ${actor}}`)
+                            followersString.push(`{"id": ${body.id}, "user": ${actorHandle}}`)
                         }
                         followersString = followersString.join(",")
                         console.log(followersString)
