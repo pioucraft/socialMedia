@@ -16,7 +16,19 @@ async function inbox(req) {
                 
                 console.log(body)
                 if(body.type == "Undo") {
-                    return {"message": "202 Accepted", "status": 202}
+                    if(body.object.type == "Follow") {
+                        let localUserFromDb = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+                        let followers = JSON.parse(localUserFromDb)
+                        let newFollowers = []
+                        for(let i=0;i<followers.length;i++) {
+                            if(!followers[i].includes(body.object.id)) {
+                                newFollowers.push(followers[i])
+                            }
+                        }
+                        await query("UPDATE Users SET followers = $1 WHERE handle = $2", [JSON.stringify(newFollowers), handle])
+                        return {"message": "202 Accepted", "status": 202}
+                    }
+                    
                 }
                 else if(body.type == "Follow") {
                     try {
