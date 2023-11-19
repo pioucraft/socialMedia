@@ -70,17 +70,19 @@ async function inbox(req) {
                             followersTemporaryString = JSON.parse(followersString)
                             for(let i=0; i<followersTemporaryString.length;i++) {
                                 if(followersTemporaryString[i].user == actorHandle) {
-                                    return 
+                                    followersString[i].id.push(body.id)
+                                    await query("UPDATE Users SET followers = $1 WHERE handle = $2", [followersString, handle])
+                                    return
                                 }
                             }
                         }
                         if(followersString == null) {
-                            followersString = [{"id": body.id, "user": actorHandle}]
+                            followersString = [{"id": [body.id], "user": actorHandle}]
                         }
                         else {
                             followersString = JSON.parse(followersString)
                             
-                            followersString.push({"id": body.id, "user": actorHandle})
+                            followersString.push({"id":[body.id], "user": actorHandle})
                         }
                         followersString = JSON.stringify(followersString)
                         console.log(followersString)
