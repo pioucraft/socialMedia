@@ -23,7 +23,55 @@ async function follow(req) {
                 let userFromRemote = await getUserJs.getUserAsAdmin(user)
                 for(let i=0;i<userFollowing.length;i++) {
                     if(userFollowing[i].user == user) {
-                        //else, unfollow
+                        let newFollowing = []
+                        for(let j=0;j<userFollowing.length;j++) {
+                            if(userFollowing[i].user != user) {
+                                newFollowing.push(userFollowing[i])
+                                await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(newFollowing), handle])
+                            }
+                        }
+                        let requestBody = {
+                            "@context": "https://www.w3.org/ns/activitystreams",
+                            id: activityId,
+                            type: "Undo",
+                            actor: `${process.env.URL}/users/${handle}`,
+                            object: {
+                                "@context": "https://www.w3.org/ns/activitystreams",
+                                id: userFollowing[i].id,
+                                type: "Follow",
+                                actor: `${process.env.URL}/users/${handle}`,
+                                object: userFromRemote.message.link
+                            }
+                        }
+                        console.log(requestBody)
+                        const hash = crypto.createHash('sha256');
+                        hash.update(JSON.stringify(requestBody), 'utf-8');
+                        const digest = hash.digest('base64');
+                        console.log(`(request-target): post ${userFromRemote.message.inbox.split(`https://${userFromRemote.message.inbox.split("/")[2]}`)[1]}`)
+                        let date = new Date().toUTCString()
+                        let headers = [
+                            `(request-target): post ${userFromRemote.message.inbox.split(`https://${userFromRemote.message.inbox.split("/")[2]}`)[1]}`,
+                            `digest: SHA-256=${digest}`,
+                            `host: ${userFromRemote.message.inbox.split("/")[2]}`,
+                            `date: ${date}`
+                        ].join("\n")
+                        console.log(headers)
+                        let signature = await encryption.sign(requestBody, headers)
+                        console.log(signature)
+                        let response = (await fetch(userFromRemote.message.inbox, {
+                            method: "POST",
+                            headers: {
+                                "Date": date,
+                                "Content-Type": "application/activity+json",
+                                "Host": requestBody.object.split("/")[2],
+                                "Signature": signature,
+                                "Accept": "application/json",
+                                "Digest": `SHA-256=${digest}`
+                            },
+                            body: JSON.stringify(requestBody)
+                        }))
+                        console.log(response)
+                        return {"message": "Success", "status": 200}
                     }
                 }
                 
