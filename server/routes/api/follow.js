@@ -51,7 +51,7 @@ async function follow(req) {
                 console.log(headers)
                 let signature = await encryption.sign(requestBody, headers)
                 console.log(signature)
-                let response = (await fetch(userFromRemote.inbox, {
+                let response = (await fetch(userFromRemote.message.inbox, {
                     method: "POST",
                     headers: {
                         "Date": date,
