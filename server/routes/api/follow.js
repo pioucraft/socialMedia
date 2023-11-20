@@ -1,7 +1,7 @@
 const query = require("../../javascript/db")
 const getUserJs = require("../../javascript/getuser")
 const encryption = require("../../javascript/encryption")
-
+const crypto = require("node:crypto")
 
 async function follow(req) {
     try {
