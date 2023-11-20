@@ -112,6 +112,7 @@ async function inbox(req) {
                                     console.log(userFromDatabase)
                                     console.log("something")
                                     userFollowing[i].accepted = true
+                                    console.log(userFollowing)
                                     await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), req.url.split("/")[4]])
                                     return {"message": "200 Success", "status": 200}
                                 }
