@@ -28,7 +28,7 @@ async function follow(req) {
                 }
                 
                 userFollowing.push({"id": activityId, "user": user,"accepted": false})
-                await query("UPDATE Users SET following = $1 WHERE handle = $2", [userFollowing, handle])
+                //await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), handle])
                 let requestBody = {
                     "@context": "https://www.w3.org/ns/activitystreams",
                     id: activityId,
@@ -40,6 +40,7 @@ async function follow(req) {
                 const hash = crypto.createHash('sha256');
                 hash.update(JSON.stringify(requestBody), 'utf-8');
                 const digest = hash.digest('base64');
+                console.log(hash)
                 let date = new Date().toUTCString()
                 let headers = [
                     `(request-target): post ${userFromRemote.inbox.split(`https://${body.object.split("/")[2]}`)[1]}`,
