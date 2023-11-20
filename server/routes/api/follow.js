@@ -56,7 +56,7 @@ async function follow(req) {
                     headers: {
                         "Date": date,
                         "Content-Type": "application/activity+json",
-                        "Host": body.object.split("/")[2],
+                        "Host": requestBody.object.split("/")[2],
                         "Signature": signature,
                         "Accept": "application/json",
                         "Digest": `SHA-256=${digest}`
