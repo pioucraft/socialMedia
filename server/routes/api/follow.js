@@ -22,7 +22,7 @@ async function follow(req) {
                 let activityId = `${process.env.URL}/${crypto.randomUUID()}`
                 let userFromRemote = await getUserJs.getUserAsAdmin(user)
                 for(let i=0;i<userFollowing.length;i++) {
-                    if(userFollowing[i].user == user) {
+                    if(userFollowing[i].user != user) {
                         userFollowing.push({"id": activityId, "user": user,"accepted": false})
                         await query("UPDATE Users SET following = $1 WHERE handle = $2", [userFollowing, handle])
                         let requestBody = {
