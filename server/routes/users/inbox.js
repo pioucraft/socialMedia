@@ -102,7 +102,11 @@ async function inbox(req) {
                         await query("UPDATE Users SET followers = $1 WHERE handle = $2", [followersString, handle])
                     }
                 }
-                
+                else if(body.type == "Accept") {
+                    if(body.object.type == "Follow") {
+                        
+                    }
+                }
             }
             else {
                 return {"message": "400 Bad Request", "status": 400}

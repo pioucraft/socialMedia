@@ -28,7 +28,7 @@ async function follow(req) {
                 }
                 
                 userFollowing.push({"id": activityId, "user": user,"accepted": false})
-                //await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), handle])
+                await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), handle])
                 let requestBody = {
                     "@context": "https://www.w3.org/ns/activitystreams",
                     id: activityId,
