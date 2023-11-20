@@ -30,4 +30,4 @@ async function follow(req) {
     }
 }
 
-modules.exports = follow
+module.exports = follow
