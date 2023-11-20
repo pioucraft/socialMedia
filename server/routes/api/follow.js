@@ -32,6 +32,7 @@ async function follow(req) {
                             actor: `${process.env.URL}/users/${handle}"`,
                             object: userFromRemote.message.link
                         }
+                        console.log(requestBody)
                         const hash = crypto.createHash('sha256');
                         hash.update(JSON.stringify(requestBody), 'utf-8');
                         const digest = hash.digest('base64');
