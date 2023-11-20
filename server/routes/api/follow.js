@@ -33,7 +33,7 @@ async function follow(req) {
                     "@context": "https://www.w3.org/ns/activitystreams",
                     id: activityId,
                     type: "Follow",
-                    actor: `${process.env.URL}/users/${handle}"`,
+                    actor: `${process.env.URL}/users/${handle}`,
                     object: userFromRemote.message.link
                 }
                 console.log(requestBody)
