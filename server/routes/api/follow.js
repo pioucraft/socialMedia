@@ -40,7 +40,7 @@ async function follow(req) {
                 const hash = crypto.createHash('sha256');
                 hash.update(JSON.stringify(requestBody), 'utf-8');
                 const digest = hash.digest('base64');
-                console.log(digest)
+                console.log(`(request-target): post ${userFromRemote.inbox.split(`https://${userFromRemote.inbox.split("/")[2]}`)[1]}`)
                 let date = new Date().toUTCString()
                 let headers = [
                     `(request-target): post ${userFromRemote.inbox.split(`https://${userFromRemote.inbox.split("/")[2]}`)[1]}`,
@@ -50,6 +50,7 @@ async function follow(req) {
                 ].join("\n")
                 console.log(headers)
                 let signature = await encryption.sign(headers)
+                console.log(signature)
                 let response = (await fetch(userFromRemote.inbox, {
                     method: "POST",
                     headers: {
