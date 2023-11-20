@@ -71,7 +71,7 @@ async function follow(req) {
                             body: JSON.stringify(requestBody)
                         }))
                         console.log(response)
-                        return {"message": "Success", "status": 200}
+                        return {"message": "Success Unfollowed", "status": 200}
                     }
                 }
                 
@@ -112,7 +112,7 @@ async function follow(req) {
                     body: JSON.stringify(requestBody)
                 }))
                 console.log(response)
-                return {"message": "Success", "status": 200}
+                return {"message": "Success Followed", "status": 200}
             }
 
         }
