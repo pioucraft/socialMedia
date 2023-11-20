@@ -49,7 +49,7 @@ async function follow(req) {
                     `date: ${date}`
                 ].join("\n")
                 console.log(headers)
-                let signature = await encryption.sign(headers)
+                let signature = await encryption.sign(requestBody, headers)
                 console.log(signature)
                 let response = (await fetch(userFromRemote.inbox, {
                     method: "POST",
