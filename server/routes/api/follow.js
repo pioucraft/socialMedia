@@ -43,9 +43,9 @@ async function follow(req) {
                 console.log(digest)
                 let date = new Date().toUTCString()
                 let headers = [
-                    `(request-target): post ${userFromRemote.inbox.split(`https://${body.object.split("/")[2]}`)[1]}`,
+                    `(request-target): post ${userFromRemote.inbox.split(`https://${userFromRemote.inbox.split("/")[2]}`)[1]}`,
                     `digest: SHA-256=${digest}`,
-                    `host: ${body.object.split("/")[2]}`,
+                    `host: ${userFromRemote.inbox.split("/")[2]}`,
                     `date: ${date}`
                 ].join("\n")
                 console.log(headers)
