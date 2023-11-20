@@ -63,7 +63,7 @@ async function follow(req) {
                             headers: {
                                 "Date": date,
                                 "Content-Type": "application/activity+json",
-                                "Host": requestBody.object.split("/")[2],
+                                "Host": userFromRemote.message.inbox.split("/")[2],
                                 "Signature": signature,
                                 "Accept": "application/json",
                                 "Digest": `SHA-256=${digest}`
