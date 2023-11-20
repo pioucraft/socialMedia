@@ -29,9 +29,9 @@ async function follow(req) {
                         for(let j=0;j<userFollowing.length;j++) {
                             if(userFollowing[i].user != user) {
                                 newFollowing.push(userFollowing[i])
-                                await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(newFollowing), handle])
                             }
                         }
+                        await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(newFollowing), handle])
                         let requestBody = {
                             "@context": "https://www.w3.org/ns/activitystreams",
                             id: activityId,
