@@ -12,7 +12,7 @@ async function inbox(req) {
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
-            console.log(JSON.stringify(body.object.type))
+            console.log(JSON.stringify(body.object.replies))
             if(await encryption.verifySignature(req, body)) {
                 
                 
