@@ -125,6 +125,7 @@ async function inbox(req) {
                 else if(body.type == "Create") {
                     if(body.object.type == "Note") {
                         if(await encryption.verifySignature(req, body)) {
+                            console.log("passed verification of signature and is a post")
                             let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
                             let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
                             let author = await getUserJs.getUserAsAdmin(authorHandle)
