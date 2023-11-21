@@ -124,6 +124,7 @@ async function inbox(req) {
                 }
                 else if(body.type == "Create") {
                     if(body.object.type == "Note") {
+                        console.log(JSON.stringify(body))
                         if(await encryption.verifySignature(req, body)) {
                             console.log("passed verification of signature and is a post")
                             let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
@@ -135,6 +136,7 @@ async function inbox(req) {
                             let postDate = date.getTime()
                             let link = sanitize(body.object.id)
                             let content = sanitize(body.object.content)
+                            //verify that the user actually follows the post's author
                             let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [author, content, link, postDate]))
                             console.log(response)       
                         }
