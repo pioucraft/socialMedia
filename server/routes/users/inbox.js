@@ -12,6 +12,7 @@ async function inbox(req) {
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
             console.log("ah")
+            console.log(JSON.stringify(body.object.type))
             if(await encryption.verifySignature(req, body)) {
                 
                 
@@ -105,41 +106,40 @@ async function inbox(req) {
                 }
                 else if(body.type == "Accept") {
                     if(body.object.type == "Follow") {
-                        if(await encryption.verifySignature(req, body)) {
-                            let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-                            let userFollowing = JSON.parse(userFromDatabase.following)
-                            for(let i=0;i<userFollowing.length;i++) {
-                                if(userFollowing[i].id == body.object.id) {
-                                    console.log(userFromDatabase)
-                                    console.log("something")
-                                    userFollowing[i].accepted = true
-                                    console.log(userFollowing)
-                                    await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), req.url.split("/")[4]])
-                                    return {"message": "200 Success", "status": 200}
-                                }
+                        
+                        let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+                        let userFollowing = JSON.parse(userFromDatabase.following)
+                        for(let i=0;i<userFollowing.length;i++) {
+                            if(userFollowing[i].id == body.object.id) {
+                                console.log(userFromDatabase)
+                                console.log("something")
+                                userFollowing[i].accepted = true
+                                console.log(userFollowing)
+                                await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), req.url.split("/")[4]])
+                                return {"message": "200 Success", "status": 200}
                             }
-                            
                         }
+                        
+                    
                     }
                 }
                 else if(body.type == "Create") {
                     if(body.object.type == "Note") {
                         console.log(JSON.stringify(body.object.replies))
-                        if(await encryption.verifySignature(req, body)) {
-                            console.log("passed verification of signature and is a post")
-                            let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
-                            let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
-                            let author = await getUserJs.getUserAsAdmin(authorHandle)
-                            let date = new Date()
+                        
+                        console.log("passed verification of signature and is a post")
+                        let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
+                        let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+                        let author = await getUserJs.getUserAsAdmin(authorHandle)
+                        let date = new Date()
 
-                            authorHandle = author.handle
-                            let postDate = date.getTime()
-                            let link = sanitize(body.object.id)
-                            let content = sanitize(body.object.content)
-                            //verify that the user actually follows the post's author
-                            let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [author, content, link, postDate]))
-                            console.log(response)       
-                        }
+                        authorHandle = author.handle
+                        let postDate = date.getTime()
+                        let link = sanitize(body.object.id)
+                        let content = sanitize(body.object.content)
+                        //verify that the user actually follows the post's author
+                        let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [author, content, link, postDate]))
+                        console.log(response)    
                     }
                 }
             }
