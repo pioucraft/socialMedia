@@ -2,6 +2,7 @@ const query = require("../../javascript/db");
 const encryption = require("../../javascript/encryption")
 const getUserJs = require("../../javascript/getuser");
 const crypto = require("node:crypto");
+const sanitize = require("sanitize-html")
 
 async function inbox(req) {
     try {
@@ -118,6 +119,23 @@ async function inbox(req) {
                                 }
                             }
                             
+                        }
+                    }
+                }
+                else if(body.type == "Create") {
+                    if(body.object.type == "Note") {
+                        if(await encryption.verifySignature(req, body)) {
+                            let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
+                            let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+                            let author = await getUserJs.getUserAsAdmin(authorHandle)
+                            let date = new Date()
+
+                            authorHandle = author.handle
+                            let postDate = date.getTime()
+                            let link = sanitize(body.object.id)
+                            let content = sanitize(body.object.content)
+                            let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [author, content, link, postDate]))
+                            console.log(response)       
                         }
                     }
                 }

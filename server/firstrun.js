@@ -13,6 +13,12 @@ try {
 catch(err) {
     console.log(err)
 }
+try {
+    query("CREATE TABLE RemotePosts(author VARCHAR(50), content TEXT, link VARCHAR(300), date BIGSERIAL, likes BIGSERIAL, boosts BIGSERIAL, answers TEXT)")
+}
+catch(err) {
+    console.log(err)
+}
 
 console.log("1️⃣  - The database was succesfuly initialized")
 let toLog = "\n\n🚀 If you followed all the instructions in the documentation, you can safely run 'bun run start' to launch the social media"
