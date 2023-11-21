@@ -124,7 +124,7 @@ async function inbox(req) {
                 }
                 else if(body.type == "Create") {
                     if(body.object.type == "Note") {
-                        console.log(JSON.stringify(body))
+                        console.log(JSON.stringify(body.object.replies))
                         if(await encryption.verifySignature(req, body)) {
                             console.log("passed verification of signature and is a post")
                             let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
