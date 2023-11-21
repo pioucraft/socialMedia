@@ -14,8 +14,6 @@ async function inbox(req) {
             console.log("ah")
             console.log(JSON.stringify(body.object.replies))
             if(await encryption.verifySignature(req, body)) {
-                
-                
                 console.log(body)
                 if(body.type == "Undo") {
                     if(body.object.type == "Follow") {
