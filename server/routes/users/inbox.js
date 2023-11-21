@@ -7,7 +7,7 @@ const sanitize = require("sanitize-html")
 async function inbox(req) {
     try {
         let body = await req.json()
-        console.log(body)
+        console.log(JSON.stringify(body))
         let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse && req.headers.get("content-type") == "application/activity+json") {
