@@ -41,6 +41,7 @@ async function getUserAsAdmin(user) {
 async function fetchUser(user) {
     let userSDomain = user.split("@")[1]
     let userWithoutDomain = user.split("@")[0]
+    console.log(`https://${userSDomain}/.well-known/webfinger?resource=acct:${userWithoutDomain}@${userSDomain}`)
     let userWebfinger = await (await fetch(`https://${userSDomain}/.well-known/webfinger?resource=acct:${userWithoutDomain}@${userSDomain}`)).json()
     let userLink = ""
     for(let i = 0;i<userWebfinger.links.length;i++) {
