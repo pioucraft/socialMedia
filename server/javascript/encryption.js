@@ -35,7 +35,7 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
 
 async function verifySignature(req, body) {
     
-    const hash = crypto.createHash('SHA-256');
+    const hash = crypto.createHash('sha256');
     hash.update(body);
     const digest = hash.digest('base64');
     console.log(digest)
