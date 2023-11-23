@@ -36,7 +36,11 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
 async function verifySignature(req, body) {
     
     const hash = crypto.createHash('sha256');
+    const encoder = new TextEncoder();
     const digest = (await crypto.subtle.digest("SHA-256",await req.clone().arrayBuffer())).toString("base64");
+    const hashArray = Array.from(new Uint8Array(digest));
+    const hashBase64 = btoa(hashArray.map(byte => String.fromCharCode(byte)).join(''));
+    digest = hashBase64
     console.log(JSON.stringify(body))
     console.log(digest)
     console.log(req.headers.get("digest").split("SHA-256=")[1])
