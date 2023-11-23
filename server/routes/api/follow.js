@@ -28,7 +28,7 @@ async function follow(req) {
                         let newFollowing = []
                         for(let j=0;j<userFollowing.length;j++) {
                             if(userFollowing[i].user != user) {
-                                newFollowing.push(userFollowing[i])
+                                newFollowing.push(userFollowing[j])
                             }
                         }
                         await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(newFollowing), handle])
