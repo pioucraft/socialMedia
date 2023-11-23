@@ -1,7 +1,7 @@
 const query = require("./db");
 const getUserJs = require("./getuser")
 const crypto = require("node:crypto")
-const hash = require("hash.js")
+var hash = require("hash.js")
 
 async function signWithoutBody(actor, rawHeaders, userLink, date) {
     let headers = rawHeaders.split(" ")
