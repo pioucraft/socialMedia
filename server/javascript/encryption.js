@@ -38,6 +38,7 @@ async function verifySignature(req, body) {
     const hash = crypto.createHash('sha256');
     hash.update(JSON.stringify(body), "utf-8");
     const digest = hash.digest('base64');
+    console.log(JSON.stringify(body))
     console.log(digest)
     console.log(req.headers.get("digest").split("SHA-256=")[1])
     let now = new Date()
