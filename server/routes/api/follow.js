@@ -27,7 +27,7 @@ async function follow(req) {
                         doIUnfollow = true
                         let newFollowing = []
                         for(let j=0;j<userFollowing.length;j++) {
-                            if(userFollowing[i].user != user) {
+                            if(userFollowing[j].user != user) {
                                 newFollowing.push(userFollowing[j])
                             }
                         }
