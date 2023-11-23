@@ -37,7 +37,7 @@ async function verifySignature(req, body) {
     
     const hash = crypto.createHash('sha256');
     const encoder = new TextEncoder();
-    let digest = (await crypto.subtle.digest("SHA-256",encoder.encode(JSON.stringify(body))));
+    let digest = (await crypto.subtle.digest("SHA-256",await req.clone().arrayBuffer()));
     const hashArray = Array.from(new Uint8Array(digest));
     const hashBase64 = btoa(String.fromCharCode(...hashArray))
     digest = hashBase64
