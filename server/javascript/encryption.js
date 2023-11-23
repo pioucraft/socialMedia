@@ -1,6 +1,7 @@
 const query = require("./db");
 const getUserJs = require("./getuser")
 const crypto = require("node:crypto")
+const hash = require("hash.js")
 
 async function signWithoutBody(actor, rawHeaders, userLink, date) {
     let headers = rawHeaders.split(" ")
@@ -44,6 +45,8 @@ async function verifySignature(req, body) {
     console.log(JSON.stringify(body))
     console.log(hash.update(JSON.stringify(body), "utf-8").digest().toString("base64"))
     console.log(digest)
+    console.log(hash.sha256.update(JSON.stringify(body)).digest("base64"))
+    console.log("|||||")
     console.log(req.headers.get("digest").split("SHA-256=")[1])
     let now = new Date()
     let date = new Date(req.headers.get("date"))
