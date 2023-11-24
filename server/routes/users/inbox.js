@@ -6,7 +6,7 @@ const sanitize = require("sanitize-html")
 
 async function inbox(req) {
     try {
-        console.log(req.body)
+        console.log(await Bun.readableStreamToText(req.body))
         let body = await req.json()
         console.log(body)
         let handle = req.url.split("/")[4]
