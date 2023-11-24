@@ -6,15 +6,15 @@ const sanitize = require("sanitize-html")
 
 async function inbox(req) {
     try {
-        let body = (await Bun.readableStreamToText(req.body))
-        //let body = await req.json()
+        let bodyString = (await Bun.readableStreamToText(req.body))
+        let body = JSON.parse(bodyString)
         console.log(body)
         let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
         if(handleFromDatabse) {
             console.log("ah")
             console.log(JSON.stringify(body.object.replies))
-            if(await encryption.verifySignature(req, body)) {
+            if(await encryption.verifySignature(req, bodyString)) {
                 console.log(body)
                 if(body.type == "Undo") {
                     if(body.object.type == "Follow") {

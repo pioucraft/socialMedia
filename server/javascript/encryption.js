@@ -42,10 +42,10 @@ async function verifySignature(req, body) {
     const hashArray = Array.from(new Uint8Array(digest));
     const hashBase64 = btoa(String.fromCharCode(...hashArray))
     digest = hashBase64
-    console.log(JSON.stringify(body))
-    console.log(hash.update(JSON.stringify(body), "utf-8").digest().toString("base64"))
+    console.log(body)
+    console.log(hash.update(body, "utf-8").digest().toString("base64"))
     console.log(digest)
-    console.log((Buffer.from(hashJs.sha256().update(JSON.stringify(body)).digest("hex").toString("base64"), "hex")).toString("base64"))
+    console.log((Buffer.from(hashJs.sha256().update(body).digest("hex").toString("base64"), "hex")).toString("base64"))
     console.log("|||||")
     console.log(req.headers.get("digest").split("SHA-256=")[1])
     let now = new Date()
