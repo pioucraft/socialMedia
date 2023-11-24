@@ -6,7 +6,8 @@ const sanitize = require("sanitize-html")
 
 async function inbox(req) {
     try {
-        let body = await req.json()
+        let body = (await Bun.readableStreamToText(req.body))
+        //let body = await req.json()
         console.log(body)
         let handle = req.url.split("/")[4]
         let handleFromDatabse = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]
