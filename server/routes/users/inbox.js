@@ -131,7 +131,8 @@ async function inbox(req) {
                         let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
                         let author = await getUserJs.getUserAsAdmin(authorHandle)
                         let date = new Date()
-
+                        console.log(authorHandle)
+                        console.log(author)
                         authorHandle = author.handle
                         let postDate = date.getTime()
                         let link = sanitize(body.object.id)
