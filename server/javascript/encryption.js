@@ -34,12 +34,12 @@ async function signWithoutBody(actor, rawHeaders, userLink, date) {
     return `keyId=${process.env.URL}/users/${actor}#main-key",algorithm="rsa-sha256",headers="${rawHeaders}",signature="${signature}"`
 }
 
-async function verifySignature(req, body) {
-    
+async function verifySignature(req, bodyAsString) {
+    let body = JSON.parse(bodyAsString)
     const hash = crypto.createHash('sha256');
     const encoder = new TextEncoder();
-    let digest = hash.update(body, "utf-8").digest().toString("base64")
-    console.log(body)
+    let digest = hash.update(bodyAsString, "utf-8").digest().toString("base64")
+    console.log(bodyAsString)
     console.log(digest)
     console.log("|||||")
     console.log(req.headers.get("digest").split("SHA-256=")[1])
