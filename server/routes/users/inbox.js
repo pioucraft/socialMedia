@@ -143,7 +143,8 @@ async function inbox(req) {
                         console.log(link)
                         console.log(content)
                         let response = (await query("INSERT INTO RemotePosts (author, content, link, date, likes, boosts) VALUES ($1, $2, $3, $4, 0, 0)", [authorHandle, content, link, postDate]))
-                        console.log(response)    
+                        console.log(response)
+                        return {"message": "202 Accepted", "status": 202}
                     }
                 }
             }
