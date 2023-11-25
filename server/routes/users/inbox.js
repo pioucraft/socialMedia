@@ -137,7 +137,11 @@ async function inbox(req) {
                         let link = sanitize(body.object.id)
                         let content = sanitize(body.object.content)
                         //verify that the user actually follows the post's author
-                        let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [author, content, link, postDate]))
+                        console.log(authorHandle)
+                        console.log(postDate)
+                        console.log(link)
+                        console.log(content)
+                        let response = (await query("INSERT INTO RemotePosts (author, content, link, date) VALUES ($1, $2, $3, $4)", [authorHandle, content, link, postDate]))
                         console.log(response)    
                     }
                 }
