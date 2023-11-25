@@ -133,7 +133,7 @@ async function inbox(req) {
                         let date = new Date()
                         console.log(authorHandle)
                         console.log(author)
-                        authorHandle = author.handle
+                        authorHandle = author.message.handle
                         let postDate = date.getTime()
                         let link = sanitize(body.object.id)
                         let content = sanitize(body.object.content)
