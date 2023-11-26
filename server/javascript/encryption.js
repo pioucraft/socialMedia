@@ -53,7 +53,7 @@ async function verifySignature(req, bodyAsString) {
         let signature = ""
         for(let i=0;i<signatureHeader.length;i++) {
             if(signatureHeader[i].startsWith("headers")) {
-                headersList = signatureHeader[i].split('"')[1].split('"')
+                headersList = signatureHeader[i].split('"')[1].split('"')[0]
             }
             else if(signatureHeader[i].startsWith("algorithm")) {
                 algorithm = signatureHeader[i].split('"')[1].split('"')[0]
@@ -62,7 +62,6 @@ async function verifySignature(req, bodyAsString) {
                 signature = signatureHeader[3].split('"')[1].split('"')[0]
             }
         }
-        [0]
         console.log(headersList)
         
         
