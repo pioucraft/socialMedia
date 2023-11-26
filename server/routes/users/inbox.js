@@ -137,14 +137,18 @@ async function inbox(req) {
                         let postDate = date.getTime()
                         let link = sanitize(body.object.id)
                         let content = sanitize(body.object.content)
-                        //verify that the user actually follows the post's author
-                        console.log(authorHandle)
-                        console.log(postDate)
-                        console.log(link)
-                        console.log(content)
-                        let response = (await query("INSERT INTO RemotePosts (author, content, link, date, likes, boosts) VALUES ($1, $2, $3, $4, 0, 0)", [authorHandle, content, link, postDate]))
-                        console.log(response)
-                        return {"message": "202 Accepted", "status": 202}
+                        if(JSON.parse(handleFromDatabse.following).includes(authorHandle)) {
+                            console.log(authorHandle)
+                            console.log(postDate)
+                            console.log(link)
+                            console.log(content)
+                            let response = (await query("INSERT INTO RemotePosts (author, content, link, date, likes, boosts) VALUES ($1, $2, $3, $4, 0, 0)", [authorHandle, content, link, postDate]))
+                            console.log(response)
+                            return {"message": "202 Accepted", "status": 202}
+                        }
+                        else {
+                            return {"message": "400 Bad Request", "status": 400}
+                        }
                     }
                 }
             }
