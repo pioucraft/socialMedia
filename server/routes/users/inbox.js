@@ -139,7 +139,7 @@ async function inbox(req) {
                         let content = sanitize(body.object.content)
                         console.log(JSON.parse(handleFromDatabse.following))
                         let isFollowing = false
-                        for(let i=0;i<JSON.parse(handleFromDatabse.following);i++) {
+                        for(let i=0;i<JSON.parse(handleFromDatabse.following).length;i++) {
                             if(JSON.parse(handleFromDatabse.following)[i].user == authorHandle) {
                                 isFollowing = true                                
                             } 
