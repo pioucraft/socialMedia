@@ -138,7 +138,13 @@ async function inbox(req) {
                         let link = sanitize(body.object.id)
                         let content = sanitize(body.object.content)
                         console.log(JSON.parse(handleFromDatabse.following))
-                        if(JSON.parse(handleFromDatabse.following).includes(authorHandle)) {
+                        let isFollowing = false
+                        for(let i=0;i<JSON.parse(handleFromDatabse.following);i++) {
+                            if(JSON.parse(handleFromDatabse.following)[i].user == authorHandle) {
+                                isFollowing = true                                
+                            } 
+                        }
+                        if(isFollowing == true) {
                             console.log(authorHandle)
                             console.log(postDate)
                             console.log(link)
