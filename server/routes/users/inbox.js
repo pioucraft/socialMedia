@@ -137,6 +137,7 @@ async function inbox(req) {
                         let postDate = date.getTime()
                         let link = sanitize(body.object.id)
                         let content = sanitize(body.object.content)
+                        console.log(JSON.parse(handleFromDatabse.following))
                         if(JSON.parse(handleFromDatabse.following).includes(authorHandle)) {
                             console.log(authorHandle)
                             console.log(postDate)
