@@ -48,10 +48,24 @@ async function verifySignature(req, bodyAsString) {
     if(digest == req.headers.get("digest").split("SHA-256=")[1] && now.getTime() < date.getTime() + 30_000) {
         console.log("true")
         let signatureHeader = req.headers.get("signature").split(",")
-        let headersList = signatureHeader[2].split('"')[1].split('"')[0]
+        let headersList = ""
+        let algorithm = ""
+        let signature = ""
+        for(let i=0;i<signatureHeader.length;i++) {
+            if(signatureHeader[i].startsWith("headers")) {
+                headersList = signatureHeader[i].split('"')[1].split('"')
+            }
+            else if(signatureHeader[i].startsWith("algorithm")) {
+                algorithm = signatureHeader[i].split('"')[1].split('"')[0]
+            }
+            else if(signatureHeader[i].startsWith("signature")) {
+                signature = signatureHeader[3].split('"')[1].split('"')[0]
+            }
+        }
+        [0]
         console.log(headersList)
-        let algorithm = signatureHeader[1].split('"')[1].split('"')[0]
-        let signature = signatureHeader[3].split('"')[1].split('"')[0]
+        
+        
         console.log(signature)
         let headers = []
         let splitedHeaders = headersList.split(" ")
