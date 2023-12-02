@@ -11,7 +11,10 @@ const server = Bun.serve({
         console.log("\n\n------------------\n\n")
         if(req.url.split("/")[3] == "api") {
             let response = await api(req)
-            if(typeof response.message == "object") {
+            if(!response.message) {
+                return response
+            }
+            else if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
                     headers: { "Content-Type": "application/json" },
                     status: response.status
@@ -24,7 +27,10 @@ const server = Bun.serve({
         }
         else if(req.url.split("/")[3] == "users") {
             let response = await users(req)
-            if(typeof response.message == "object") {
+            if(!response.message) {
+                return response
+            }
+            else if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
                     headers: { "Content-Type": "application/json" },
                     status: response.status
@@ -36,7 +42,10 @@ const server = Bun.serve({
         }
         else if(req.url.split("/")[3] == ".well-known" && req.url.split("/")[4].split("?")[0] == "webfinger") {
             let response = await webfinger(req)
-            if(typeof response.message == "object") {
+            if(!response.message) {
+                return response
+            }
+            else if(typeof response.message == "object") {
                 return new Response(JSON.stringify(response.message), {
                     headers: { "Content-Type": "application/json" },
                     status: response.status
