@@ -78,7 +78,7 @@ async function testAuthentification(body) {
         }
     }
     catch {
-
+        return {"message": "500 Internal Server Error", "status": 500}
     }
 }
 
