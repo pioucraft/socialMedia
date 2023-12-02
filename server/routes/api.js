@@ -28,7 +28,7 @@ async function api(req) {
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     console.log(startOfUrlPath)
     let body = await req.json()
-    let testedAuthentification = await testAuthentification(body, startOfUrlPath)
+    let testedAuthentification = await testAuthentification(body, url)
     console.log(testedAuthentification)
     if(pathsThatNeedAuthentification.includes(startOfUrlPath) && testedAuthentification != true) {
         return testedAuthentification
@@ -74,7 +74,7 @@ async function api(req) {
     }
 }
 
-async function testAuthentification(body, startOfUrlPath) {
+async function testAuthentification(body, url) {
     try {
         if(!body.password || !body.handle) {
             return {"message": "401 Missing Authentification", "status": 401}
