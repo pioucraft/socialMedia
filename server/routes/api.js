@@ -23,10 +23,11 @@ async function api(req) {
         "/changeProfilePicture",
         "/follow"
     ]
-    let startOfUrlPath = `/${url.pathname.split("/")[1]}`
+    let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     console.log(startOfUrlPath)
-    if(pathsThatNeedAuthentification.includes()) {
-        
+    let body = await req.json()
+    if(pathsThatNeedAuthentification.includes(startOfUrlPath) && !testAuthentification(body)) {
+
     }
     else if(url.pathname.startsWith("/api/createAccount")) {
         return (await createAccount(req))
@@ -66,6 +67,17 @@ async function api(req) {
     }
     else {
         return {"message": "404 Not Found", "status": 404}
+    }
+}
+
+async function testAuthentification(body) {
+    try {
+        if(!body.includes("password") || !body.includes("handle")) {
+            return new Response('{"error": "Body missing authentification"}', {"status": 401}) 
+        }
+    }
+    catch {
+
     }
 }
 
