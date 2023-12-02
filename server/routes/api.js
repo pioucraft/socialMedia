@@ -27,7 +27,13 @@ async function api(req) {
     ]
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     console.log(startOfUrlPath)
-    let body = await req.json()
+    let body = {}
+    try {
+        body = await req.json()
+    }
+    catch(err) {
+
+    }
     let testedAuthentification = await testAuthentification(body, url)
     console.log(testedAuthentification)
     if(pathsThatNeedAuthentification.includes(startOfUrlPath) && testedAuthentification != true) {
