@@ -28,7 +28,7 @@ async function api(req) {
     let body = await req.json()
     let testedAuthentification = testAuthentification(body)
     if(pathsThatNeedAuthentification.includes(startOfUrlPath) && testedAuthentification != true) {
-        return testAuthentification
+        return testedAuthentification
     }
     else if(url.pathname.startsWith("/api/createAccount")) {
         return (await createAccount(req))
