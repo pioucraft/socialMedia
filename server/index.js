@@ -18,7 +18,7 @@ const server = Bun.serve({
                 })
             }
             else {
-                return new Response(response.message)
+                return new Response(response.message, {status: response.status})
             }
             
         }
