@@ -1,9 +1,8 @@
 const query = require("../../javascript/db")
 
 
-async function login(req) {
+async function login(body) {
     try {
-        let body = await req.json()
         let email = body.email
         let password = body.password
         let truePassword = (await query("SELECT * FROM Users WHERE email = $1", [email])).rows[0].password

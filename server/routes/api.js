@@ -20,7 +20,7 @@ async function api(req) {
         "/changeUsername",
         "/changeEmail",
         "/changeBio",
-        "/uploadFile",
+        // this is a diferent process "/uploadFile",
         "/changePassword",
         "/changeProfilePicture",
         "/follow"
@@ -34,40 +34,40 @@ async function api(req) {
         return testedAuthentification
     }
     else if(url.pathname.startsWith("/api/createAccount")) {
-        return (await createAccount(req, body))
+        return (await createAccount(body))
     }
     else if(url.pathname.startsWith("/api/verifyEmail")) {
         return (await verifyEmail(req))
     }
     else if(url.pathname.startsWith("/api/sendVerificationEmail")) {
-        return (await sendVerificationEmail(req, body))
+        return (await sendVerificationEmail(body))
     }
     else if(url.pathname.startsWith("/api/changeUsername")) {
-        return (await changeUsername(req, body))
+        return (await changeUsername(body))
     }
     else if(url.pathname.startsWith("/api/changeEmail")) {
-        return (await changeEmail(req, body))
+        return (await changeEmail(body))
     }
     else if(url.pathname.startsWith("/api/changeBio")) {
-        return (await changeBio(req, body))
+        return (await changeBio(body))
     }
     else if(url.pathname.startsWith("/api/uploadFile")) {
-        return (await uploadFile(req, body))
+        return (await uploadFile(req))
     }
     else if(url.pathname.startsWith("/api/changePassword")) {
-        return (await changePassword(req, body))
+        return (await changePassword(body))
     }
     else if(url.pathname.startsWith("/api/login")) {
-        return (await login(req, body))
+        return (await login(body))
     }
     else if(url.pathname.startsWith("/api/changeProfilePicture")) {
-        return (await changeProfilePicture(req, body))
+        return (await changeProfilePicture(body))
     }
     else if(url.pathname.startsWith("/api/getUser")) {
-        return (await getUser(req, body))
+        return (await getUser(body))
     }
     else if(url.pathname.startsWith("/api/follow")) {
-        return (await follow(req, body))
+        return (await follow(body))
     }
     else {
         return {"message": "404 Not Found", "status": 404}
@@ -88,7 +88,7 @@ async function testAuthentification(body, startOfUrlPath) {
         let emailVerification = handleFromDatabase.emailverification
         if(trueToken != token) 
             return {"message": "401 Incorrect Credentials", "status": 401}
-        if(emailVerification != "yes" && startOfUrlPath != "/sendVerificationEmail") 
+        if(emailVerification != "yes" && (startOfUrlPath != "/sendVerificationEmail" ||startOfUrlPath != "/changeEmail")) 
             return {"message": "401 Please Verify Your Email", "status": 401}
         else 
             return true

@@ -11,9 +11,8 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-async function sendVerificationEmail(req) {
+async function sendVerificationEmail(body) {
     try {
-        let body = await req.json()
         let email = body.email
         let uuid = (await query("SELECT * FROM Users WHERE email = $1;", [email])).rows[0].emailverification
         if(uuid == "yes") {

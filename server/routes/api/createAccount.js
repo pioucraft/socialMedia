@@ -1,9 +1,8 @@
 const query = require("./../../javascript/db")
 const sanitize = require("sanitize-html")
 
-async function createAccount(req) {
+async function createAccount(body) {
     try {
-        let body = await req.json()
         let handle = sanitize(body.handle)
         handle = handle.toLowerCase()
         let username = sanitize(body.username)

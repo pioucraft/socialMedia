@@ -1,9 +1,8 @@
 const query = require("../../javascript/db")
 const sanitize = require("sanitize-html")
 
-async function changeBio(req, body) {
+async function changeBio(body) {
     try {
-        let body = await req.json()
         let handle = body.handle
         let bio = sanitize(body.bio)
         if(bio.length > 1000) {
