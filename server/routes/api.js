@@ -77,6 +77,7 @@ async function testAuthentification(body) {
         if(!body.password || !body.handle) {
             return {"message": "401 Missing Authentification", "status": 401}
         }
+        console.log("ok")
     }
     catch(err) {
         console.log(err)
