@@ -14,10 +14,10 @@ async function follow(body) {
         
         for(let i=0;i<userFollowing.length;i++) {
             if(userFollowing[i].user == user) {
-                return await unfollowFunction(body, i)
+                return await unfollowFunction(body, i, handle, user, userFollowing, userFromRemote)
             }
         }
-        return await followFunction(body)
+        return await followFunction(body, handle, user, userFollowing, userFromRemote)
         
 
     }
@@ -27,13 +27,8 @@ async function follow(body) {
     }
 }
 
-async function followFunction(body) {
-    let handle = body.handle
-    let user = body.user
-    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-    let userFollowing = JSON.parse(userFromDatabase.following)
+async function followFunction(body, handle, user, userFollowing, userFromRemote) {
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
-    let userFromRemote = await getUserJs.getUserAsAdmin(user)
     userFollowing.push({"id": activityId, "user": user,"accepted": false})
     await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), handle])
     let requestBody = {
@@ -74,13 +69,8 @@ async function followFunction(body) {
     return {"message": "Success Followed", "status": 200}
 }
 
-async function unfollowFunction(body, i) {
-    let handle = body.handle
-    let user = body.user
-    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-    let userFollowing = JSON.parse(userFromDatabase.following)
+async function unfollowFunction(body, i, handle, user, userFollowing, userFromRemote) {
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
-    let userFromRemote = await getUserJs.getUserAsAdmin(user)
     let newFollowing = []
     for(let j=0;j<userFollowing.length;j++) {
         if(userFollowing[j].user != user) {

@@ -141,7 +141,7 @@ async function inbox(req) {
                         let isFollowing = false
                         for(let i=0;i<JSON.parse(handleFromDatabse.following).length;i++) {
                             if(JSON.parse(handleFromDatabse.following)[i].user == authorHandle) {
-                                isFollowing = true                                
+                                isFollowing = true
                             } 
                         }
                         if(isFollowing == true) {
