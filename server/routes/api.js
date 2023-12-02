@@ -13,7 +13,22 @@ const follow = require("./api/follow")
 
 async function api(req) {
     let url = new URL(req.url)
-    if(url.pathname.startsWith("/api/createAccount")) {
+    let pathsThatNeedAuthentification = [
+        "/sendVerificationEmail",
+        "/changeUsername",
+        "/changeEmail",
+        "/changeBio",
+        "/uploadFile",
+        "/changePassword",
+        "/changeProfilePicture",
+        "/follow"
+    ]
+    let startOfUrlPath = `/${url.pathname.split("/")[1]}`
+    console.log(startOfUrlPath)
+    if(pathsThatNeedAuthentification.includes()) {
+        
+    }
+    else if(url.pathname.startsWith("/api/createAccount")) {
         return (await createAccount(req))
     }
     else if(url.pathname.startsWith("/api/verifyEmail")) {
