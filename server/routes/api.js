@@ -27,6 +27,7 @@ async function api(req) {
     console.log(startOfUrlPath)
     let body = await req.json()
     let testedAuthentification = await testAuthentification(body)
+    console.log(testedAuthentification)
     if(pathsThatNeedAuthentification.includes(startOfUrlPath) && testedAuthentification != true) {
         return testedAuthentification
     }
