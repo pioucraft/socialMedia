@@ -2,7 +2,7 @@ const query = require("../../javascript/db");
 const fs = require("node:fs")
 
 async function uploadFile(req) {
-    let formData = await (req.clone()).formData()
+    let formData = await req.formData()
     let handle = formData.get("handle")
     let token = formData.get("token")
     let accountFromDb = (await query("SELECT * FROM Users WHERE handle = $1;", [handle])).rows[0]

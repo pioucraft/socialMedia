@@ -29,7 +29,7 @@ async function api(req) {
     console.log(startOfUrlPath)
     let body = {}
     try {
-        body = await req.json()
+        body = await (req.clone()).json()
     }
     catch(err) {
 
