@@ -77,7 +77,8 @@ async function testAuthentification(body) {
             return {"message": "401 Missing Authentification", "status": 401}
         }
     }
-    catch {
+    catch(err) {
+        console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
