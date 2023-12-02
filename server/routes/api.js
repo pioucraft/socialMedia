@@ -73,7 +73,7 @@ async function api(req) {
 
 async function testAuthentification(body) {
     try {
-        if(!body.contains("password") || !body.contains("handle")) {
+        if(!body.password || !body.handle) {
             return {"message": "401 Missing Authentification", "status": 401}
         }
     }
