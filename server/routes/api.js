@@ -77,7 +77,15 @@ async function testAuthentification(body) {
         if(!body.password || !body.handle) {
             return {"message": "401 Missing Authentification", "status": 401}
         }
-        console.log("ok")
+        let handle = body.handle
+        let token = body.token
+        let trueToken = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].token
+            if(trueToken != token) {
+                return {"message": "401 Unauthorized", "status": 401}
+            }
+            else {
+                return true
+            }
     }
     catch(err) {
         console.log(err)
