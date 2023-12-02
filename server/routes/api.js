@@ -29,7 +29,8 @@ async function api(req) {
     console.log(startOfUrlPath)
     let body = {}
     try {
-        body = await (req.clone()).json()
+        if(!url.pathname.startsWith("/api/uploadFile"))
+            body = await req.json()
     }
     catch(err) {
 
