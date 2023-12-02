@@ -11,6 +11,7 @@ async function follow(body) {
         let userFollowing = JSON.parse(userFromDatabase.following)
         if(userFollowing == null) userFollowing = []
         console.log(userFollowing)
+        let userFromRemote = await getUserJs.getUserAsAdmin(user)
         
         for(let i=0;i<userFollowing.length;i++) {
             if(userFollowing[i].user == user) {
@@ -70,6 +71,8 @@ async function followFunction(body, handle, user, userFollowing, userFromRemote)
 }
 
 async function unfollowFunction(body, i, handle, user, userFollowing, userFromRemote) {
+    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+    let userFollowing = JSON.parse(userFromDatabase.following)
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
     let newFollowing = []
     for(let j=0;j<userFollowing.length;j++) {
