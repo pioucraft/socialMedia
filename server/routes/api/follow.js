@@ -14,7 +14,7 @@ async function follow(body) {
         
         for(let i=0;i<userFollowing.length;i++) {
             if(userFollowing[i].user == user) {
-                return await unfollowFunction(body)
+                return await unfollowFunction(body, i)
             }
         }
         return await followFunction(body)
@@ -74,7 +74,7 @@ async function followFunction(body) {
     return {"message": "Success Followed", "status": 200}
 }
 
-async function unfollowFunction(body) {
+async function unfollowFunction(body, i) {
     let handle = body.handle
     let user = body.user
     let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
