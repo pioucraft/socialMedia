@@ -12,13 +12,14 @@ async function follow(body) {
         if(userFollowing == null) userFollowing = []
         console.log(userFollowing)
         let userFromRemote = await getUserJs.getUserAsAdmin(user)
+        let activityId = `${process.env.URL}/${crypto.randomUUID()}`
         
         for(let i=0;i<userFollowing.length;i++) {
             if(userFollowing[i].user == user) {
-                return await unfollowFunction(body, i, handle, user, userFollowing, userFromRemote)
+                return await unfollowFunction(body, i, handle, user, userFollowing, userFromRemote, activityId)
             }
         }
-        return await followFunction(body, handle, user, userFollowing, userFromRemote)
+        return await followFunction(body, handle, user, userFollowing, userFromRemote, activityId)
         
 
     }
@@ -28,8 +29,7 @@ async function follow(body) {
     }
 }
 
-async function followFunction(body, handle, user, userFollowing, userFromRemote) {
-    let activityId = `${process.env.URL}/${crypto.randomUUID()}`
+async function followFunction(body, handle, user, userFollowing, userFromRemote, activityId) {
     userFollowing.push({"id": activityId, "user": user,"accepted": false})
     await query("UPDATE Users SET following = $1 WHERE handle = $2", [JSON.stringify(userFollowing), handle])
     let requestBody = {
@@ -70,10 +70,7 @@ async function followFunction(body, handle, user, userFollowing, userFromRemote)
     return {"message": "Success Followed", "status": 200}
 }
 
-async function unfollowFunction(body, i, handle, user, userFollowing, userFromRemote) {
-    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-    let userFollowing = JSON.parse(userFromDatabase.following)
-    let activityId = `${process.env.URL}/${crypto.randomUUID()}`
+async function unfollowFunction(body, i, handle, user, userFollowing, userFromRemote, activityId) {
     let newFollowing = []
     for(let j=0;j<userFollowing.length;j++) {
         if(userFollowing[j].user != user) {
