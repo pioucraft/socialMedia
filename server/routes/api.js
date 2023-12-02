@@ -12,44 +12,41 @@ const getUser = require("./api/getUser")
 const follow = require("./api/follow")
 
 async function api(req) {
-    let url = req.url
-    if(!url.endsWith("/")) {
-        url = url.concat("/")
-    }
-    if(url.split("/")[4] == "createAccount") {
+    let url = new URL(req.url)
+    if(url.pathname.startsWith("createAccount")) {
         return (await createAccount(req))
     }
-    else if(url.split("/")[4] == "verifyEmail") {
+    else if(url.pathname.startsWith("verifyEmail")) {
         return (await verifyEmail(req))
     }
-    else if(url.split("/")[4] == "sendVerificationEmail") {
+    else if(url.pathname.startsWith("sendVerificationEmail")) {
         return (await sendVerificationEmail(req))
     }
-    else if(url.split("/")[4] == "changeUsername") {
+    else if(url.pathname.startsWith("changeUsername")) {
         return (await changeUsername(req))
     }
-    else if(url.split("/")[4] == "changeEmail") {
+    else if(url.pathname.startsWith("changeEmail")) {
         return (await changeEmail(req))
     }
-    else if(url.split("/")[4] == "changeBio") {
+    else if(url.pathname.startsWith("changeBio")) {
         return (await changeBio(req))
     }
-    else if(url.split("/")[4] == "uploadFile") {
+    else if(url.pathname.startsWith("uploadFile")) {
         return (await uploadFile(req))
     }
-    else if(url.split("/")[4] == "changePassword") {
+    else if(url.pathname.startsWith("changePassword")) {
         return (await changePassword(req))
     }
-    else if(url.split("/")[4] == "login") {
+    else if(url.pathname.startsWith("login")) {
         return (await login(req))
     }
-    else if(url.split("/")[4] == "changeProfilePicture") {
+    else if(url.pathname.startsWith("changeProfilePicture")) {
         return (await changeProfilePicture(req))
     }
-    else if(url.split("/")[4] == "getUser") {
+    else if(url.pathname.startsWith("getUser")) {
         return (await getUser(req))
     }
-    else if(url.split("/")[4] == "follow") {
+    else if(url.pathname.startsWith("follow")) {
         return (await follow(req))
     }
     else {
