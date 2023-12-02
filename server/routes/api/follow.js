@@ -28,6 +28,8 @@ async function follow(body) {
 }
 
 async function followFunction(body) {
+    let handle = body.handle
+    let user = body.user
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
     let userFromRemote = await getUserJs.getUserAsAdmin(user)
     userFollowing.push({"id": activityId, "user": user,"accepted": false})
@@ -71,6 +73,8 @@ async function followFunction(body) {
 }
 
 async function unfollowFunction(body) {
+    let handle = body.handle
+    let user = body.user
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
     let userFromRemote = await getUserJs.getUserAsAdmin(user)
     let newFollowing = []
