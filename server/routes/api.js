@@ -26,8 +26,9 @@ async function api(req) {
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     console.log(startOfUrlPath)
     let body = await req.json()
-    if(pathsThatNeedAuthentification.includes(startOfUrlPath) && !testAuthentification(body)) {
-
+    let testedAuthentification = testAuthentification(body)
+    if(pathsThatNeedAuthentification.includes(startOfUrlPath) && testAuthentification != true) {
+        return testAuthentification
     }
     else if(url.pathname.startsWith("/api/createAccount")) {
         return (await createAccount(req))
@@ -73,7 +74,7 @@ async function api(req) {
 async function testAuthentification(body) {
     try {
         if(!body.includes("password") || !body.includes("handle")) {
-            return new Response('{"error": "Body missing authentification"}', {"status": 401}) 
+            return {"message": "404 Not Found", "status": 404}
         }
     }
     catch {
