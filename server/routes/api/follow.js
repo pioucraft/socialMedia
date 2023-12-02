@@ -28,6 +28,8 @@ async function follow(body) {
 }
 
 async function followFunction(body) {
+    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+    let userFollowing = JSON.parse(userFromDatabase.following)
     let handle = body.handle
     let user = body.user
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
@@ -73,6 +75,8 @@ async function followFunction(body) {
 }
 
 async function unfollowFunction(body) {
+    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+    let userFollowing = JSON.parse(userFromDatabase.following)
     let handle = body.handle
     let user = body.user
     let activityId = `${process.env.URL}/${crypto.randomUUID()}`
