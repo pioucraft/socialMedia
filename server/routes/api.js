@@ -13,40 +13,40 @@ const follow = require("./api/follow")
 
 async function api(req) {
     let url = new URL(req.url)
-    if(url.pathname.startsWith("createAccount")) {
+    if(url.pathname.startsWith("/api/createAccount")) {
         return (await createAccount(req))
     }
-    else if(url.pathname.startsWith("verifyEmail")) {
+    else if(url.pathname.startsWith("/api/verifyEmail")) {
         return (await verifyEmail(req))
     }
-    else if(url.pathname.startsWith("sendVerificationEmail")) {
+    else if(url.pathname.startsWith("/api/sendVerificationEmail")) {
         return (await sendVerificationEmail(req))
     }
-    else if(url.pathname.startsWith("changeUsername")) {
+    else if(url.pathname.startsWith("/api/changeUsername")) {
         return (await changeUsername(req))
     }
-    else if(url.pathname.startsWith("changeEmail")) {
+    else if(url.pathname.startsWith("/api/changeEmail")) {
         return (await changeEmail(req))
     }
-    else if(url.pathname.startsWith("changeBio")) {
+    else if(url.pathname.startsWith("/api/changeBio")) {
         return (await changeBio(req))
     }
-    else if(url.pathname.startsWith("uploadFile")) {
+    else if(url.pathname.startsWith("/api/uploadFile")) {
         return (await uploadFile(req))
     }
-    else if(url.pathname.startsWith("changePassword")) {
+    else if(url.pathname.startsWith("/api/changePassword")) {
         return (await changePassword(req))
     }
-    else if(url.pathname.startsWith("login")) {
+    else if(url.pathname.startsWith("/api/login")) {
         return (await login(req))
     }
-    else if(url.pathname.startsWith("changeProfilePicture")) {
+    else if(url.pathname.startsWith("/api/changeProfilePicture")) {
         return (await changeProfilePicture(req))
     }
-    else if(url.pathname.startsWith("getUser")) {
+    else if(url.pathname.startsWith("/api/getUser")) {
         return (await getUser(req))
     }
-    else if(url.pathname.startsWith("follow")) {
+    else if(url.pathname.startsWith("/api/follow")) {
         return (await follow(req))
     }
     else {
