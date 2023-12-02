@@ -2,6 +2,7 @@ const query = require("../../javascript/db");
 const fs = require("node:fs")
 
 async function uploadFile(req) {
+    console.log(req.clone())
     let formData = await req.formData()
     let handle = formData.get("handle")
     let token = formData.get("token")
