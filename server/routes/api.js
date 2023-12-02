@@ -11,6 +11,8 @@ const changeProfilePicture = require("./api/changeProfilePicture")
 const getUser = require("./api/getUser")
 const follow = require("./api/follow")
 
+const query = require("../javascript/db")
+
 async function api(req) {
     let url = new URL(req.url)
     let pathsThatNeedAuthentification = [
