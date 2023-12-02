@@ -81,13 +81,15 @@ async function testAuthentification(body) {
         }
         let handle = body.handle
         let token = body.token
-        let trueToken = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].token
-            if(trueToken != token) {
-                return {"message": "401 Unauthorized", "status": 401}
-            }
-            else {
-                return true
-            }
+        let handleFromDatabase  = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+        if(!handleFromDatabase) 
+            return {"message": "401 Unauthorized", "status": 401}
+        let trueToken = handleFromDatabase.token
+        if(trueToken != token) 
+            return {"message": "401 Unauthorized", "status": 401}
+        else 
+            return true
+        
     }
     catch(err) {
         console.log(err)
