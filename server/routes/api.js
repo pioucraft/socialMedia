@@ -88,7 +88,7 @@ async function testAuthentification(body, url) {
         let emailVerification = handleFromDatabase.emailverification
         if(trueToken != token) 
             return {"message": "401 Incorrect Credentials", "status": 401}
-        if(emailVerification != "yes" && (!url.pathname.startsWith("/api/verifyEmail") ||!url.pathname.startsWith("/api/changeEmail") |!url.pathname.startsWith("/api/sendVerificationEmail"))) 
+        if(emailVerification != "yes" && (!url.pathname.startsWith("/api/verifyEmail") ||!url.pathname.startsWith("/api/changeEmail") ||!url.pathname.startsWith("/api/sendVerificationEmail"))) 
             return {"message": "401 Please Verify Your Email", "status": 401}
         else 
             return true
