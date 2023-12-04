@@ -1,5 +1,5 @@
-const getUserJs = require("../../javascript/getuser")
-const query = require("../../javascript/db");
+const getUserJs = require("../../../javascript/getuser")
+const query = require("../../../javascript/db");
 const sanitize = require("sanitize-html")
 
 async function createNote(body, handleFromDatabse) {

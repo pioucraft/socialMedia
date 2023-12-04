@@ -1,4 +1,4 @@
-const query = require("../../javascript/db");
+const query = require("../../../javascript/db");
 
 async function acceptFollow(body, handle, userFromDatabase) {
     let userFollowing = JSON.parse(userFromDatabase.following)

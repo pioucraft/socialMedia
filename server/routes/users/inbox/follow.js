@@ -1,6 +1,6 @@
 const query = require("../../../javascript/db");
 const crypto = require("node:crypto");const encryption = require("../../javascript/encryption")
-
+const encryption = require("../../../javascript/encryption")
 
 async function follow(body, handle) {
     try {
