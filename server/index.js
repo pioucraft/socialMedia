@@ -11,40 +11,16 @@ const server = Bun.serve({
         console.log("\n\n------------------\n\n")
         if(req.url.split("/")[3] == "api") {
             let response = await api(req)
-            if(typeof response.message == "object") {
-                return new Response(JSON.stringify(response.message), {
-                    headers: { "Content-Type": "application/json" },
-                    status: response.status
-                })
-            }
-            else {
-                return new Response(response.message, {status: response.status})
-            }
+            return returnGenerator(response)
             
         }
         else if(req.url.split("/")[3] == "users") {
             let response = await users(req)
-            if(typeof response.message == "object") {
-                return new Response(JSON.stringify(response.message), {
-                    headers: { "Content-Type": "application/json" },
-                    status: response.status
-                })
-            }
-            else {
-                return new Response(response.message)
-            }
+            return returnGenerator(response)
         }
         else if(req.url.split("/")[3] == ".well-known" && req.url.split("/")[4].split("?")[0] == "webfinger") {
             let response = await webfinger(req)
-            if(typeof response.message == "object") {
-                return new Response(JSON.stringify(response.message), {
-                    headers: { "Content-Type": "application/json" },
-                    status: response.status
-                })
-            }
-            else {
-                return new Response(response.message)
-            }
+            return returnGenerator(response)
         }
         else if(req.url.split("/")[3] == "files") {
             return new Response(Bun.file(`${__dirname}/routes/api/files/${req.url.split("/")[4]}/${req.url.split("/")[5]}`));
@@ -54,3 +30,15 @@ const server = Bun.serve({
         }
     }
 })
+
+function returnGenerator(response) {
+    if(typeof response.message == "object") {
+        return new Response(JSON.stringify(response.message), {
+            headers: { "Content-Type": "application/json" },
+            status: response.status
+        })
+    }
+    else {
+        return new Response(response.message, {status: response.status})
+    }
+}
