@@ -84,8 +84,8 @@ async function fetchUser(user) {
         sanitize(userLink),
         sanitize(userPage.inbox),
         sanitize(userPage.outbox),
-        sanitize(userPage.name),
-        sanitize(userPage.summary),
+        sanitize(userPage.name ?? ""),
+        sanitize(userPage.summary ?? ""),
         (userPage.icon ?? {}).url
     ]
 
