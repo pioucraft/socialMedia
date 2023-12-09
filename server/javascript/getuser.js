@@ -34,6 +34,7 @@ async function getUserAsAdmin(user) {
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
             let wasTheUserFetchedInTheLast24Hours = parseInt(parseInt(userFromDatabase.lastfetch)+1000*60*60*24) > parseInt(date.getTime())
             if(userFromDatabase && wasTheUserFetchedInTheLast24Hours) {
+                console.log(userFromDatabase)
                 return {"message": userFromDatabase, "status": 200}
             }
             //or else you refetch it
@@ -52,7 +53,7 @@ async function fetchUser(user) {
     let userSDomain = user.split("@")[1]
     let userWithoutDomain = user.split("@")[0]
     let userWebfinger = await (await fetch(`https://${userSDomain}/.well-known/webfinger?resource=acct:${userWithoutDomain}@${userSDomain}`)).json()
-    console.log(userWebfinger)
+    
     //fetch the link to acces the user page using webfinger
     let userLink = ""
     for(let i = 0;i<userWebfinger.links.length;i++) {
