@@ -6,12 +6,7 @@ client.connect().then(() => console.log("connected to the database"))
 
 
 async function query(query, parameters) {
-    if(parameters === undefined) {
-        return await client.query(query)
-    }
-    else {
-        return await client.query(query, parameters)
-    }
+    return await client.query(query, parameters ?? undefined);
 }
 
 module.exports = query
