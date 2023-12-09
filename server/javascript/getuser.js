@@ -76,7 +76,7 @@ async function fetchUser(user) {
     [
         returnStatement["profilepicture"]
     ] = [
-        (userPage.icon ?? {}).url ?? undefined
+        (userPage.icon ?? {}).url ?? "undefined"
     ]
     console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
