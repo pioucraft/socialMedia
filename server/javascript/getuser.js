@@ -71,10 +71,8 @@ async function fetchUser(user) {
     let returnStatement = {}
     //define returnStatement with correct values
     console.log("something")
-    let date = new Date()
 
     let something = "something"
-    console.log(date.getTime())
     [
         returnStatement.handle, 
         returnStatement.link,
