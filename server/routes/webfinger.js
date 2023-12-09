@@ -4,7 +4,7 @@ const query = require("../javascript/db")
 
 async function webfinger(req) {
     try {
-        let url = decodeURI(req.url)
+        let url = decodeURIComponent(req.url)
         if(url.split("?")[1].startsWith("resource")) {
             let resource = url.split("=")[1]
             if(resource.startsWith("acct:")) {
