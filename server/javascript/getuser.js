@@ -74,7 +74,7 @@ async function fetchUser(user) {
 
     let something = "something"
     [
-        returnStatement.profilepicture
+        returnStatement["profilepicture"]
     ] = [
         (userPage.icon ?? {}).url ?? undefined
     ]
