@@ -67,7 +67,7 @@ async function fetchUser(user) {
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
     let returnStatement = {}
     //define returnStatement with correct values
-    let date = new Date()
+    let date = new Date();
 
     [
         returnStatement.lastfetch, 
