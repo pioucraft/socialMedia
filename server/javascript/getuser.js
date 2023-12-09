@@ -89,9 +89,9 @@ async function fetchUser(user) {
         sanitize(userLink),
         sanitize(userPage.inbox),
         sanitize(userPage.outbox),
-        sanitize(userPage.name ?? ""),
-        sanitize(userPage.summary ?? ""),
-        (userPage.icon ?? {}).url ?? ""
+        sanitize(userPage.name ?? user),
+        sanitize(userPage.summary ?? " "),
+        (userPage.icon ?? {}).url ?? undefined
     ]
     console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
