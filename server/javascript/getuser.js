@@ -75,8 +75,7 @@ async function fetchUser(user) {
 
     let something = "something"
     console.log(date.getTime());
-    [returnStatement.test] = ["hello"]
-    /*
+
     [
         returnStatement.lastfetch, 
         returnStatement.handle, 
@@ -89,14 +88,14 @@ async function fetchUser(user) {
     ] = [
         date.getTime(),
         sanitize(user),
-        sanitize(userLink ?? ""),
-        sanitize(userPage.inbox ?? ""),
-        sanitize(userPage.outbox ?? ""),
+        sanitize(userLink),
+        sanitize(userPage.inbox),
+        sanitize(userPage.outbox),
         sanitize(userPage.name ?? user),
-        sanitize(userPage.summary ?? " "),
-        (userPage.icon ?? {}).url ?? undefined
+        sanitize(userPage.summary),
+        (userPage.icon ?? {}).url
     ]
-    */
+    
     console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
         returnStatement.publickeypem = userPage.publicKey.publicKeyPem
