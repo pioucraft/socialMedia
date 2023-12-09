@@ -52,7 +52,7 @@ async function fetchUser(user) {
     let userSDomain = user.split("@")[1]
     let userWithoutDomain = user.split("@")[0]
     let userWebfinger = await (await fetch(`https://${userSDomain}/.well-known/webfinger?resource=acct:${userWithoutDomain}@${userSDomain}`)).json()
-    
+    console.log(userWebfinger)
     //fetch the link to acces the user page using webfinger
     let userLink = ""
     for(let i = 0;i<userWebfinger.links.length;i++) {
@@ -66,7 +66,6 @@ async function fetchUser(user) {
     //fetch the user page and initialize the return statement
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
     let returnStatement = {}
-    console.log(userPage)
     //define returnStatement with correct values
     let date = new Date()
     [
