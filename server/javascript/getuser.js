@@ -85,10 +85,10 @@ async function fetchUser(user) {
         returnStatement.profilepicture
     ] = [
         date.getTime(),
-        sanitize(user),
-        sanitize(userLink),
-        sanitize(userPage.inbox),
-        sanitize(userPage.outbox),
+        sanitize(user ?? ""),
+        sanitize(userLink ?? ""),
+        sanitize(userPage.inbox ?? ""),
+        sanitize(userPage.outbox ?? ""),
         sanitize(userPage.name ?? user),
         sanitize(userPage.summary ?? " "),
         (userPage.icon ?? {}).url ?? undefined
