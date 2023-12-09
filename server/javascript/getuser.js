@@ -74,7 +74,7 @@ async function fetchUser(user) {
     let date = new Date()
 
     let something = "something"
-    console.log(date.getTime())
+    console.log(date.getTime());
     [returnStatement.test] = ["hello"]
     /*
     [
