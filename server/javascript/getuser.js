@@ -74,6 +74,7 @@ async function fetchUser(user) {
     let date = new Date()
 
     let something = "something"
+    console.log(date.getTime())
     [
         returnStatement.lastfetch, 
         returnStatement.handle, 
@@ -85,7 +86,7 @@ async function fetchUser(user) {
         returnStatement.profilepicture
     ] = [
         date.getTime(),
-        sanitize(user ?? ""),
+        sanitize(user),
         sanitize(userLink ?? ""),
         sanitize(userPage.inbox ?? ""),
         sanitize(userPage.outbox ?? ""),
