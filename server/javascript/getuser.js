@@ -34,7 +34,6 @@ async function getUserAsAdmin(user) {
             let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0]
             let wasTheUserFetchedInTheLast24Hours = parseInt(parseInt(userFromDatabase.lastfetch)+1000*60*60*24) > parseInt(date.getTime())
             if(userFromDatabase && wasTheUserFetchedInTheLast24Hours) {
-                console.log(userFromDatabase)
                 return {"message": userFromDatabase, "status": 200}
             }
             //or else you refetch it
