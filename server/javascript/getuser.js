@@ -91,7 +91,7 @@ async function fetchUser(user) {
         sanitize(userPage.outbox),
         sanitize(userPage.name ?? ""),
         sanitize(userPage.summary ?? ""),
-        (userPage.icon ?? {}).url
+        (userPage.icon ?? {}).url ?? ""
     ]
     console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
