@@ -69,7 +69,6 @@ async function fetchUser(user) {
     let returnStatement = {}
     //define returnStatement with correct values
     let date = new Date()
-    console.log(returnStatement)
     [
         returnStatement.lastfetch, 
         returnStatement.handle, 
