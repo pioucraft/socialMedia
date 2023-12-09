@@ -93,7 +93,7 @@ async function fetchUser(user) {
         sanitize(userPage.summary ?? ""),
         (userPage.icon ?? {}).url
     ]
-
+    console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
         returnStatement.publickeypem = userPage.publicKey.publicKeyPem
     }
