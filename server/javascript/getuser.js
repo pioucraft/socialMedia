@@ -43,7 +43,6 @@ async function getUserAsAdmin(user) {
         }
     }
     catch(err) {
-        console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
@@ -63,18 +62,12 @@ async function fetchUser(user) {
         }
     }
 
-    console.log("something")
 
     //fetch the user page and initialize the return statement
     let userPage = await (await fetch(userLink, {headers: {"Accept": "application/activity+json, application/ld+json"}})).json()
-    console.log(userPage)
     let returnStatement = {}
     //define returnStatement with correct values
-    console.log("something")
     let date = new Date()
-
-    let something = "something"
-    console.log(date.getTime());
 
     [
         returnStatement.lastfetch, 
@@ -96,7 +89,6 @@ async function fetchUser(user) {
         (userPage.icon ?? {}).url
     ]
     
-    console.log(returnStatement)
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
         returnStatement.publickeypem = userPage.publicKey.publicKeyPem
     }
