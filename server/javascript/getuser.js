@@ -74,20 +74,8 @@ async function fetchUser(user) {
 
     let something = "something"
     [
-        returnStatement.handle, 
-        returnStatement.link,
-        returnStatement.inbox,
-        returnStatement.outbox,
-        returnStatement.username,
-        returnStatement.bio,
         returnStatement.profilepicture
     ] = [
-        sanitize(user),
-        sanitize(userLink ?? ""),
-        sanitize(userPage.inbox ?? ""),
-        sanitize(userPage.outbox ?? ""),
-        sanitize(userPage.name ?? user),
-        sanitize(userPage.summary ?? " "),
         (userPage.icon ?? {}).url ?? undefined
     ]
     console.log(returnStatement)
