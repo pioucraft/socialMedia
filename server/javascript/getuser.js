@@ -31,8 +31,8 @@ async function getUserAsAdmin(user) {
         else {
             //check if the user has been fetched for the last time at least less 24 hours ago
             let date = new Date()
-            let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0] ?? {}
-            let wasTheUserFetchedInTheLast24Hours = parseInt(parseInt(userFromDatabase.lastfetch ?? "0")+1000*60*60*24) > parseInt(date.getTime())
+            let userFromDatabase = (await query("SELECT * FROM remoteUsers WHERE handle = $1", [user])).rows[0] 
+            let wasTheUserFetchedInTheLast24Hours = parseInt(parseInt((userFromDatabase.lastfetch ?? {}) ?? "0")+1000*60*60*24) > parseInt(date.getTime())
             if(userFromDatabase && wasTheUserFetchedInTheLast24Hours) {
                 return {"message": userFromDatabase, "status": 200}
             }
@@ -72,7 +72,7 @@ async function fetchUser(user) {
     [
         returnStatement.lastfetch, 
         returnStatement.handle, 
-        returnStatement.link, 
+        returnStatement.link,
         returnStatement.inbox,
         returnStatement.outbox,
         returnStatement.username,
@@ -86,7 +86,7 @@ async function fetchUser(user) {
         sanitize(userPage.outbox),
         sanitize(userPage.name),
         sanitize(userPage.summary),
-        userPage.icon.url
+        (userPage.icon ?? {}).url
     ]
 
     if(userPage.publicKey.id == `${userLink}#main-key` || userPage.publicKey.id == `${userLink}/#main-key`) {
