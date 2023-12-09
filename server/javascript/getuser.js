@@ -72,7 +72,6 @@ async function fetchUser(user) {
     //define returnStatement with correct values
     console.log("something")
     let date = new Date()
-    console.log("something")
     [
         returnStatement.lastfetch, 
         returnStatement.handle, 
