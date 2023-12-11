@@ -6,7 +6,7 @@ async function changeBio(body) {
         let handle = body.handle
         let bio = sanitize(body.bio)
         if(bio.length > 1000) {
-            return {"message": "400 Bad Request", "status": 400}
+            return {"message": "400 Bio Too Long", "status": 400}
         }
         if((await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0].emailverification != "yes") {
             return {"message": "401 Please Verify Your Email", "status": 401}

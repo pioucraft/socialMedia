@@ -5,7 +5,7 @@ async function changeEmail(body) {
         let handle = body.handle
         let email = body.email
         if(email.length > 100) {
-            return {"message": "400 Bad Request", "status": 400}
+            return {"message": "400 Email Too Long", "status": 400}
         }
         if((await query("SELECT * FROM Users WHERE email ~* $1;", [email])).rowCount != 0) {
             return {"message": "409 Email Already Taken", "status": 409}

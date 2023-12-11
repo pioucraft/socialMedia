@@ -3,11 +3,11 @@ const sanitize = require("sanitize-html")
 
 async function createAccount(body) {
     try {
-        let handle = sanitize(body.handle)
-        handle = handle.toLowerCase()
+        let handle = sanitize(body.handle).toLocaleLowerCase()
         let username = sanitize(body.username)
         let email = body.email
         let password = body.password
+        
         let validUsername = isLatinUsername(handle)
         if(handle && username && email && password) {
             if(handle.length > 20 || username.length > 30 || email.length > 100 || validUsername == false) {
@@ -34,7 +34,6 @@ async function createAccount(body) {
         }
     }
     catch(err) {
-        console.log(err)
         return {"message": "500 Internal Server Error", "status": 500}
     }
 }
