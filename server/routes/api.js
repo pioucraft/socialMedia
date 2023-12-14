@@ -28,13 +28,8 @@ async function api(req) {
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     let body = {}
 
-    if(!url.pathname.startsWith("/api/uploadFile")) {
-        try  {
+    if(!url.pathname.startsWith("/api/uploadFile") && !url.pathname.startsWith("/verifyEmail")) {
             body = await req.json()
-        }
-        catch(err) {
-            console.log(err)
-        }
     }
         
 
