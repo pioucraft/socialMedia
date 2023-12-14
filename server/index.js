@@ -28,6 +28,7 @@ const server = Bun.serve({
             }
         }
         catch(err) {
+            console.log(err)
             return new Response("500 Internal Server Error", {status: 500})
         }
         
