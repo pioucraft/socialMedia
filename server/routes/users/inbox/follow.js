@@ -4,7 +4,6 @@ const encryption = require("../../../javascript/encryption")
 
 async function follow(body, handle) {
     try {
-        console.log("following")
         return {"message": "202 Accepted", "status": 202}
     }
     finally {
@@ -54,7 +53,6 @@ async function follow(body, handle) {
 
 
         let followers = JSON.parse(followersString) ?? []
-        console.log(followers)
         if(followersString != null) {
             //if the followers list isn't empty
             
