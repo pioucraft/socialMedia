@@ -53,7 +53,7 @@ async function follow(body, handle) {
         })
 
 
-        let followers = JSON.parse(followersString)
+        let followers = JSON.parse(followersString) ?? []
         console.log(followers)
         if(followersString != null) {
             //if the followers list isn't empty
@@ -71,11 +71,6 @@ async function follow(body, handle) {
                 followers.push({"id":[body.id], "user": actorHandle})
             }
             
-        }
-        else {
-
-            
-            followers = [{"id": [body.id], "user": actorHandle}]
         }
 
         followersString = JSON.stringify(followers)
