@@ -28,11 +28,18 @@ async function api(req) {
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     let body = {}
 
-    if(!url.pathname.startsWith("/api/uploadFile"))
-        body = await req.json()
+    if(!url.pathname.startsWith("/api/uploadFile")) {
+        try  {
+            body = await req.json()
+        }
+        catch(err) {
+            
+        }
+    }
+        
 
     let testedAuthentification = true
-    
+
     if(pathsThatNeedAuthentification.includes(startOfUrlPath))
         testedAuthentification = await testAuthentification(body, url)
 
