@@ -1,5 +1,3 @@
-const query = require("../javascript/db")
-
 const handle = require("./users/handle")
 const inbox = require("./users/inbox")
 

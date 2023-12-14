@@ -32,6 +32,7 @@ async function sendVerificationEmail(body) {
             text: `Welcome to ${process.env.socialName}. Click here to confirm your email.`, 
             html: `<p>Welcome to ${process.env.socialName}. Click <a href="${process.env.URL}/api/verifyEmail/${uuid}">here</a> to confirm your email. If you didn't try to create an account, you can just ignore this email.</p>`, 
         });
+        
         query("UPDATE Users SET lastVerificationEmailSent = $1 WHERE email = $2;", [date.getTime(), email])
             
         return {"message": "Success", "status": 200}
