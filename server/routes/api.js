@@ -33,7 +33,7 @@ async function api(req) {
             body = await req.json()
         }
         catch(err) {
-            
+            console.log(err)
         }
     }
         
