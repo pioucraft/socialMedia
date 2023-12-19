@@ -7,7 +7,8 @@ async function getFollowingUsersPosts(body) {
     let followingWithoutIds = []
     following.forEach(follow => followingWithoutIds.push(follow.user))
     console.log(followingWithoutIds)
-    let posts = (await query("SELECT * FROM remoteposts WHERE author in ($1)", [followingWithoutIds.toString()])).rows[0].following
+    let posts = (await query("SELECT * FROM remoteposts WHERE author in ($1)", [followingWithoutIds.toString()])).rows
+    console.log(posts)
     return {"message": posts, "status": 200}
 }
 module.exports = getFollowingUsersPosts
