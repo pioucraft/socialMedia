@@ -79,7 +79,7 @@ async function api(req) {
     else if(url.pathname.startsWith("/api/follow")) {
         return (await follow(body))
     }
-    else if(url.pathname.startsWith("/getPost")) {
+    else if(url.pathname.startsWith("/api/getPost")) {
         return (await getPost(req, body))
     }
     else {
