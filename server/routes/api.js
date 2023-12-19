@@ -11,6 +11,7 @@ const changeProfilePicture = require("./api/changeProfilePicture")
 const getUser = require("./api/getUser")
 const follow = require("./api/follow")
 const getPost = require("./api/getPost")
+const getPosts = require("./api/getPost")
 
 const query = require("../javascript/db")
 
@@ -25,7 +26,8 @@ async function api(req) {
         "/changePassword",
         "/changeProfilePicture",
         "/follow",
-        "/getPost"
+        "/getPost",
+        "/getPosts"
     ]
     let startOfUrlPath = `/${url.pathname.split("/")[2]}`
     let body = {}
@@ -80,7 +82,11 @@ async function api(req) {
         return (await follow(body))
     }
     else if(url.pathname.startsWith("/api/getPost")) {
-        return (await getPost(req, body))
+        return (await getPost(req))
+    }
+
+    else if(url.pathname.startsWith("/api/getPosts")) {
+        return (await getPosts(body))
     }
     else {
         return {"message": "404 Not Found", "status": 404}
