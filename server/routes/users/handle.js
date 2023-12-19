@@ -14,12 +14,6 @@ async function handle(req) {
                 "type": "Person",
                 "preferredUsername": handle,
                 "name": handleFromDatabse.username,
-                //"summary": handleFromDatabse.bio,
-                //"icon": {
-                //    "type": "Image",
-                //    "mediaType": `image/${handleFromDatabse.profilepicture.split(".")[handleFromDatabse.profilepicture.split(".").length - 1]}`,
-                //    "url": `${process.env.URL}/images/${handleFromDatabse.profilepicture}`,
-                //},
                 "inbox": `${process.env.URL}/users/${handle}/inbox`,
                 
                 "publicKey": {

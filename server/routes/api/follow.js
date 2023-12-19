@@ -4,26 +4,21 @@ const encryption = require("../../javascript/encryption")
 const crypto = require("node:crypto")
 
 async function follow(body) {
-    try {
-        let handle = body.handle
-        let user = body.user
-        let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
-        let userFollowing = JSON.parse(userFromDatabase.following) ?? []
-        let userFromRemote = await getUserJs.getUserAsAdmin(user)
-        let activityId = `${process.env.URL}/${crypto.randomUUID()}`
-        
-        //check if you need to follow or to unfollow
-        for(let i=0;i<userFollowing.length;i++) {
-            if(userFollowing[i].user == user) {
-                return await unfollowFunction(i, handle, user, userFollowing, userFromRemote, activityId)
-            }
+    let handle = body.handle
+    let user = body.user
+    let userFromDatabase = (await query("SELECT * FROM Users WHERE handle = $1", [handle])).rows[0]
+    let userFollowing = JSON.parse(userFromDatabase.following) ?? []
+    let userFromRemote = await getUserJs.getUserAsAdmin(user)
+    let activityId = `${process.env.URL}/${crypto.randomUUID()}`
+    
+    //check if you need to follow or to unfollow
+    for(let i=0;i<userFollowing.length;i++) {
+        if(userFollowing[i].user == user) {
+            return await unfollowFunction(i, handle, user, userFollowing, userFromRemote, activityId)
         }
-        return await followFunction(handle, user, userFollowing, userFromRemote, activityId)
+    }
+    return await followFunction(handle, user, userFollowing, userFromRemote, activityId)
         
-    }
-    catch(err) {
-        return {"message": "500 Internal Server Error", "status": 500}
-    }
 }
 
 async function followFunction(handle, user, userFollowing, userFromRemote, activityId) {
