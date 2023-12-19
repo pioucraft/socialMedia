@@ -84,7 +84,6 @@ async function api(req) {
     else if(url.pathname.startsWith("/api/getPost")) {
         return (await getPost(req))
     }
-
     else if(url.pathname.startsWith("/api/getFollowingUsersPosts")) {
         return (await getFollowingUsersPosts(body))
     }
