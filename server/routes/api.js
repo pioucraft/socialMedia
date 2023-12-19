@@ -11,7 +11,7 @@ const changeProfilePicture = require("./api/changeProfilePicture")
 const getUser = require("./api/getUser")
 const follow = require("./api/follow")
 const getPost = require("./api/getPost")
-const getPosts = require("./api/getPost")
+const getPosts = require("./api/getPosts")
 
 const query = require("../javascript/db")
 
