@@ -11,7 +11,7 @@ const changeProfilePicture = require("./api/changeProfilePicture")
 const getUser = require("./api/getUser")
 const follow = require("./api/follow")
 const getPost = require("./api/getPost")
-const getPosts = require("./api/getPosts")
+const getFollowingUsersPosts = require("./api/getFollowingUsersPosts")
 
 const query = require("../javascript/db")
 
@@ -85,8 +85,8 @@ async function api(req) {
         return (await getPost(req))
     }
 
-    else if(url.pathname.startsWith("/api/getPosts")) {
-        return (await getPosts(body))
+    else if(url.pathname.startsWith("/api/getFollowingUsersPosts")) {
+        return (await getFollowingUsersPosts(body))
     }
     else {
         return {"message": "404 Not Found", "status": 404}
