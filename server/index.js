@@ -7,8 +7,11 @@ const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
         try {
-            console.log(req)
-            if(req.url.split("/")[3] == "api") {
+            if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
+                let path = req.url.split(`${process.env.URL}/`)[1].split("/").filter(element => ![""].includes(element)).join("/")
+                console.log(path)
+            }
+            else if(req.url.split("/")[3] == "api") {
                 let response = await api(req)
                 return returnGenerator(response)
                 
