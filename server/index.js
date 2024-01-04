@@ -12,7 +12,7 @@ const server = Bun.serve({
             if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
                 let path = new URL(req.url).pathname
                 let file = Bun.file(`${__dirname}/../client${path}`)
-                if(file.exists()) {
+                if(await file.exists()) {
                     return new Response(file)
                 }
                 else {
