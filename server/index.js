@@ -7,11 +7,10 @@ const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
         try {
+            console.log(req)
             if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
                 let path = new URL(req.url).pathname
                 let file = Bun.file(__dirname+"/../client"+path)
-                console.log(path)
-                console.log(req.url)
                 return new Response(file)
             }
             else if(req.url.split("/")[3] == "api") {
