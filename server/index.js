@@ -7,7 +7,6 @@ const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
         try {
-            console.log(req)
             let acceptHeaders = req.headers.get("accept") ?? ""
             if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
                 let path = new URL(req.url).pathname
@@ -16,7 +15,6 @@ const server = Bun.serve({
                     return new Response(file)
                 }
                 else {
-                    console.log("no")
                     file = Bun.file(`${__dirname}/../client/404.html`)
                     return new Response(file, {status: 404})
                 }
