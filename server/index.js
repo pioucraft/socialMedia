@@ -10,6 +10,7 @@ const server = Bun.serve({
             if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
                 let path = req.url.split(`http://localhost:${process.env.PORT}/`)[1].split("/").filter(element => ![""].includes(element)).join("/")
                 console.log(path)
+                console.log(req.url)
             }
             else if(req.url.split("/")[3] == "api") {
                 let response = await api(req)
