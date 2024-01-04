@@ -8,7 +8,8 @@ const server = Bun.serve({
     async fetch(req) {
         try {
             console.log(req)
-            if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
+            let acceptHeaders = req.headers.get("accept")
+            if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
                 let path = new URL(req.url).pathname
                 let file = Bun.file(__dirname+"/../client"+path)
                 return new Response(file)
