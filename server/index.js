@@ -16,8 +16,9 @@ const server = Bun.serve({
                     return new Response(file)
                 }
                 else {
+                    console.log("no")
                     file = Bun.file(`${__dirname}/../client/404.html`)
-                return new Response(file, {status: 404})
+                    return new Response(file, {status: 404})
                 }
                     
                 
