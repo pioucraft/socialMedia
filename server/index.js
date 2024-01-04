@@ -8,7 +8,7 @@ const server = Bun.serve({
     async fetch(req) {
         try {
             if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
-                let path = req.url.split(`${process.env.URL}/`)[1].split("/").filter(element => ![""].includes(element)).join("/")
+                let path = req.url.split(`http://localhost:${process.env.PORT}/`)[1].split("/").filter(element => ![""].includes(element)).join("/")
                 console.log(path)
             }
             else if(req.url.split("/")[3] == "api") {
