@@ -9,8 +9,10 @@ const server = Bun.serve({
         try {
             if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
                 let path = new URL(req.url).pathname
+                let file = Bun.file(__dirname+"../"+path)
                 console.log(path)
                 console.log(req.url)
+                return new Response(file)
             }
             else if(req.url.split("/")[3] == "api") {
                 let response = await api(req)
