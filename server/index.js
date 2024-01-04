@@ -8,7 +8,7 @@ const server = Bun.serve({
     async fetch(req) {
         try {
             if(req.headers.get("accept").includes("*/*") || req.headers.get("accept").includes("text/html")) {
-                let path = req.url.split(`http://localhost:${process.env.PORT}/`)[1].split("/").filter(element => ![""].includes(element)).join("/")
+                let path = new URL(req.url).pathname
                 console.log(path)
                 console.log(req.url)
             }
