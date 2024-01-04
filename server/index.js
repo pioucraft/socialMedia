@@ -9,7 +9,7 @@ const server = Bun.serve({
         try {
             console.log(req)
             let acceptHeaders = req.headers.get("accept") ?? ""
-            if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html") || req.headers.get("content-type").includes("application")) {
+            if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
                 let path = new URL(req.url).pathname
                 let file = Bun.file(__dirname+"/../client"+path)
                 return new Response(file)
