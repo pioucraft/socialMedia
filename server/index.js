@@ -11,8 +11,15 @@ const server = Bun.serve({
             let acceptHeaders = req.headers.get("accept") ?? ""
             if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
                 let path = new URL(req.url).pathname
-                let file = Bun.file(__dirname+"/../client"+path)
-                return new Response(file)
+                try {
+                    let file = Bun.file(`${__dirname}/../client${path}`)
+                    return new Response(file)
+                }
+                catch(err) {
+                    let file = Bun.file(`${__dirname}/../client/404.html`)
+                    return new Response(file, {status: 404})
+                }
+                
             }
             else if(req.url.split("/")[3] == "api") {
                 let response = await api(req)
