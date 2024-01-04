@@ -5,7 +5,7 @@ const sanitize = require("sanitize-html")
 async function createNote(body, handleFromDatabse) {
     
     let userFetched = (await (await fetch(body.actor, {headers: {"Accept": "application/activity+json, applictaion/ld+json"}})).json())
-    let authorHandle = (`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
+    let authorHandle = sanitize(`${userFetched.preferredUsername}@${body.actor.split("/")[2]}`)
     
     let link = sanitize(body.object.id)
     let content = sanitize(body.object.content)
@@ -26,9 +26,7 @@ async function createNote(body, handleFromDatabse) {
         (await query("INSERT INTO RemotePosts (author, content, link, date, likes, boosts) VALUES ($1, $2, $3, $4, 0, 0)", [authorHandle, content, link, postDate]))
         return {"message": "202 Accepted", "status": 202}
     }
-    else {
-        return {"message": "400 Not Followed By User", "status": 400}
-    }
+    return {"message": "400 Not Followed By User", "status": 400}
 }
 
 module.exports = createNote

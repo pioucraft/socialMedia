@@ -1,0 +1,2 @@
+- getfollowingusersposts.js remove the replies and add a max posts number to avoid problems
+- createNote.js avoid rewriting a post to the database if another user already received it
