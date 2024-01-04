@@ -13,6 +13,7 @@ const server = Bun.serve({
                 let path = new URL(req.url).pathname
                 try {
                     let file = Bun.file(`${__dirname}/../client${path}`)
+                    console.log(file)
                     return new Response(file)
                 }
                 catch(err) {
