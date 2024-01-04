@@ -119,4 +119,5 @@ async function unfollowFunction(i, handle, user, userFollowing, userFromRemote, 
     }))
     return {"message": "Success Unfollowed", "status": 200}
 }
+
 module.exports = follow

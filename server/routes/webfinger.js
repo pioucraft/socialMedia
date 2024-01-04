@@ -1,5 +1,3 @@
-const express = require("express")
-const router = express.Router()
 const query = require("../javascript/db")
 
 async function webfinger(req) {
