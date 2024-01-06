@@ -7,21 +7,7 @@ const server = Bun.serve({
     port: process.env.PORT,
     async fetch(req) {
         try {
-            let acceptHeaders = req.headers.get("accept") ?? ""
-            if(acceptHeaders.includes("*/*") || acceptHeaders.includes("text/html")) {
-                let path = new URL(req.url).pathname
-                let file = Bun.file(`${__dirname}/../client${path}`)
-                if(await file.exists()) {
-                    return new Response(file)
-                }
-                else {
-                    file = Bun.file(`${__dirname}/../client/404.html`)
-                    return new Response(file, {status: 404})
-                }
-                    
-                
-            }
-            else if(req.url.split("/")[3] == "api") {
+            if(req.url.split("/")[3] == "api") {
                 let response = await api(req)
                 return returnGenerator(response)
                 
