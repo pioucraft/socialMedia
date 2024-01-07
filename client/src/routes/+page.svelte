@@ -1,19 +1,26 @@
+<script>
+    let listOfPosts = [{"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}, {"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}, {"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}]
+</script>
 
 <div class="leftBar">
     leftBar
 </div>
 
 
-<div class="top">
+<div class="topBar">
     top
 </div>
 
 <div class="timeline">
-    
-    
+    {#each listOfPosts as post}
+        <div class="timeline-post">
+            <h5>{post.author}</h5>
+            <p>{post.content}</p>
+        </div>
+    {/each}
 </div>
 
-<div class="bottom">
+<div class="bottomBar">
     bottom
 </div>
 
@@ -24,61 +31,60 @@
 <style>
 
     :global(body) {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-    }
-    
-    .timeline {
-        position: absolute;
-        /*width: 60vw;
-        margin-top: 7vh;
-        margin-left: 20vw;
-        overflow-y:auto;
-        height: 86vh;*/
-    }
-
-    .top {
-        margin-left: 20vw;
-        position: absolute;
-        top: 0%;
-        left: 0%;
-        width: 60vw;
-        height: 7vh;
-        border-bottom: solid ;
-        background-color: aqua;
-    }
-
-    .bottom {
-        margin-left: 20vw;
-        position: absolute;
-        top: 93vh;
-        left: 0%;
-        height: 7vh;
-        width: 60vw;
-        border-top: solid;
-        background-color: aqua;
-    }
-    
-    .leftBar {
-        top: 0;
-        left: 0;
+        display: grid;
+        grid-template-areas: 
+        "leftbar topbar rightbar"
+        "leftbar timeline rightbar"
+        "leftbar bottombar rightbar";
+        grid-template-rows: 75px auto 70px;
+        grid-template-columns: 2fr 5fr 2fr;
         height: 100vh;
-        position: absolute;
-        border-right: solid;
-        width: 20vw;
-        background-color: beige;
+        margin: 0;
+    }
+
+    @media only screen and (max-width: 600px) {
+        :global(body) {
+            grid-template-columns:0px auto 0px;
+        }
+
+        .leftBar {
+            display: none;
+        }
+
+        .rightBar {
+            display: none;
+        }
+    }
+
+
+    .leftBar {
+        grid-area: leftbar;
+        border: solid;
+    }
+
+    .topBar {
+        grid-area: topbar;
+        border: solid;
     }
 
     .rightBar {
-        top: 0;
-        left: 80vw;
-        height: 100vh;
-        position: absolute;
-        border-left: solid;
-        width: 20vw;
-        background-color: beige;
+        grid-area: rightbar;
+        border: solid;
     }
 
+    .timeline {
+        grid-area: timeline;
+        border: solid;
+        overflow-y: auto;
+    }
 
+    .bottomBar {
+        grid-area: bottombar;
+        border: solid;
+    }
+
+    .timeline-post {
+        border-bottom: solid;
+        padding: 1%;
+    }
 </style>
