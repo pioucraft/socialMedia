@@ -5,7 +5,7 @@
     "start_url": "/",
     "icons": [
       {
-        "src": "pigsvelte.png",
+        "src": "bigsvelte.png",
         "sizes": "256x256",
         "type": "image/png",
         "purpose": "any maskable"
