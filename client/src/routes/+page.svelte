@@ -1,5 +1,6 @@
 <script>
     let listOfPosts = [{"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}, {"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}, {"author": "me", "content": "potato"}, {"author": "a Potato", "content": "Do you like potatoes ?"}, {"author": "me", "content": "potato"},{"author": "me", "content": "potato"}, {"author": "me", "content": "potato"}, {"author": "Elon Musk", "content": "Send me BTC please"}]
+    let profileDropdownOppened = true
 </script>
 
 <div class="leftBar">
@@ -9,7 +10,13 @@
 
 <div class="topBar">
     <input type="search" name="" id="" class="topBar-search" placeholder="Search on da Social Media">
-    <button class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
+    <button on:click={() => {profileDropdownOppened = !profileDropdownOppened}} class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
+    {#if profileDropdownOppened}
+        <div class="topBar-profilePictureDropdown">
+            <button>login</button>
+            <button>signup</button>
+        </div>
+    {/if}
 </div>
 
 <div class="timeline">
@@ -43,19 +50,7 @@
         margin: 0;
     }
 
-    @media only screen and (max-width: 600px) {
-        :global(body) {
-            grid-template-columns:0px auto 0px;
-        }
-
-        .leftBar {
-            display: none;
-        }
-
-        .rightBar {
-            display: none;
-        }
-    }
+   
 
 
     .leftBar {
@@ -120,5 +115,34 @@
         width: 6vh;
         height: 6vh;
         border-radius: 100%;
+    }
+
+    .topBar-profilePictureDropdown {
+        position: absolute;
+        right: 23vw;
+        top: 10vh;
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+        border-radius: 1vh;
+        padding: 10px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        :global(body) {
+            grid-template-columns:0px auto 0px;
+        }
+
+        .leftBar {
+            display: none;
+        }
+
+        .rightBar {
+            display: none;
+        }
+
+        .topBar-profilePictureDropdown {
+            right: 3vw;
+        }
     }
 </style>
