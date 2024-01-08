@@ -8,7 +8,7 @@
 
 
 <div class="topBar">
-    <input type="search" name="" id="" class="topBar-search">
+    <input type="search" name="" id="" class="topBar-search" placeholder="Search on da Social Media">
     <button class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
 </div>
 
@@ -64,8 +64,14 @@
     }
 
     .topBar {
+        display: grid;
+        grid-template-areas: "search profile";
+        grid-template-columns: auto 10vh;
+        gap: 5vw;
         grid-area: topbar;
         border: solid;
+        align-items: center;
+        padding-left: 3vw;
     }
 
     .rightBar {
@@ -89,12 +95,30 @@
         padding: 1%;
     }
 
-    .topBar-profilePicture {
+    .topBar-search {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        grid-area: search;
+        border-radius: 5vh;
+        border: solid gray 2px;
+        outline: none;
+        padding: 1%;
+        padding-left: 2%;
+        padding-right: 2%;
+        font-size: large;
+    }
 
+    .topBar-profilePicture {
+        grid-area: profile;
+        width: 6vh;
+        height: 6vh;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
     }
 
     .topBar-profilePicture-image {
-        width: 7vh;
-        height: 7vh;
+        width: 6vh;
+        height: 6vh;
+        border-radius: 100%;
     }
 </style>
