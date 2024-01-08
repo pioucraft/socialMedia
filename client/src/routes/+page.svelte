@@ -10,11 +10,12 @@
 
 <div class="topBar">
     <input type="search" name="" id="" class="topBar-search" placeholder="Search on da Social Media">
-    <button on:click={() => {profileDropdownOppened = !profileDropdownOppened}} class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
+    <button on:click={() => {profileDropdownOppened = true}} class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
     {#if profileDropdownOppened}
+        <button on:click={() => {profileDropdownOppened = false}} class="topBar-fullInvisibleButton"></button>
         <div class="topBar-profilePictureDropdown">
-            <button>login</button>
-            <button>signup</button>
+            <button class="topbar-profilePictureDropDown-button">Sign in</button>
+            <button class="topbar-profilePictureDropDown-button">Create account</button>
         </div>
     {/if}
 </div>
@@ -37,6 +38,12 @@
 </div>
 
 <style>
+
+    :root {
+        --primary: black;
+        --secondary: black;
+        --accent: black;
+    }
 
     :global(body) {
         display: grid;
@@ -126,6 +133,23 @@
         background-color: black;
         border-radius: 1vh;
         padding: 10px;
+    }
+
+    .topBar-fullInvisibleButton {
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: transparent;
+        border: none;
+    }
+
+    .topbar-profilePictureDropDown-button {
+        margin: 1vh;
+        padding: 1vh;
+        font-size: medium;
+        color: ;
     }
 
     @media only screen and (max-width: 600px) {
