@@ -8,7 +8,8 @@
 
 
 <div class="topBar">
-    top
+    <input type="search" name="" id="" class="topBar-search">
+    <button class="topBar-profilePicture"><img src="profilePicture-test.jpg" alt="" class="topBar-profilePicture-image"></button>
 </div>
 
 <div class="timeline">
@@ -86,5 +87,14 @@
     .timeline-post {
         border-bottom: solid;
         padding: 1%;
+    }
+
+    .topBar-profilePicture {
+
+    }
+
+    .topBar-profilePicture-image {
+        width: 7vh;
+        height: 7vh;
     }
 </style>
