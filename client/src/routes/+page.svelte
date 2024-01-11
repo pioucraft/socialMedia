@@ -38,10 +38,15 @@
 
 <style>
 
-    button:focus {
+    button:focus, 
+    button:active, 
+    button:hover {
         outline: none;
+        box-shadow: none; /* Sometimes the effect is a box-shadow */
+        -webkit-tap-highlight-color: transparent; /* Specifically for WebKit browsers like Chrome */
     }
-    
+
+
     :root {
         --primary: black;
         --secondary: black;
