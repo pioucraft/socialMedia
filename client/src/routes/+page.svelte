@@ -38,6 +38,10 @@
 
 <style>
 
+    button:focus {
+        outline: none;
+    }
+    
     :root {
         --primary: black;
         --secondary: black;
