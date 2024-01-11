@@ -32,7 +32,7 @@
 <div class="bottomBar">
     bottom
 </div>
-
+y
 <div class="rightBar">
     Trending
 </div>
@@ -149,7 +149,7 @@
         margin: 1vh;
         padding: 1vh;
         font-size: medium;
-        color: ;
+        color: black;
     }
 
     @media only screen and (max-width: 600px) {
