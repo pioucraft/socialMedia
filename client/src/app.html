@@ -5,6 +5,15 @@
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="manifest" href="manifest.json" />
+		<style>
+			button:focus, 
+			button:active, 
+			button:hover {
+				outline: none;
+				box-shadow: none; /* Sometimes the effect is a box-shadow */
+				-webkit-tap-highlight-color: transparent; /* Specifically for WebKit browsers like Chrome */
+			}
+		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
