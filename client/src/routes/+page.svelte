@@ -32,7 +32,6 @@
 <div class="bottomBar">
     bottom
 </div>
-y
 <div class="rightBar">
     Trending
 </div>
